@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt | Rimci</title>
+  <meta name="description" content="Erzählen Sie Rimci von Ihrem Vorhaben. Per Formular, E-Mail oder Telefon." />
+  <meta name="theme-color" content="#0a0a0b" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/kontakt.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <!-- Icon-Sprite. Einmal definiert, ueberall per <use> referenziert. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="i-arrow-ur" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 11.5 11.5 4.5" /><path d="M5.5 4.5h6v6" />
+    </symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 8h10" /><path d="M9 4l4 4-4 4" />
+    </symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 8H3" /><path d="M7 4 3 8l4 4" />
+    </symbol>
+    <symbol id="i-arrow-u" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 13V3" /><path d="M4 7l4-4 4 4" />
+    </symbol>
+    <symbol id="i-caret" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m4 6 4 4 4-4" />
+    </symbol>
+    <symbol id="i-tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 8.5 3.5 3.5L13 5" />
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M8 3v10" /><path d="M3 8h10" />
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <span class="nav-sentinel" aria-hidden="true"></span>
+
+  <!-- ====================================================================
+       Navigation
+       ==================================================================== -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="index.html">
+        <span class="nav__mark" aria-hidden="true"></span>
+        Rimci
+      </a>
+
+      <nav class="nav__list" aria-label="Hauptnavigation">
+        <a class="nav__link" href="index.html">Start</a>
+        <a class="nav__link" href="arbeiten.html">Arbeiten</a>
+        <button class="nav__link" type="button" data-mega-trigger aria-expanded="false" aria-controls="mega-leistungen">
+          Leistungen
+          <svg class="nav__caret" aria-hidden="true"><use href="#i-caret" /></svg>
+        </button>
+        <a class="nav__link" href="ueber-uns.html">Über uns</a>
+        <a class="nav__link is-current" href="kontakt.html" aria-current="page">Kontakt</a>
+      </nav>
+
+      <a class="btn btn--primary nav__cta" href="kontakt.html">
+        Projekt starten
+        <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+      </a>
+
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mega-Menü: zeigt ehrlich, was es heute gibt und was noch nicht -->
+    <div class="mega" id="mega-leistungen">
+      <div class="wrap">
+        <div class="mega__grid">
+          <a class="mega__item" href="leistungen.html">
+            <span class="mega__title">Landingpage</span>
+            <span class="mega__desc">Eine Seite, die erklärt, überzeugt und zur Anfrage führt. Unser einziges Paket.</span>
+          </a>
+          <span class="mega__item" aria-disabled="true">
+            <span class="mega__title">Mehrseitige Website</span>
+            <span class="mega__desc">Mehrere Unterseiten für Unternehmen mit größerem Angebot.</span>
+            <span class="mega__tag">In Vorbereitung</span>
+          </span>
+          <span class="mega__item" aria-disabled="true">
+            <span class="mega__title">Onlineshop</span>
+            <span class="mega__desc">Produkte verkaufen statt nur zeigen.</span>
+            <span class="mega__tag">In Vorbereitung</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <nav class="drawer__list" aria-label="Menü">
+      <a class="drawer__link" href="index.html">Start <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="arbeiten.html">Arbeiten <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="leistungen.html">Leistungen <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="ueber-uns.html">Über uns <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="kontakt.html" aria-current="page">Kontakt <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+    </nav>
+    <div class="drawer__foot">
+      <div class="drawer__contact">
+        <a href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+        <a href="tel:+491234567890">+49 123 4567890</a>
+      </div>
+      <a class="btn btn--primary btn--lg" href="kontakt.html">
+        Projekt starten
+        <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+      </a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <section class="contact wrap">
+      <div class="contact__intro" data-hero>
+        <span class="label reveal">Kontakt</span>
+        <h1 class="h1">
+          <span class="line-mask"><span>Erzählen Sie uns</span></span>
+          <span class="line-mask"><span>von Ihrem Vorhaben.</span></span>
+        </h1>
+        <p class="lead reveal">Schreiben Sie uns, was Sie vorhaben. Wir melden uns persönlich zurück.</p>
+        <div class="direct reveal">
+          <a class="direct__row" href="mailto:hallo@rimci.de">
+            <span class="direct__label">E-Mail</span>
+            <span class="direct__value">hallo@rimci.de</span>
+          </a>
+          <a class="direct__row" href="tel:+491234567890">
+            <span class="direct__label">Telefon</span>
+            <span class="direct__value">+49 123 4567890</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact__panel reveal">
+        <!-- Versanddienst: Formspree-URL in data-endpoint eintragen.
+             Solange leer, bietet das Formular den Versand per E-Mail an. -->
+        <form class="form" id="contact-form" data-endpoint="" novalidate>
+          <div class="form__row">
+            <div class="field">
+              <label class="field__label" for="f-name">Name</label>
+              <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+              <p class="field__error" id="f-name-err"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-company">Firma <span class="field__opt">optional</span></label>
+              <input class="input" id="f-company" name="company" type="text" autocomplete="organization" />
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label class="field__label" for="f-email">E-Mail</label>
+              <input class="input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="f-email-err" />
+              <p class="field__error" id="f-email-err"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-phone">Telefon <span class="field__opt">optional</span></label>
+              <input class="input" id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-topic">Ihr Anliegen</label>
+            <select class="select" id="f-topic" name="topic" required aria-describedby="f-topic-err">
+              <option value="" selected disabled>Bitte auswählen</option>
+              <option value="landingpage">Neue Landingpage</option>
+              <option value="beratung">Beratungsgespräch</option>
+              <option value="sonstiges">Sonstiges</option>
+            </select>
+            <p class="field__error" id="f-topic-err"></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-message">Nachricht</label>
+            <textarea class="textarea" id="f-message" name="message" rows="5" required minlength="10" aria-describedby="f-message-help f-message-err"></textarea>
+            <p class="field__help" id="f-message-help">Ein paar Sätze reichen: Was machen Sie, und was soll die Seite erreichen?</p>
+            <p class="field__error" id="f-message-err"></p>
+          </div>
+
+          <div class="field">
+            <label class="consent">
+              <input type="checkbox" name="consent" value="ja" required aria-describedby="f-consent-err" />
+              <span>Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden.</span>
+            </label>
+            <p class="field__error" id="f-consent-err"></p>
+          </div>
+
+          <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <div class="form__foot">
+            <p class="form__note">Felder ohne Hinweis sind Pflichtfelder.</p>
+            <button class="btn btn--primary btn--lg" type="submit">
+              <span data-label>Anfrage senden</span>
+              <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+            </button>
+          </div>
+
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="form-done" id="form-done" tabindex="-1" hidden>
+          <span class="tag">Gesendet</span>
+          <h2 class="h2">Danke. Ihre Anfrage ist da.</h2>
+          <p class="body-text">Wir lesen sie persönlich und melden uns bei Ihnen.</p>
+          <a class="link-line" href="index.html">Zur Startseite</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       Footer
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__top">
+        <div class="footer__pitch">
+          <p class="h3">Landingpages für Firmen, die online endlich professionell auftreten.</p>
+          <a class="btn btn--primary" href="kontakt.html">
+            Projekt starten
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+
+        <nav class="footer__col" aria-label="Seiten">
+          <p class="footer__col-title">Seiten</p>
+          <div class="footer__links">
+            <a href="index.html">Start</a>
+            <a href="arbeiten.html">Arbeiten</a>
+            <a href="leistungen.html">Leistungen</a>
+            <a href="ueber-uns.html">Über uns</a>
+            <a href="kontakt.html">Kontakt</a>
+          </div>
+        </nav>
+
+        <div class="footer__col">
+          <p class="footer__col-title">Leistungen</p>
+          <div class="footer__links">
+            <a href="leistungen.html">Landingpage</a>
+            <span class="faint u-small">Mehrseitige Website, bald</span>
+            <span class="faint u-small">Onlineshop, bald</span>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-title">Kontakt</p>
+          <div class="footer__links">
+            <a href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+            <a href="tel:+491234567890">+49 123 4567890</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer__wordmark" aria-hidden="true">Rimci</p>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 Rimci</span>
+        <nav class="footer__legal" aria-label="Rechtliches">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </nav>
+        <a class="to-top" href="#main">
+          Nach oben
+          <svg aria-hidden="true"><use href="#i-arrow-u" /></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/form.js"></script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+/* ==========================================================================
+   RIMCI - inner.css
+   Unterseiten: Arbeiten (Filter, Raster), Leistungen (Paket, Ausblick, FAQ),
+   Über uns (Leitsatz, Werte, Team), Rechtliches (Fliesstext).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Arbeiten
+   -------------------------------------------------------------------------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-bottom: var(--s6);
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.6em 1.15em;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+
+.filter:hover { color: var(--text); border-color: var(--text); }
+
+.filter:active { transform: scale(0.97); }
+
+.filter[aria-pressed="true"] {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.filter__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  opacity: 0.65;
+}
+
+@media (min-width: 860px) {
+  .work-grid--index { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+
+  /* Setzt die Spaltenbreiten der Startseite ausser Kraft */
+  .work-grid--index .work-card:nth-child(n) { grid-column: auto; margin-top: 0; }
+
+  /* Jede zweite sichtbare Karte sitzt tiefer. Wird per Skript nach jedem
+     Filterwechsel neu vergeben, damit der Versatz nicht durcheinander kommt. */
+  .work-grid--index .work-card.is-offset { margin-top: clamp(2rem, 7vw, 6.5rem); }
+}
+
+.work-card.is-entering {
+  animation: card-in 0.6s var(--ease) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s3);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-card);
+}
+
+/* --------------------------------------------------------------------------
+   Leistungen: das eine Paket
+   -------------------------------------------------------------------------- */
+
+.package {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: var(--s6);
+  padding: clamp(1.75rem, 5vw, 4rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--bg-card);
+}
+
+/* Duenne Akzentkante oben: markiert das Paket als das eine Angebot */
+.package::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+@media (min-width: 960px) {
+  .package {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+
+.package__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s4);
+}
+
+.package__price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  padding-block: var(--s4);
+  border-block: 1px solid var(--line);
+}
+
+.package__price .group-title { margin-bottom: 0.25rem; }
+
+.price-ph {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--text-faint);
+}
+
+.included { display: flex; flex-direction: column; gap: var(--s5); }
+
+.included__group + .included__group {
+  padding-top: var(--s5);
+  border-top: 1px solid var(--line);
+}
+
+.included__list { display: grid; gap: 0.7rem; }
+
+@media (min-width: 640px) {
+  .included__list { grid-template-columns: 1fr 1fr; column-gap: var(--s5); }
+}
+
+.included__list li {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  gap: 0.6rem;
+  font-size: var(--fs-small);
+  color: var(--text-dim);
+}
+
+.included__list svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-top: 0.36rem;
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Leistungen: Ausblick
+   -------------------------------------------------------------------------- */
+
+.later { display: grid; gap: var(--s4); }
+
+@media (min-width: 768px) {
+  .later { grid-template-columns: 1fr 1fr; }
+}
+
+.later__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-card);
+}
+
+/* --------------------------------------------------------------------------
+   Leistungen: Fragen
+   Native <details>, damit es ohne Skript und mit Tastatur funktioniert.
+   -------------------------------------------------------------------------- */
+
+.faq { max-width: 60rem; border-top: 1px solid var(--line); }
+
+.faq__item { border-bottom: 1px solid var(--line); }
+
+.faq__q {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding-block: var(--s4);
+  cursor: pointer;
+  font-size: clamp(1.0625rem, 1.6vw, 1.3125rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.faq__q::-webkit-details-marker { display: none; }
+
+.faq__q:hover { color: var(--accent); }
+
+.faq__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  color: var(--text);
+  transition: transform var(--dur) var(--ease),
+              background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+
+.faq__icon svg { width: 0.8rem; height: 0.8rem; }
+
+.faq__item[open] .faq__icon {
+  transform: rotate(45deg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.faq__a {
+  max-width: 62ch;
+  padding-bottom: var(--s5);
+  color: var(--text-dim);
+}
+
+.faq__item[open] .faq__a { animation: faq-in 0.45s var(--ease); }
+
+@keyframes faq-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Über uns
+   -------------------------------------------------------------------------- */
+
+.statement {
+  max-width: 30ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.2vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* Vier Werte, vier Zellen. Breite wechselt pro Reihe. */
+.values { display: grid; gap: var(--s4); }
+
+@media (min-width: 860px) {
+  .values { grid-template-columns: repeat(3, 1fr); }
+  .value:nth-child(1),
+  .value:nth-child(4) { grid-column: span 2; }
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s6);
+  min-height: clamp(13rem, 22vw, 18rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--bg-card);
+}
+
+.value--accent {
+  border-color: var(--accent-line);
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--accent-dim), transparent 60%),
+    var(--bg-card);
+}
+
+.value--solid {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.value--solid .body-text { color: rgba(10, 10, 11, 0.74); }
+
+.value--pattern {
+  background:
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.028) 0 10px, transparent 10px 20px),
+    var(--bg-card);
+}
+
+.team {
+  display: grid;
+  gap: var(--s4);
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+}
+
+.member { display: flex; flex-direction: column; gap: var(--s3); }
+
+.member__name { font-weight: 600; }
+
+.member__role { font-size: var(--fs-small); color: var(--text-faint); }
+
+/* --------------------------------------------------------------------------
+   Rechtliches
+   -------------------------------------------------------------------------- */
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  max-width: 68ch;
+}
+
+.prose h2 {
+  margin-top: var(--s5);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.prose p,
+.prose dd { color: var(--text-dim); }
+
+.prose a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 0.2em;
+}
+
+.prose a:hover { text-decoration-color: var(--accent); }
+
+.notice {
+  padding: var(--s4) var(--s5);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-card);
+  background: var(--accent-dim);
+  color: var(--text) !important;
+  font-size: var(--fs-small);
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) 1fr;
+  gap: 0.8rem var(--s5);
+}
+
+.dl dt { font-size: var(--fs-small); color: var(--text-faint); }
+
+.fill {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--accent);
+}

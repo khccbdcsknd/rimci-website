@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leistungen | Rimci</title>
+  <meta name="description" content="Ein Paket, vollständig umgesetzt: die Landingpage von Rimci mit Design, Text, Technik und Betreuung zum festen Preis." />
+  <meta name="theme-color" content="#0a0a0b" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/inner.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <!-- Icon-Sprite. Einmal definiert, ueberall per <use> referenziert. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="i-arrow-ur" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 11.5 11.5 4.5" /><path d="M5.5 4.5h6v6" />
+    </symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 8h10" /><path d="M9 4l4 4-4 4" />
+    </symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 8H3" /><path d="M7 4 3 8l4 4" />
+    </symbol>
+    <symbol id="i-arrow-u" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 13V3" /><path d="M4 7l4-4 4 4" />
+    </symbol>
+    <symbol id="i-caret" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m4 6 4 4 4-4" />
+    </symbol>
+    <symbol id="i-tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 8.5 3.5 3.5L13 5" />
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M8 3v10" /><path d="M3 8h10" />
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <span class="nav-sentinel" aria-hidden="true"></span>
+
+  <!-- ====================================================================
+       Navigation
+       ==================================================================== -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="index.html">
+        <span class="nav__mark" aria-hidden="true"></span>
+        Rimci
+      </a>
+
+      <nav class="nav__list" aria-label="Hauptnavigation">
+        <a class="nav__link" href="index.html">Start</a>
+        <a class="nav__link" href="arbeiten.html">Arbeiten</a>
+        <button class="nav__link is-current" type="button" data-mega-trigger aria-expanded="false" aria-controls="mega-leistungen">
+          Leistungen
+          <svg class="nav__caret" aria-hidden="true"><use href="#i-caret" /></svg>
+        </button>
+        <a class="nav__link" href="ueber-uns.html">Über uns</a>
+        <a class="nav__link" href="kontakt.html">Kontakt</a>
+      </nav>
+
+      <a class="btn btn--primary nav__cta" href="kontakt.html">
+        Projekt starten
+        <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+      </a>
+
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mega-Menü: zeigt ehrlich, was es heute gibt und was noch nicht -->
+    <div class="mega" id="mega-leistungen">
+      <div class="wrap">
+        <div class="mega__grid">
+          <a class="mega__item" href="leistungen.html">
+            <span class="mega__title">Landingpage</span>
+            <span class="mega__desc">Eine Seite, die erklärt, überzeugt und zur Anfrage führt. Unser einziges Paket.</span>
+          </a>
+          <span class="mega__item" aria-disabled="true">
+            <span class="mega__title">Mehrseitige Website</span>
+            <span class="mega__desc">Mehrere Unterseiten für Unternehmen mit größerem Angebot.</span>
+            <span class="mega__tag">In Vorbereitung</span>
+          </span>
+          <span class="mega__item" aria-disabled="true">
+            <span class="mega__title">Onlineshop</span>
+            <span class="mega__desc">Produkte verkaufen statt nur zeigen.</span>
+            <span class="mega__tag">In Vorbereitung</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <nav class="drawer__list" aria-label="Menü">
+      <a class="drawer__link" href="index.html">Start <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="arbeiten.html">Arbeiten <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="leistungen.html" aria-current="page">Leistungen <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="ueber-uns.html">Über uns <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="kontakt.html">Kontakt <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+    </nav>
+    <div class="drawer__foot">
+      <div class="drawer__contact">
+        <a href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+        <a href="tel:+491234567890">+49 123 4567890</a>
+      </div>
+      <a class="btn btn--primary btn--lg" href="kontakt.html">
+        Projekt starten
+        <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+      </a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <section class="page-hero wrap" data-hero>
+      <span class="label reveal">Leistungen</span>
+      <h1 class="page-hero__title">
+        <span class="line-mask"><span>Ein Paket.</span></span>
+        <span class="line-mask"><span>Richtig gemacht.</span></span>
+      </h1>
+      <p class="lead page-hero__lead reveal">Wir machen eine Sache: Landingpages. Die aber vollständig, vom ersten Satz bis zum Livegang.</p>
+    </section>
+
+    <section class="section wrap">
+      <article class="package reveal">
+        <div class="package__intro">
+          <h2 class="h2">Landingpage</h2>
+          <p class="body-text">Eine einzelne Seite, die in wenigen Sekunden erklärt, was Sie anbieten, warum man Ihnen vertrauen kann und wie man Sie erreicht.</p>
+          <div class="package__price">
+            <span class="group-title">Preis</span>
+            <span class="price-ph">Preis folgt</span>
+            <span class="u-small muted">Fester Betrag, vor Projektbeginn genannt.</span>
+          </div>
+          <a class="btn btn--primary btn--lg" href="kontakt.html" data-magnetic="0.22">
+            Projekt starten
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+
+        <div class="included">
+          <div class="included__group">
+            <h3 class="group-title">Gestaltung</h3>
+            <ul class="included__list">
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Individuelles Design, keine Vorlage</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Für Smartphone, Tablet und Desktop</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Texte, die erklären statt aufzählen</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Ihre Farben und Ihr Logo</span></li>
+            </ul>
+          </div>
+          <div class="included__group">
+            <h3 class="group-title">Technik</h3>
+            <ul class="included__list">
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Kurze Ladezeit</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Grundlegende Suchmaschinenoptimierung</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Kontaktformular mit Anliegen-Auswahl</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Verschlüsselte Verbindung per HTTPS</span></li>
+            </ul>
+          </div>
+          <div class="included__group">
+            <h3 class="group-title">Betreuung</h3>
+            <ul class="included__list">
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Ein fester Ansprechpartner</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Zwei Korrekturrunden</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Einrichtung von Domain und Hosting</span></li>
+              <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Kurze Einweisung bei der Übergabe</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section section--raised">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h2 reveal">Was als Nächstes kommt</h2>
+          <p class="body-text reveal">Sobald das Landingpage-Paket sitzt, erweitern wir das Angebot. Vorher nicht.</p>
+        </div>
+        <div class="later">
+          <div class="later__item reveal">
+            <span class="tag">In Vorbereitung</span>
+            <h3 class="h3">Mehrseitige Website</h3>
+            <p class="body-text">Für Unternehmen, deren Angebot nicht auf eine Seite passt.</p>
+          </div>
+          <div class="later__item reveal">
+            <span class="tag">In Vorbereitung</span>
+            <h3 class="h3">Onlineshop</h3>
+            <p class="body-text">Für alle, die Produkte direkt über die eigene Seite verkaufen wollen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="sec-head">
+        <h2 class="h2 reveal">Häufige Fragen</h2>
+      </div>
+      <div class="faq reveal">
+        <details class="faq__item">
+          <summary class="faq__q">Wie lange dauert es, bis die Seite online ist?<span class="faq__icon" aria-hidden="true"><svg><use href="#i-plus" /></svg></span></summary>
+          <p class="faq__a">Die meisten Landingpages sind nach wenigen Tagen online. Wie schnell genau, hängt vor allem davon ab, wie zügig Inhalte und Freigaben vorliegen.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Muss ich die Texte selbst schreiben?<span class="faq__icon" aria-hidden="true"><svg><use href="#i-plus" /></svg></span></summary>
+          <p class="faq__a">Nein. Wir schreiben die Texte gemeinsam mit Ihnen. Sie bringen das Wissen über Ihr Geschäft mit, wir kümmern uns um die Formulierung.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Was kostet die Seite?<span class="faq__icon" aria-hidden="true"><svg><use href="#i-plus" /></svg></span></summary>
+          <p class="faq__a">Nach dem ersten Gespräch nennen wir Ihnen einen festen Preis. Nachträglich kommt nichts dazu.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Kann ich die Seite später selbst ändern?<span class="faq__icon" aria-hidden="true"><svg><use href="#i-plus" /></svg></span></summary>
+          <p class="faq__a">Kleine Dinge wie Telefonnummer oder Öffnungszeiten zeigen wir Ihnen bei der Übergabe. Für größere Änderungen sind wir weiter erreichbar.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Was passiert, wenn mir der Entwurf nicht gefällt?<span class="faq__icon" aria-hidden="true"><svg><use href="#i-plus" /></svg></span></summary>
+          <p class="faq__a">Dann sagen Sie es uns. Zwei Korrekturrunden sind im Preis enthalten, und die meisten Wünsche lassen sich im Gespräch schnell klären.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         Abschluss. Eine Aussage, ein Knopf.
+         ================================================================== -->
+    <section class="closer">
+      <div class="wrap closer__inner">
+        <h2 class="h1 closer__title reveal">Reden wir über Ihre Seite.</h2>
+        <div class="reveal">
+          <a class="btn btn--primary btn--lg" href="kontakt.html" data-magnetic="0.25">
+            Projekt starten
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+        <p class="closer__mail reveal">
+          Oder direkt: <a class="link-line" href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       Footer
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__top">
+        <div class="footer__pitch">
+          <p class="h3">Landingpages für Firmen, die online endlich professionell auftreten.</p>
+          <a class="btn btn--primary" href="kontakt.html">
+            Projekt starten
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+
+        <nav class="footer__col" aria-label="Seiten">
+          <p class="footer__col-title">Seiten</p>
+          <div class="footer__links">
+            <a href="index.html">Start</a>
+            <a href="arbeiten.html">Arbeiten</a>
+            <a href="leistungen.html">Leistungen</a>
+            <a href="ueber-uns.html">Über uns</a>
+            <a href="kontakt.html">Kontakt</a>
+          </div>
+        </nav>
+
+        <div class="footer__col">
+          <p class="footer__col-title">Leistungen</p>
+          <div class="footer__links">
+            <a href="leistungen.html">Landingpage</a>
+            <span class="faint u-small">Mehrseitige Website, bald</span>
+            <span class="faint u-small">Onlineshop, bald</span>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-title">Kontakt</p>
+          <div class="footer__links">
+            <a href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+            <a href="tel:+491234567890">+49 123 4567890</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer__wordmark" aria-hidden="true">Rimci</p>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 Rimci</span>
+        <nav class="footer__legal" aria-label="Rechtliches">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </nav>
+        <a class="to-top" href="#main">
+          Nach oben
+          <svg aria-hidden="true"><use href="#i-arrow-u" /></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

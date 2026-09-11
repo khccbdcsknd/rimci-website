@@ -1,0 +1,412 @@
+/* ==========================================================================
+   RIMCI - base.css
+   Tokens, Reset, Typografie, Buttons, Utilities.
+
+   THEME LOCK:  Die Seite ist durchgehend dunkel. Keine Sektion invertiert.
+   ACCENT LOCK: Genau eine Akzentfarbe (--accent) auf der gesamten Seite.
+   SHAPE LOCK:  Buttons = Pill (999px). Karten & Medien = 20px. Inputs = 12px.
+   ========================================================================== */
+
+:root {
+  /* --- Flaechen ------------------------------------------------------- */
+  --bg:            #0a0a0b;   /* Basis, bewusst kein reines Schwarz */
+  --bg-raised:     #101013;   /* leicht abgesetzte Baender */
+  --bg-card:       #141418;   /* Karten */
+  --bg-card-hover: #1a1a1f;
+
+  /* --- Linien --------------------------------------------------------- */
+  --line:        rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+
+  /* --- Text ----------------------------------------------------------- */
+  --text:        #f2f2f4;
+  --text-dim:    #a1a1aa;
+  --text-faint:  #85858f;   /* 5.4:1 auf --bg, AA auch fuer kleine Labels */
+  --text-on-accent: #0a0a0b;
+
+  /* --- Akzent (genau einer) ------------------------------------------- */
+  --accent:       #c6f24e;
+  --accent-dim:   rgba(198, 242, 78, 0.16);
+  --accent-line:  rgba(198, 242, 78, 0.32);
+
+  /* --- Schrift -------------------------------------------------------- */
+  --font-display: "Archivo", system-ui, -apple-system, sans-serif;
+  --font-body:    "Archivo", system-ui, -apple-system, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Fluide Typo-Skala */
+  --fs-display: clamp(3rem, 9vw, 8.5rem);
+  --fs-h1:      clamp(2.5rem, 7.5vw, 6rem);
+  --fs-h2:      clamp(2rem, 5vw, 4rem);
+  --fs-h3:      clamp(1.25rem, 2.2vw, 1.75rem);
+  --fs-lead:    clamp(1.0625rem, 1.5vw, 1.3125rem);
+  --fs-body:    clamp(0.9375rem, 1.05vw, 1.0625rem);
+  --fs-small:   0.875rem;
+  --fs-label:   0.6875rem;
+
+  /* --- Raster & Abstaende --------------------------------------------- */
+  --gutter:      clamp(1.25rem, 4vw, 3rem);
+  --max:         1560px;
+  --max-text:    62ch;
+  --section-y:   clamp(5.5rem, 12vw, 11rem);
+  --s1: 0.5rem;  --s2: 0.75rem; --s3: 1rem;   --s4: 1.5rem;
+  --s5: 2rem;    --s6: 3rem;    --s7: 4.5rem; --s8: 7rem;
+
+  /* --- Form ----------------------------------------------------------- */
+  --r-card:  20px;
+  --r-input: 12px;
+  --r-pill:  999px;
+
+  /* --- Bewegung ------------------------------------------------------- */
+  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io:   cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:  0.22s;
+  --dur:       0.45s;
+  --dur-slow:  0.9s;
+
+  /* --- Ebenen --------------------------------------------------------- */
+  --z-grain:   90;
+  --z-nav:     80;
+  --z-menu:    70;
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   Reset
+   -------------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Platz fuer die fixierte Navigation bei Anker-Sprüngen */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body.is-locked { overflow: hidden; }
+
+img, svg, video { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+ul, ol { list-style: none; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+button { cursor: pointer; }
+
+::selection { background: var(--accent); color: var(--text-on-accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Layout-Primitive
+   -------------------------------------------------------------------------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--section-y); }
+
+.section--raised { background: var(--bg-raised); }
+
+.section--tight { padding-block: clamp(3.5rem, 7vw, 6rem); }
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100%;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-radius: var(--r-pill);
+  font-weight: 600;
+}
+
+.skip-link:focus { top: 1rem; }
+
+/* --------------------------------------------------------------------------
+   Typografie
+   -------------------------------------------------------------------------- */
+
+.display,
+.h1, .h2, .h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.display { font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.045em; }
+.h1      { font-size: var(--fs-h1); }
+.h2      { font-size: var(--fs-h2); }
+.h3      { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -0.02em; font-weight: 600; }
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--text-dim);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.body-text {
+  color: var(--text-dim);
+  max-width: var(--max-text);
+  text-wrap: pretty;
+}
+
+.muted { color: var(--text-dim); }
+.faint { color: var(--text-faint); }
+.accent-text { color: var(--accent); }
+
+/* Kleines Label ueber einer Ueberschrift. Bewusst sparsam eingesetzt. */
+.label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  --btn-bd: var(--line-strong);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.6em;
+  border: 1px solid var(--btn-bd);
+  border-radius: var(--r-pill);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;          /* CTA bricht nie um */
+  transition: background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+
+.btn:active { transform: scale(0.975); }
+
+.btn--primary {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--text-on-accent);
+  --btn-bd: var(--accent);
+}
+
+.btn--primary:hover { --btn-bg: #d8ff69; --btn-bd: #d8ff69; }
+
+.btn--ghost:hover {
+  --btn-bd: var(--text);
+  --btn-bg: rgba(255, 255, 255, 0.05);
+}
+
+.btn--lg { padding: 1.05em 2.1em; font-size: 1rem; }
+
+/* Pfeil im Button, bewegt sich beim Hover mit */
+.btn__arrow {
+  width: 0.9em;
+  height: 0.9em;
+  flex: none;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.btn:hover .btn__arrow { transform: translateX(3px); }
+
+/* Textlink mit unterstrichener Linie, die beim Hover durchlaeuft */
+.link-line {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 500;
+  padding-bottom: 2px;
+}
+
+.link-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur) var(--ease);
+}
+
+.link-line:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* --------------------------------------------------------------------------
+   Platzhalter fuer Bilder und Logos
+   Bewusst sichtbar: markiert die Stelle, an die spaeter echtes Material kommt.
+   -------------------------------------------------------------------------- */
+
+.ph {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-card);
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.022) 0 10px,
+      transparent 10px 20px
+    ),
+    var(--bg-card);
+  border: 1px solid var(--line);
+  color: var(--text-faint);
+}
+
+.ph::after {
+  content: attr(data-ph);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.45em 0.9em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 11, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.ph--16x9  { aspect-ratio: 16 / 9; }
+.ph--4x5   { aspect-ratio: 4 / 5; }
+.ph--1x1   { aspect-ratio: 1 / 1; }
+.ph--wide  { aspect-ratio: 21 / 9; }
+
+.ph--avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--r-pill);
+  flex: none;
+}
+
+.ph--avatar::after { content: ""; padding: 0; border: 0; background: none; }
+
+/* --------------------------------------------------------------------------
+   Scroll-Reveal
+   Gesteuert per IntersectionObserver in scripts/main.js.
+   Zweck: Inhalte erscheinen in Lesereihenfolge, nicht alles auf einmal.
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--dur-slow) var(--ease),
+              transform var(--dur-slow) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Zeilenweise Maske fuer grosse Ueberschriften */
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+
+.line-mask > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 1.05s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.is-in .line-mask > span,
+.line-mask.is-in > span { transform: none; }
+
+/* --------------------------------------------------------------------------
+   Film-Korn. Fixiert und ohne Pointer-Events, damit beim Scrollen
+   nichts neu gezeichnet werden muss.
+   -------------------------------------------------------------------------- */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.32;
+}
+
+/* Die bewegte Ebene ist groesser als der Viewport. Der Rahmen beschneidet sie,
+   damit sie nie seitlichen Scroll erzeugt. */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  animation: grain-shift 6s steps(5) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3%, 2%); }
+  40%  { transform: translate(2%, -3%); }
+  60%  { transform: translate(-2%, -2%); }
+  80%  { transform: translate(3%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   Reduzierte Bewegung
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .line-mask > span { transform: none; transition: none; }
+  .grain::before { animation: none; }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,401 @@
+/* ==========================================================================
+   RIMCI - layout.css
+   Geteilte Seitenrahmen: Navigation, Mega-Menue, mobiles Menue, Footer.
+   Wird von jeder Seite geladen.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Navigation
+   -------------------------------------------------------------------------- */
+
+/* Unsichtbarer Messpunkt am Seitenanfang. Sobald er den Viewport verlaesst,
+   bekommt die Navigation ihren Hintergrund. Loest das ohne Scroll-Listener. */
+.nav-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  transition: background var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              backdrop-filter var(--dur) var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.is-stuck {
+  background: rgba(10, 10, 11, 0.72);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom-color: var(--line);
+}
+
+/* Waehrend das Mega-Menue offen ist, bleibt die Leiste deckend. */
+.nav.is-open {
+  background: var(--bg);
+  border-bottom-color: var(--line);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  height: 72px;
+}
+
+.nav__brand {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-right: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+/* Quadratische Marke als Platzhalter, bis ein echtes Logo existiert. */
+.nav__mark {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 6px;
+  background: var(--accent);
+  flex: none;
+  transition: transform var(--dur) var(--ease);
+}
+
+.nav__brand:hover .nav__mark { transform: rotate(45deg); }
+
+.nav__list {
+  display: none;
+  align-items: center;
+  gap: var(--s4);
+}
+
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.nav__link:hover,
+.nav__link[aria-expanded="true"],
+.nav__link.is-current { color: var(--text); }
+
+.nav__link.is-current::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.15rem;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+}
+
+.nav__caret {
+  width: 0.6rem;
+  height: 0.6rem;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.nav__link[aria-expanded="true"] .nav__caret { transform: rotate(180deg); }
+
+.nav__cta { display: none; }
+
+/* --------------------------------------------------------------------------
+   Mega-Menue (Desktop)
+   -------------------------------------------------------------------------- */
+
+.mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-menu);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--dur) var(--ease),
+              transform var(--dur) var(--ease),
+              visibility var(--dur);
+}
+
+.mega.is-open { visibility: visible; opacity: 1; transform: none; }
+
+.mega__grid {
+  display: grid;
+  gap: var(--s3);
+  padding-block: var(--s5) var(--s6);
+}
+
+@media (min-width: 768px) {
+  .mega__grid { grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+}
+
+.mega__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--bg-card);
+  transition: background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+
+.mega__item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.mega__item[aria-disabled="true"] {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.mega__title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.mega__desc { font-size: var(--fs-small); color: var(--text-dim); }
+
+.mega__tag {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0.25em 0.7em;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-pill);
+}
+
+/* --------------------------------------------------------------------------
+   Mobiles Menue
+   -------------------------------------------------------------------------- */
+
+.burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0 10px;
+  align-items: flex-end;
+}
+
+.burger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform var(--dur) var(--ease),
+              opacity var(--dur-fast) var(--ease),
+              width var(--dur) var(--ease);
+}
+
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 22px; }
+
+.burger span:nth-child(3) { width: 14px; }
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  background: var(--bg);
+  padding: 96px var(--gutter) var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+  overflow-y: auto;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease), visibility var(--dur);
+}
+
+.drawer.is-open { visibility: visible; opacity: 1; }
+
+.drawer__list { display: flex; flex-direction: column; }
+
+.drawer__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding: var(--s3) 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.drawer.is-open .drawer__link { opacity: 1; transform: none; }
+
+/* Gestaffelter Einlauf, damit die Liste in Lesereihenfolge erscheint */
+.drawer.is-open .drawer__link:nth-child(1) { transition-delay: 0.06s; }
+.drawer.is-open .drawer__link:nth-child(2) { transition-delay: 0.11s; }
+.drawer.is-open .drawer__link:nth-child(3) { transition-delay: 0.16s; }
+.drawer.is-open .drawer__link:nth-child(4) { transition-delay: 0.21s; }
+.drawer.is-open .drawer__link:nth-child(5) { transition-delay: 0.26s; }
+
+.drawer__index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--text-faint);
+  letter-spacing: 0.12em;
+}
+
+.drawer__foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding-top: var(--s5);
+}
+
+.drawer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--fs-small);
+  color: var(--text-dim);
+}
+
+@media (min-width: 1024px) {
+  .nav__list { display: flex; }
+  .nav__cta  { display: inline-flex; }
+  .burger    { display: none; }
+  .drawer    { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.footer {
+  position: relative;
+  border-top: 1px solid var(--line);
+  padding-top: clamp(3.5rem, 8vw, 6rem);
+  padding-bottom: var(--s5);
+  overflow: hidden;
+}
+
+/* Uebergrosser Schriftzug am unteren Rand, halb angeschnitten. */
+.footer__wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 22vw, 20rem);
+  font-weight: 700;
+  line-height: 0.78;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  user-select: none;
+  transition: -webkit-text-stroke-color var(--dur-slow) var(--ease);
+}
+
+.footer:hover .footer__wordmark { -webkit-text-stroke-color: var(--accent-line); }
+
+.footer__top {
+  display: grid;
+  gap: var(--s6);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .footer__top { grid-template-columns: 1.4fr 1fr 1fr; gap: var(--s5); }
+}
+
+@media (min-width: 1200px) {
+  .footer__top { grid-template-columns: 2fr 1fr 1fr 1.2fr; }
+}
+
+.footer__pitch { max-width: 34ch; }
+
+.footer__pitch .h3 { margin-bottom: var(--s3); }
+
+.footer__col-title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--s3);
+}
+
+.footer__links { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.footer__links a {
+  font-size: var(--fs-small);
+  color: var(--text-dim);
+  width: fit-content;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.footer__links a:hover { color: var(--accent); }
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3) var(--s5);
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--s4);
+  margin-top: var(--s5);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-small);
+  color: var(--text-faint);
+}
+
+.footer__legal { display: flex; flex-wrap: wrap; gap: var(--s4); }
+
+.footer__legal a:hover { color: var(--text); }
+
+.to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-small);
+  color: var(--text-dim);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.to-top:hover { color: var(--accent); }
+
+.to-top svg { width: 0.85rem; height: 0.85rem; transition: transform var(--dur-fast) var(--ease); }
+
+.to-top:hover svg { transform: translateY(-3px); }

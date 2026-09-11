@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rimci | Landingpages für Unternehmen</title>
+  <meta name="description" content="Rimci baut schnelle, klare Landingpages für Firmen, die online endlich professionell auftreten. Fester Preis, ein Ansprechpartner, in wenigen Tagen live." />
+  <meta name="theme-color" content="#0a0a0b" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/home.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <!-- Icon-Sprite. Einmal definiert, ueberall per <use> referenziert. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="i-arrow-ur" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 11.5 11.5 4.5" /><path d="M5.5 4.5h6v6" />
+    </symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 8h10" /><path d="M9 4l4 4-4 4" />
+    </symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 8H3" /><path d="M7 4 3 8l4 4" />
+    </symbol>
+    <symbol id="i-arrow-u" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 13V3" /><path d="M4 7l4-4 4 4" />
+    </symbol>
+    <symbol id="i-caret" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m4 6 4 4 4-4" />
+    </symbol>
+    <symbol id="i-tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 8.5 3.5 3.5L13 5" />
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M8 3v10" /><path d="M3 8h10" />
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <span class="nav-sentinel" aria-hidden="true"></span>
+
+  <!-- ====================================================================
+       Navigation
+       ==================================================================== -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="index.html">
+        <span class="nav__mark" aria-hidden="true"></span>
+        Rimci
+      </a>
+
+      <nav class="nav__list" aria-label="Hauptnavigation">
+        <a class="nav__link is-current" href="index.html" aria-current="page">Start</a>
+        <a class="nav__link" href="arbeiten.html">Arbeiten</a>
+        <button class="nav__link" type="button" data-mega-trigger aria-expanded="false" aria-controls="mega-leistungen">
+          Leistungen
+          <svg class="nav__caret" aria-hidden="true"><use href="#i-caret" /></svg>
+        </button>
+        <a class="nav__link" href="ueber-uns.html">Über uns</a>
+        <a class="nav__link" href="kontakt.html">Kontakt</a>
+      </nav>
+
+      <a class="btn btn--primary nav__cta" href="kontakt.html">
+        Projekt starten
+        <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+      </a>
+
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mega-Menü: zeigt ehrlich, was es heute gibt und was noch nicht -->
+    <div class="mega" id="mega-leistungen">
+      <div class="wrap">
+        <div class="mega__grid">
+          <a class="mega__item" href="leistungen.html">
+            <span class="mega__title">Landingpage</span>
+            <span class="mega__desc">Eine Seite, die erklärt, überzeugt und zur Anfrage führt. Unser einziges Paket.</span>
+          </a>
+          <span class="mega__item" aria-disabled="true">
+            <span class="mega__title">Mehrseitige Website</span>
+            <span class="mega__desc">Mehrere Unterseiten für Unternehmen mit größerem Angebot.</span>
+            <span class="mega__tag">In Vorbereitung</span>
+          </span>
+          <span class="mega__item" aria-disabled="true">
+            <span class="mega__title">Onlineshop</span>
+            <span class="mega__desc">Produkte verkaufen statt nur zeigen.</span>
+            <span class="mega__tag">In Vorbereitung</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <nav class="drawer__list" aria-label="Menü">
+      <a class="drawer__link" href="index.html" aria-current="page">Start <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="arbeiten.html">Arbeiten <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="leistungen.html">Leistungen <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="ueber-uns.html">Über uns <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+      <a class="drawer__link" href="kontakt.html">Kontakt <svg class="drawer__index" width="18" height="18" aria-hidden="true"><use href="#i-arrow-ur" /></svg></a>
+    </nav>
+    <div class="drawer__foot">
+      <div class="drawer__contact">
+        <a href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+        <a href="tel:+491234567890">+49 123 4567890</a>
+      </div>
+      <a class="btn btn--primary btn--lg" href="kontakt.html">
+        Projekt starten
+        <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+      </a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ==================================================================
+         1. Hero
+         ================================================================== -->
+    <section class="hero wrap" data-hero>
+      <div class="hero__head">
+        <h1 class="display hero__title">
+          <span class="line-mask"><span>Landingpages,</span></span>
+          <span class="line-mask"><span>die verkaufen.</span></span>
+        </h1>
+      </div>
+
+      <div class="hero__foot">
+        <div class="hero__pitch">
+          <p class="lead reveal">
+            Wir bauen schnelle, klare Landingpages für Firmen, die online endlich
+            professionell auftreten. In wenigen Tagen live.
+          </p>
+          <div class="hero__actions reveal">
+            <a class="btn btn--primary btn--lg" href="kontakt.html" data-magnetic="0.22">
+              Projekt starten
+              <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+            </a>
+            <a class="btn btn--ghost btn--lg" href="arbeiten.html">
+              Arbeiten ansehen
+              <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-r" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero__media reveal">
+          <div class="ph ph--16x9" data-ph="Platzhalter Bild" role="img" aria-label="Platz für ein Bild, das später eingesetzt wird"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         2. Was Sie bekommen. Keine Zahlen, nur Zusagen, die wir halten.
+         ================================================================== -->
+    <section class="section--tight wrap">
+      <ul class="facts">
+        <li class="facts__item reveal">
+          <span class="facts__key">Ein Ansprechpartner</span>
+          <span class="facts__val">Von der ersten Skizze bis zum Livegang dieselbe Person.</span>
+        </li>
+        <li class="facts__item reveal">
+          <span class="facts__key">Fester Preis</span>
+          <span class="facts__val">Vorab genannt. Keine Nachträge, keine Überraschung.</span>
+        </li>
+        <li class="facts__item reveal">
+          <span class="facts__key">Kurze Wege</span>
+          <span class="facts__val">Kein Projekt, das sich über Monate zieht.</span>
+        </li>
+        <li class="facts__item reveal">
+          <span class="facts__key">Kein Baukasten</span>
+          <span class="facts__val">Handgeschriebener Code statt Vorlage von der Stange.</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ==================================================================
+         3. Logo-Band. Einzige Laufschrift der Seite.
+         ================================================================== -->
+    <section class="clients" aria-label="Kunden">
+      <div class="clients__head">
+        <span class="faint u-small">Hier stehen später die Logos unserer Kunden.</span>
+      </div>
+      <div class="marquee">
+        <div class="marquee__track" data-marquee>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+          <span class="ph client-slot" data-ph="Logo"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         4. Arbeiten
+         ================================================================== -->
+    <section class="section wrap" id="arbeiten">
+      <div class="work-head">
+        <span class="label reveal">Ausgewählte Arbeiten</span>
+        <div class="work-head__row">
+          <h2 class="h2 reveal">Sechs Plätze,<br />die auf Ihr Projekt warten.</h2>
+          <a class="link-line reveal" href="arbeiten.html">
+            Alle Arbeiten
+            <svg width="14" height="14" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="work-grid">
+        <a class="work-card reveal" href="arbeiten.html">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <span class="work-card__name">Handwerk <svg aria-hidden="true"><use href="#i-arrow-ur" /></svg></span>
+            <span class="work-card__tags">Landingpage</span>
+          </div>
+        </a>
+        <a class="work-card reveal" href="arbeiten.html">
+          <div class="work-card__media"><span class="ph ph--4x5" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <span class="work-card__name">Gastronomie <svg aria-hidden="true"><use href="#i-arrow-ur" /></svg></span>
+            <span class="work-card__tags">Landingpage<br />Text</span>
+          </div>
+        </a>
+        <a class="work-card reveal" href="arbeiten.html">
+          <div class="work-card__media"><span class="ph ph--4x5" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <span class="work-card__name">Kanzlei <svg aria-hidden="true"><use href="#i-arrow-ur" /></svg></span>
+            <span class="work-card__tags">Landingpage</span>
+          </div>
+        </a>
+        <a class="work-card reveal" href="arbeiten.html">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <span class="work-card__name">Praxis <svg aria-hidden="true"><use href="#i-arrow-ur" /></svg></span>
+            <span class="work-card__tags">Landingpage<br />Terminformular</span>
+          </div>
+        </a>
+        <a class="work-card reveal" href="arbeiten.html">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <span class="work-card__name">Fitness <svg aria-hidden="true"><use href="#i-arrow-ur" /></svg></span>
+            <span class="work-card__tags">Landingpage</span>
+          </div>
+        </a>
+        <a class="work-card reveal" href="arbeiten.html">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <span class="work-card__name">Handel <svg aria-hidden="true"><use href="#i-arrow-ur" /></svg></span>
+            <span class="work-card__tags">Landingpage<br />SEO</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         5. Ablauf als Sticky-Stapel. Die Karten schieben sich
+            in der Reihenfolge übereinander, in der die Schritte passieren.
+         ================================================================== -->
+    <section class="flow wrap" id="ablauf">
+      <div class="flow__head">
+        <h2 class="h2 reveal">So läuft es ab.</h2>
+      </div>
+
+      <div class="flow__stack">
+        <article class="flow-step">
+          <span class="flow-step__no">01</span>
+          <div>
+            <h3 class="h3 flow-step__title">Gespräch</h3>
+            <p class="body-text">Wir hören zu, sehen uns Ihren Markt an und klären, was die Seite leisten soll.</p>
+          </div>
+          <ul class="flow-step__list">
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Kostenlos und unverbindlich</span></li>
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Rund 30 Minuten, am Telefon oder vor Ort</span></li>
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Danach kennen Sie den festen Preis</span></li>
+          </ul>
+        </article>
+
+        <article class="flow-step">
+          <span class="flow-step__no">02</span>
+          <div>
+            <h3 class="h3 flow-step__title">Entwurf</h3>
+            <p class="body-text">Sie sehen die fertige Seite, bevor sie online geht. Änderungen besprechen wir direkt.</p>
+          </div>
+          <ul class="flow-step__list">
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Struktur, Text und Gestaltung in einem Entwurf</span></li>
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Zwei Korrekturrunden sind eingerechnet</span></li>
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Sie geben frei, wir setzen um</span></li>
+          </ul>
+        </article>
+
+        <article class="flow-step">
+          <span class="flow-step__no">03</span>
+          <div>
+            <h3 class="h3 flow-step__title">Livegang</h3>
+            <p class="body-text">Wir stellen die Seite online, richten alles ein und übergeben sie Ihnen.</p>
+          </div>
+          <ul class="flow-step__list">
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Domain und Hosting eingerichtet</span></li>
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Kontaktformular getestet</span></li>
+            <li><svg aria-hidden="true"><use href="#i-tick" /></svg><span>Kurze Einweisung, damit Sie selbst kleine Dinge ändern können</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         6. Kundenstimmen. Bewusst leer, bis echte vorliegen.
+         ================================================================== -->
+    <section class="section voices" id="stimmen">
+      <div class="wrap">
+        <div class="voices__head">
+          <div>
+            <span class="label reveal">Kundenstimmen</span>
+            <h2 class="h2 reveal u-mt-3">Noch keine Bewertungen.<br />Mit Absicht.</h2>
+          </div>
+          <div class="voices__nav">
+            <button class="rail-btn" type="button" data-rail-prev aria-label="Vorherige Kundenstimme">
+              <svg aria-hidden="true"><use href="#i-arrow-l" /></svg>
+            </button>
+            <button class="rail-btn" type="button" data-rail-next aria-label="Nächste Kundenstimme">
+              <svg aria-hidden="true"><use href="#i-arrow-r" /></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="voices__rail" data-rail>
+          <blockquote class="voice">
+            <p class="voice__quote">„Platz für die erste echte Kundenstimme. Sie kommt hierhin, sobald das erste Projekt abgeschlossen ist."</p>
+            <footer class="voice__who">
+              <span class="ph ph--avatar" data-ph=""></span>
+              <span><span class="voice__name">Name folgt</span><br /><span class="voice__role">Firma, Branche</span></span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="voice">
+            <p class="voice__quote">„Hier steht später, wie ein Kunde die Zusammenarbeit erlebt hat. Wortwörtlich, ungekürzt."</p>
+            <footer class="voice__who">
+              <span class="ph ph--avatar" data-ph=""></span>
+              <span><span class="voice__name">Name folgt</span><br /><span class="voice__role">Firma, Branche</span></span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="voice">
+            <p class="voice__quote">„Dieser Platz bleibt frei, bis uns jemand wirklich etwas geschrieben hat."</p>
+            <footer class="voice__who">
+              <span class="ph ph--avatar" data-ph=""></span>
+              <span><span class="voice__name">Name folgt</span><br /><span class="voice__role">Firma, Branche</span></span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="voice">
+            <p class="voice__quote">„Erfundene Bewertungen merkt man. Deshalb steht hier vorerst nichts."</p>
+            <footer class="voice__who">
+              <span class="ph ph--avatar" data-ph=""></span>
+              <span><span class="voice__name">Name folgt</span><br /><span class="voice__role">Firma, Branche</span></span>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         7. Nachweise. Drei Plätze, heute noch leer.
+         ================================================================== -->
+    <section class="section wrap">
+      <div class="proof__head">
+        <h2 class="h2 reveal">Auszeichnungen und Nachweise</h2>
+        <p class="body-text reveal u-mt-3">
+          Drei Plätze für Auszeichnungen, Zertifikate oder Presse. Sie bleiben leer,
+          solange es nichts zu zeigen gibt.
+        </p>
+      </div>
+
+      <div class="proof__grid">
+        <div class="proof__slot reveal">
+          <span class="ph" data-ph="Platzhalter"></span>
+          <span class="proof__caption">Platz für eine Auszeichnung</span>
+        </div>
+        <div class="proof__slot reveal">
+          <span class="ph" data-ph="Platzhalter"></span>
+          <span class="proof__caption">Platz für ein Zertifikat</span>
+        </div>
+        <div class="proof__slot reveal">
+          <span class="ph" data-ph="Platzhalter"></span>
+          <span class="proof__caption">Platz für einen Pressebeitrag</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         Abschluss. Eine Aussage, ein Knopf.
+         ================================================================== -->
+    <section class="closer">
+      <div class="wrap closer__inner">
+        <h2 class="h1 closer__title reveal">Reden wir über Ihre Seite.</h2>
+        <div class="reveal">
+          <a class="btn btn--primary btn--lg" href="kontakt.html" data-magnetic="0.25">
+            Projekt starten
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+        <p class="closer__mail reveal">
+          Oder direkt: <a class="link-line" href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       Footer
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__top">
+        <div class="footer__pitch">
+          <p class="h3">Landingpages für Firmen, die online endlich professionell auftreten.</p>
+          <a class="btn btn--primary" href="kontakt.html">
+            Projekt starten
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+          </a>
+        </div>
+
+        <nav class="footer__col" aria-label="Seiten">
+          <p class="footer__col-title">Seiten</p>
+          <div class="footer__links">
+            <a href="index.html">Start</a>
+            <a href="arbeiten.html">Arbeiten</a>
+            <a href="leistungen.html">Leistungen</a>
+            <a href="ueber-uns.html">Über uns</a>
+            <a href="kontakt.html">Kontakt</a>
+          </div>
+        </nav>
+
+        <div class="footer__col">
+          <p class="footer__col-title">Leistungen</p>
+          <div class="footer__links">
+            <a href="leistungen.html">Landingpage</a>
+            <span class="faint u-small">Mehrseitige Website, bald</span>
+            <span class="faint u-small">Onlineshop, bald</span>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-title">Kontakt</p>
+          <div class="footer__links">
+            <a href="mailto:hallo@rimci.de">hallo@rimci.de</a>
+            <a href="tel:+491234567890">+49 123 4567890</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer__wordmark" aria-hidden="true">Rimci</p>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 Rimci</span>
+        <nav class="footer__legal" aria-label="Rechtliches">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </nav>
+        <a class="to-top" href="#main">
+          Nach oben
+          <svg aria-hidden="true"><use href="#i-arrow-u" /></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

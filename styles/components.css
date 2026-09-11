@@ -1,0 +1,259 @@
+/* ==========================================================================
+   RIMCI - components.css
+   Wiederverwendete Bausteine, die mehrere Seiten teilen:
+   Seitenkopf, Abschnittskopf, Zusagen-Zeile, Arbeiten-Raster, Abschluss-CTA,
+   Hilfsklassen.
+   ========================================================================== */
+
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.u-small { font-size: var(--fs-small); }
+.u-mt-3  { margin-top: var(--s3); }
+
+/* Kleine Gruppenueberschrift innerhalb eines Blocks (keine Sektions-Eyebrow) */
+.group-title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--s3);
+}
+
+.tag {
+  align-self: flex-start;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0.3em 0.8em;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-pill);
+}
+
+/* --------------------------------------------------------------------------
+   Seitenkopf fuer Unterseiten
+   -------------------------------------------------------------------------- */
+
+.page-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s4);
+  padding-top: calc(72px + clamp(2.5rem, 6vw, 4.5rem));
+  padding-bottom: clamp(3.5rem, 8vw, 6.5rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 8.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.page-hero__lead { margin-top: var(--s2); }
+
+.page-hero--compact { padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+.page-hero--compact .page-hero__title { font-size: clamp(2.75rem, 8vw, 6rem); }
+
+.page-hero + .section { padding-top: clamp(3rem, 6vw, 5.5rem); }
+
+/* Ueberschrift plus optionaler Text, immer untereinander */
+.sec-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  max-width: 56ch;
+  margin-bottom: var(--s6);
+}
+
+/* --------------------------------------------------------------------------
+   Zusagen-Zeile
+   -------------------------------------------------------------------------- */
+
+/* Flache Kennzahl-Zeile unter dem Hero, kein Kartencontainer. */
+.facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s4) var(--s5);
+  border-top: 1px solid var(--line);
+  padding-top: var(--s5);
+}
+
+@media (min-width: 480px) {
+  .facts { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .facts { grid-template-columns: repeat(4, 1fr); }
+}
+
+.facts__item { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.facts__key {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.facts__val { font-size: var(--fs-small); color: var(--text-dim); }
+
+
+/* --------------------------------------------------------------------------
+   3. Arbeiten-Raster
+   Zwoelfspaltiges Raster mit wechselnden Breiten, damit keine Reihe
+   wie die vorherige liest.
+   -------------------------------------------------------------------------- */
+
+.work-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  margin-bottom: var(--s6);
+}
+
+.work-head__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s4);
+}
+
+.work-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+@media (min-width: 860px) {
+  .work-grid { grid-template-columns: repeat(12, 1fr); }
+  .work-card:nth-child(1) { grid-column: span 7; }
+  .work-card:nth-child(2) { grid-column: span 5; }
+  .work-card:nth-child(3) { grid-column: span 5; }
+  .work-card:nth-child(4) { grid-column: span 7; }
+  .work-card:nth-child(5) { grid-column: span 6; }
+  .work-card:nth-child(6) { grid-column: span 6; }
+
+  /* Die zweite Karte jeder Reihe sitzt tiefer. Bricht die Rasterkante auf. */
+  .work-card:nth-child(2),
+  .work-card:nth-child(4) { margin-top: clamp(1.5rem, 4vw, 4rem); }
+}
+
+.work-card { display: block; }
+
+.work-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-card);
+  border: 1px solid var(--line);
+  transition: border-color var(--dur) var(--ease);
+}
+
+.work-card:hover .work-card__media { border-color: var(--line-strong); }
+
+/* Der Platzhalter selbst zoomt leicht, damit die Karte auf Hover antwortet. */
+.work-card__media .ph {
+  border: 0;
+  border-radius: 0;
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.work-card:hover .work-card__media .ph { transform: scale(1.035); }
+
+.work-card__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding-top: var(--s3);
+}
+
+.work-card__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.7vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.work-card__name svg {
+  width: 0.8em;
+  height: 0.8em;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.work-card:hover .work-card__name svg { opacity: 1; transform: none; }
+
+.work-card__tags {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-align: right;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. Abschluss-CTA
+   Eine Aussage, ein Knopf. Kein zweites Angebot daneben.
+   -------------------------------------------------------------------------- */
+
+.closer {
+  position: relative;
+  padding-block: clamp(5rem, 14vw, 10rem);
+  text-align: center;
+  overflow: hidden;
+}
+
+.closer::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(70rem, 120vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent-dim), transparent 62%);
+  pointer-events: none;
+}
+
+.closer__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s5);
+}
+
+.closer__title { max-width: 22ch; }
+
+.closer__mail {
+  font-size: var(--fs-small);
+  color: var(--text-dim);
+}
+
+.closer__mail a { color: var(--text); }

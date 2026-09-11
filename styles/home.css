@@ -1,0 +1,305 @@
+/* ==========================================================================
+   RIMCI - home.css
+   Nur Startseite: Hero, Logo-Band, Arbeiten-Raster, Kundenstimmen,
+   Auszeichnungen, Ablauf-Stapel, Abschluss-CTA.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Hero
+   Asymmetrisch, linksbuendig. Ueberschrift zweizeilig, laeuft per Maske ein.
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s6);
+  padding-top: calc(72px + clamp(1.5rem, 5vh, 3.5rem));
+  padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  isolation: isolate;
+}
+
+/* Sehr weiches Licht hinter der Ueberschrift, hebt die obere Haelfte an.
+   Neutral gehalten, kein farbiges Leuchten. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -20% 0 auto 0;       /* seitlich buendig, sonst Querscroll auf iOS */
+  height: 80%;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 70% 60% at 35% 35%,
+    rgba(255, 255, 255, 0.045),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+
+.hero__title { margin-bottom: 0; }
+
+/* Die zweite Zeile ist eingerueckt, damit der Block nicht als Rechteck liest. */
+.hero__title .line-mask:nth-child(2) > span { padding-left: clamp(0rem, 8vw, 9rem); }
+
+.hero__foot {
+  display: grid;
+  gap: var(--s5);
+  align-items: end;
+}
+
+@media (min-width: 900px) {
+  .hero__foot {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--s6);
+  }
+}
+
+.hero__pitch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  align-items: flex-start;
+}
+
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+.hero__media { width: 100%; }
+
+.hero__media .ph { aspect-ratio: 16 / 9; }
+
+@media (min-width: 900px) {
+  .hero__media .ph { aspect-ratio: 21 / 9; }
+}
+
+/* --------------------------------------------------------------------------
+   2. Logo-Band
+   Einzige Laufschrift der Seite. Zeigt, fuer wie viele Branchen gebaut wird,
+   sobald echte Kundenlogos vorliegen.
+   -------------------------------------------------------------------------- */
+
+.clients {
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+  border-block: 1px solid var(--line);
+  background: var(--bg-raised);
+  overflow: hidden;
+}
+
+.clients__head {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--s5);
+}
+
+.marquee {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  /* Kanten ausblenden, damit die Schleife nicht abrupt abschneidet */
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  flex: none;
+  gap: var(--s4);
+  padding-right: var(--s4);
+  animation: marquee-run 38s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+@keyframes marquee-run {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+.client-slot {
+  flex: none;
+  width: clamp(9rem, 16vw, 13rem);
+  height: clamp(3.75rem, 6vw, 4.75rem);
+  border-radius: var(--r-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .marquee__track { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Ablauf
+   Echter Sticky-Stapel: jede Karte haelt oben an, die naechste schiebt
+   darueber. Erzaehlt die drei Schritte in der Reihenfolge, in der sie
+   passieren.
+   -------------------------------------------------------------------------- */
+
+.flow { padding-block: var(--section-y) 0; }
+
+.flow__head { margin-bottom: var(--s6); }
+
+.flow__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding-bottom: var(--section-y);
+}
+
+.flow-step {
+  position: sticky;
+  top: calc(72px + var(--s4));
+  display: grid;
+  gap: var(--s4);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  /* Deckend, damit die vorherige Karte sauber verdeckt wird */
+  background: var(--bg-card);
+}
+
+@media (min-width: 860px) {
+  .flow-step {
+    grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s5);
+    align-items: start;
+  }
+}
+
+.flow-step__no {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.flow-step__title { margin-bottom: var(--s2); }
+
+.flow-step__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: var(--fs-small);
+  color: var(--text-dim);
+}
+
+.flow-step__list li {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  gap: 0.5rem;
+}
+
+.flow-step__list svg { width: 0.85rem; height: 0.85rem; margin-top: 0.38rem; color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   5. Kundenstimmen
+   Waagerechte Leiste mit Schnappkanten. Vier Karten, jede bewusst kurz.
+   -------------------------------------------------------------------------- */
+
+.voices { background: var(--bg-raised); border-block: 1px solid var(--line); }
+
+.voices__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-bottom: var(--s6);
+}
+
+.voices__nav { display: flex; gap: var(--s2); }
+
+.rail-btn {
+  display: grid;
+  place-items: center;
+  width: 2.875rem;
+  height: 2.875rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  color: var(--text);
+  transition: background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              opacity var(--dur-fast) var(--ease);
+}
+
+.rail-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--text-on-accent); }
+
+.rail-btn:disabled { opacity: 0.3; pointer-events: none; }
+
+.rail-btn svg { width: 1rem; height: 1rem; }
+
+.voices__rail {
+  display: flex;
+  gap: var(--s4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* Einrastpunkt liegt an der Rasterkante, nicht am Bildschirmrand */
+  scroll-padding-inline: var(--gutter);
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* Volle Breite nutzen, erste Karte bleibt an der Rasterkante */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  padding-bottom: var(--s2);
+}
+
+.voices__rail::-webkit-scrollbar { display: none; }
+
+.voice {
+  flex: none;
+  width: min(23rem, 82vw);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--bg-card);
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.voice:hover { border-color: var(--accent-line); background: var(--bg-card-hover); }
+
+.voice__quote { font-size: 1.0625rem; line-height: 1.5; letter-spacing: -0.01em; }
+
+.voice__who {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-top: auto;
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+}
+
+.voice__name { font-size: var(--fs-small); font-weight: 600; }
+
+.voice__role { font-size: var(--fs-small); color: var(--text-faint); }
+
+/* --------------------------------------------------------------------------
+   6. Auszeichnungen
+   Platzhalter-Leiste. Hier stehen spaeter echte Nachweise, keine erfundenen.
+   -------------------------------------------------------------------------- */
+
+.proof__head { margin-bottom: var(--s6); max-width: 52ch; }
+
+.proof__grid {
+  display: grid;
+  gap: var(--s4);
+  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+}
+
+.proof__slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+.proof__slot .ph { aspect-ratio: 3 / 2; }
+
+.proof__caption { font-size: var(--fs-small); color: var(--text-dim); }
