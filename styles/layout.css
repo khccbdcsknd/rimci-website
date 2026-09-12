@@ -399,3 +399,21 @@
 .to-top svg { width: 0.85rem; height: 0.85rem; transition: transform var(--dur-fast) var(--ease); }
 
 .to-top:hover svg { transform: translateY(-3px); }
+
+/* --------------------------------------------------------------------------
+   Flache Bildschirme
+   Steht am Dateiende, weil Media Queries die Spezifitaet nicht erhoehen.
+   Vor den Grundregeln der Menuelinks haetten diese Werte keine Wirkung.
+   -------------------------------------------------------------------------- */
+
+@media (max-height: 720px) {
+  .drawer { padding-top: 76px; gap: 1rem; }
+  .drawer__link { font-size: clamp(1.4rem, 6vw, 1.9rem); padding: 0.55rem 0; }
+  .drawer__foot { padding-top: 1rem; }
+}
+
+@media (max-height: 660px) {
+  .drawer { padding-top: 58px; gap: 0.7rem; }
+  .drawer__link { font-size: clamp(1.15rem, 5vw, 1.5rem); padding: 0.35rem 0; }
+  .drawer__foot { padding-top: 0.7rem; }
+}
