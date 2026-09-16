@@ -134,6 +134,16 @@
      damit eine Reihe in Lesereihenfolge erscheint statt gleichzeitig.
      ------------------------------------------------------------------------ */
 
+  /* Bilder in Platzhaltern: sobald geladen, Beschriftung ausblenden */
+  function initShots() {
+    var bilder = document.querySelectorAll(".ph img");
+    Array.prototype.forEach.call(bilder, function (img) {
+      function zeigen() { img.parentNode.classList.add("is-filled"); }
+      if (img.complete && img.naturalWidth > 0) zeigen();
+      img.addEventListener("load", zeigen);
+    });
+  }
+
   function initReveal() {
     var targets = document.querySelectorAll(".reveal, .line-mask");
     if (!targets.length) return;
@@ -282,6 +292,7 @@
     initNavBackdrop();
     initMegaMenu();
     initDrawer();
+    initShots();
     initReveal();
     initHeroIntro();
     initMarquee();
