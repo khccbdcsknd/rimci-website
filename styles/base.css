@@ -316,6 +316,8 @@ button { cursor: pointer; }
   backdrop-filter: blur(4px);
 }
 
+.work-card__link { display: block; }
+
 .ph img {
   display: none;
   position: absolute;
