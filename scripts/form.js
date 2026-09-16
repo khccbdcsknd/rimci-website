@@ -19,7 +19,7 @@
   var submit = form.querySelector('[type="submit"]');
   var submitLabel = submit ? submit.querySelector("[data-label]") : null;
   var endpoint = (form.getAttribute("data-endpoint") || "").trim();
-  var MAIL = "hallo@rimci.de";
+  var MAIL = "nikorimacbusiness@gmail.com";
 
   var missing = {
     name: "Bitte geben Sie Ihren Namen an.",
