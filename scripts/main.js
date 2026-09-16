@@ -138,9 +138,9 @@
   function initShots() {
     var bilder = document.querySelectorAll(".ph img");
     Array.prototype.forEach.call(bilder, function (img) {
-      function zeigen() { img.parentNode.classList.add("is-filled"); }
-      if (img.complete && img.naturalWidth > 0) zeigen();
-      img.addEventListener("load", zeigen);
+      function fehlt() { img.parentNode.classList.add("is-missing"); }
+      if (img.complete && img.naturalWidth === 0) fehlt();
+      img.addEventListener("error", fehlt);
     });
   }
 
