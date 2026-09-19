@@ -56,9 +56,6 @@
   /* Jede zweite sichtbare Karte sitzt tiefer. Wird per Skript nach jedem
      Filterwechsel neu vergeben, damit der Versatz nicht durcheinander kommt. */
   .work-grid--index .work-card.is-offset { margin-top: clamp(2rem, 7vw, 6.5rem); }
-
-  /* Einzelnes Projekt ueber beide Spalten */
-  .work-grid--index .work-card:only-child { grid-column: 1 / -1; }
 }
 
 .work-card.is-entering {

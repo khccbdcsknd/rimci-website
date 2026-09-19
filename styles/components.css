@@ -153,10 +153,6 @@
   .work-card:nth-child(5) { grid-column: span 6; }
   .work-card:nth-child(6) { grid-column: span 6; }
 
-  /* Ist nur ein Projekt da, laeuft es ueber die volle Breite,
-     damit rechts keine leere Spalte stehen bleibt. */
-  .work-card:only-child { grid-column: 1 / -1; }
-
   /* Die zweite Karte jeder Reihe sitzt tiefer. Bricht die Rasterkante auf. */
   .work-card:nth-child(2),
   .work-card:nth-child(4) { margin-top: clamp(1.5rem, 4vw, 4rem); }

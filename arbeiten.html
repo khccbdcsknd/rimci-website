@@ -130,25 +130,87 @@
         <span class="line-mask"><span>Platz für</span></span>
         <span class="line-mask"><span>Ihr Projekt.</span></span>
       </h1>
-      <p class="lead page-hero__lead reveal">Hier landen die Seiten, die wir bauen. Den Anfang macht ein Heizungs- und Sanitärbetrieb aus Frankfurt.</p>
+      <p class="lead page-hero__lead reveal">Hier landen die Seiten, die wir bauen. Bis dahin zeigen die Platzhalter, für welche Branchen wir arbeiten.</p>
     </section>
 
     <section class="section wrap">
+      <div class="filters" data-filters role="group" aria-label="Nach Branche filtern">
+        <button class="filter" type="button" data-filter="alle" aria-pressed="true">Alle <span class="filter__count"></span></button>
+        <button class="filter" type="button" data-filter="handwerk" aria-pressed="false">Handwerk <span class="filter__count"></span></button>
+        <button class="filter" type="button" data-filter="gastronomie" aria-pressed="false">Gastronomie <span class="filter__count"></span></button>
+        <button class="filter" type="button" data-filter="gesundheit" aria-pressed="false">Gesundheit <span class="filter__count"></span></button>
+        <button class="filter" type="button" data-filter="dienstleistung" aria-pressed="false">Dienstleistung <span class="filter__count"></span></button>
+        <button class="filter" type="button" data-filter="handel" aria-pressed="false">Handel <span class="filter__count"></span></button>
+      </div>
+      <p class="sr-only" aria-live="polite" data-filter-status></p>
 
       <div class="work-grid work-grid--index" data-work-index>
         <article class="work-card reveal" data-cat="handwerk">
-          <div class="work-card__media">
-            <a class="work-card__link" href="https://drop-77e47bc3-735.tundra-vanilla.workers.dev" target="_blank" rel="noopener" aria-label="Website der Wärmebauer GmbH in neuem Tab öffnen">
-              <span class="ph ph--16x9 ph--bild" data-ph="Platzhalter"><img src="assets/arbeit-handwerk.jpg" alt="Landingpage der Wärmebauer GmbH aus Frankfurt am Main" decoding="async" /></span>
-            </a>
-          </div>
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
           <div class="work-card__meta">
-            <h2 class="work-card__name">Die Wärmebauer GmbH</h2>
+            <h2 class="work-card__name">Tischlerei</h2>
             <span class="work-card__tags">Handwerk<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="gastronomie">
+          <div class="work-card__media"><span class="ph ph--4x5" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Café</h2>
+            <span class="work-card__tags">Gastronomie<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="gesundheit">
+          <div class="work-card__media"><span class="ph ph--4x5" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Physiotherapie</h2>
+            <span class="work-card__tags">Gesundheit<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="handwerk">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Elektrobetrieb</h2>
+            <span class="work-card__tags">Handwerk<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="dienstleistung">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Steuerberatung</h2>
+            <span class="work-card__tags">Dienstleistung<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="handel">
+          <div class="work-card__media"><span class="ph ph--4x5" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Fahrradladen</h2>
+            <span class="work-card__tags">Handel<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="gesundheit">
+          <div class="work-card__media"><span class="ph ph--16x9" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Zahnarztpraxis</h2>
+            <span class="work-card__tags">Gesundheit<br />Landingpage</span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="dienstleistung">
+          <div class="work-card__media"><span class="ph ph--4x5" data-ph="Platzhalter"></span></div>
+          <div class="work-card__meta">
+            <h2 class="work-card__name">Gebäudereinigung</h2>
+            <span class="work-card__tags">Dienstleistung<br />Landingpage</span>
           </div>
         </article>
       </div>
 
+      <div class="empty" data-empty hidden>
+        <p class="h3">In dieser Branche ist noch nichts online.</p>
+        <p class="body-text">Vielleicht wird Ihre Seite die erste.</p>
+        <a class="btn btn--primary" href="kontakt.html">
+          Projekt starten
+          <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow-ur" /></svg>
+        </a>
+      </div>
     </section>
 
     <!-- ==================================================================
@@ -231,5 +293,6 @@
   </footer>
 
   <script src="scripts/main.js"></script>
+  <script src="scripts/arbeiten.js"></script>
 </body>
 </html>
