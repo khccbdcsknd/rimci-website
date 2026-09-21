@@ -200,7 +200,7 @@
   padding-top: 0.6rem;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
 }
 
 .work-card__link a {
