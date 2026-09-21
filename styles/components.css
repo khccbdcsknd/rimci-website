@@ -179,6 +179,39 @@
 
 .work-card:hover .work-card__media .ph { transform: scale(1.035); }
 
+/* Echte Arbeitsbilder sitzen im selben Rahmen und folgen derselben Hover-Geste
+   wie die Platzhalter, damit gemischte Reihen ruhig bleiben. */
+.work-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.work-shot--4x5 { aspect-ratio: 4 / 5; }
+.work-shot--16x9 { aspect-ratio: 16 / 9; }
+
+.work-card:hover .work-shot { transform: scale(1.035); }
+
+/* Verweis auf die zugehörige Beispielseite, direkt unter der Karte. */
+.work-card__link {
+  margin: 0;
+  padding-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+}
+
+.work-card__link a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+.work-card__link a:hover { color: var(--text); border-bottom-color: var(--text); }
+
 .work-card__meta {
   display: flex;
   align-items: baseline;

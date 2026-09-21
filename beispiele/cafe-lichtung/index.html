@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Café Lichtung | Beispielprojekt von Rimci</title>
+<meta name="description" content="Beispielprojekt: Landingpage für ein erfundenes Café mit Backstube. Frühstück, Mittagstisch, Kuchen aus eigener Herstellung." />
+<meta name="robots" content="noindex, nofollow" />
+
+<style>
+  /* ==========================================================================
+     Beispielprojekt Café Lichtung, zweite Fassung
+     Erfundener Betrieb, erfundene Kontaktdaten. Eine Datei, keine externen
+     Ressourcen.
+
+     Gestaltung bewusst gegen die anderen Uebungsseiten gesetzt:
+     dunkles Braun als Grund statt Hell, mittige Satzachse statt linksbuendig,
+     harte Kanten statt runder Pillen, Baender im Wechsel Braun und Beige.
+     ========================================================================== */
+
+  :root {
+    --dunkel:  #34251b;
+    --mittel:  #4a3529;
+    --tief:    #27190f;
+    --beige:   #e8dac3;
+    --beige-h: #f4ecdf;
+    --braun:   #5c4534;
+    --braun-2: #7d6248;
+    --kupfer:  #a9754a;
+
+    --breite: 1060px;
+    --eng: 720px;
+    --rand: 20px;
+
+    --s1: 0.5rem;
+    --s2: 0.9rem;
+    --s3: 1.4rem;
+    --s4: 2.2rem;
+    --s5: 3.4rem;
+    --s6: 5rem;
+    --s7: 7rem;
+
+    --schrift: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --weich: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--dunkel);
+    color: var(--beige);
+    font-family: var(--schrift);
+    font-size: 17.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  a { color: inherit; }
+
+  .bahn { width: 100%; max-width: var(--breite); margin: 0 auto; padding: 0 var(--rand); }
+  .bahn--eng { max-width: var(--eng); }
+  .mitte { text-align: center; }
+
+  .label {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--kupfer);
+  }
+
+  /* --------------------------------------------------------------------------
+     Hinweis auf das Beispiel
+     -------------------------------------------------------------------------- */
+
+  .merke {
+    background: var(--tief);
+    color: var(--beige);
+    font-size: 13px;
+    text-align: center;
+    padding: 9px var(--rand);
+    border-bottom: 1px solid rgba(232,218,195,0.14);
+  }
+  .merke strong { color: #fff; }
+
+  /* --------------------------------------------------------------------------
+     Kopf
+     -------------------------------------------------------------------------- */
+
+  .kopf { position: sticky; top: 0; z-index: 40; background: var(--dunkel); border-bottom: 1px solid rgba(232,218,195,0.16); }
+  .kopf__in { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); min-height: 72px; }
+
+  .marke { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
+  .marke__zeichen { width: 34px; height: 34px; flex: none; display: block; }
+  .marke__text { display: flex; flex-direction: column; line-height: 1.15; }
+  .marke__name { font-weight: 800; letter-spacing: -0.02em; font-size: 17px; }
+  .marke__zusatz { font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,218,195,0.6); }
+
+  .kopf__nav { display: none; gap: var(--s4); }
+  .kopf__nav a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; color: rgba(232,218,195,0.78);
+    border-bottom: 1px solid transparent;
+  }
+  .kopf__nav a:hover { color: var(--beige); border-bottom-color: var(--kupfer); }
+
+  .knopf {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 48px; padding: 0 26px;
+    border: 1px solid var(--beige); border-radius: 0;
+    font: inherit; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background 150ms var(--weich), color 150ms var(--weich), border-color 150ms var(--weich);
+  }
+  .knopf--voll { background: var(--beige); color: var(--dunkel); }
+  .knopf--voll:hover { background: #fff; border-color: #fff; }
+  .knopf--leer { background: transparent; color: var(--beige); }
+  .knopf--leer:hover { background: rgba(232,218,195,0.12); }
+  .knopf--dunkel { background: var(--dunkel); color: var(--beige); border-color: var(--dunkel); }
+  .knopf--dunkel:hover { background: var(--tief); border-color: var(--tief); }
+  .knopf--rand-dunkel { background: transparent; color: var(--braun); border-color: var(--braun); }
+  .knopf--rand-dunkel:hover { background: var(--braun); color: var(--beige-h); }
+  .kopf .knopf { min-height: 44px; padding: 0 20px; }
+
+  /* --------------------------------------------------------------------------
+     Baender
+     -------------------------------------------------------------------------- */
+
+  .band { padding: var(--s6) 0; }
+  .band--beige { background: var(--beige); color: var(--braun); }
+  .band--beige h2, .band--beige h3 { color: var(--dunkel); }
+  .band--hell { background: var(--beige-h); color: var(--braun); }
+  .band--hell h2, .band--hell h3 { color: var(--dunkel); }
+  .band--tief { background: var(--tief); }
+
+  .kopfzeile { margin-bottom: var(--s5); }
+  .kopfzeile__titel { font-size: clamp(1.9rem, 6.4vw, 3rem); margin: var(--s3) 0 var(--s3); }
+  .kopfzeile__text { color: rgba(232,218,195,0.76); max-width: 50ch; margin: 0 auto; }
+  .band--beige .kopfzeile__text, .band--hell .kopfzeile__text { color: var(--braun); }
+
+  .strich { width: 56px; height: 2px; background: var(--kupfer); margin: 0 auto var(--s3); }
+
+  /* --------------------------------------------------------------------------
+     Aufmacher
+     -------------------------------------------------------------------------- */
+
+  .auf { padding: var(--s7) 0 var(--s6); }
+  .auf__titel { font-size: clamp(2.7rem, 11vw, 5.6rem); margin: var(--s3) 0 var(--s3); }
+  .auf__text { font-size: clamp(1.05rem, 3.6vw, 1.2rem); color: rgba(232,218,195,0.78); max-width: 42ch; margin: 0 auto var(--s4); }
+  .auf__knoepfe { display: flex; flex-wrap: wrap; gap: var(--s2); justify-content: center; }
+
+  .status {
+    display: inline-block;
+    border-top: 1px solid rgba(232,218,195,0.3);
+    border-bottom: 1px solid rgba(232,218,195,0.3);
+    padding: 10px 0;
+    margin-top: var(--s5);
+    font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(232,218,195,0.82);
+  }
+
+  /* Bildflaeche */
+  .flaeche {
+    position: relative; overflow: hidden; margin: 0;
+    border-radius: 0;
+    border: 1px solid rgba(232,218,195,0.22);
+    background: var(--mittel);
+  }
+  .band--beige .flaeche, .band--hell .flaeche { border-color: rgba(92,69,52,0.26); background: var(--beige-h); }
+  .flaeche--quer { aspect-ratio: 16 / 9; }
+  .flaeche img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+  .flaeche__zeichnung { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .flaeche figcaption { display: none; }
+
+  /* --------------------------------------------------------------------------
+     Die Karte
+     -------------------------------------------------------------------------- */
+
+  .karte { border-top: 2px solid var(--braun); }
+  .karte__posten {
+    display: grid; grid-template-columns: 1fr; gap: 4px;
+    padding: var(--s4) 0;
+    border-bottom: 1px solid rgba(92,69,52,0.24);
+    text-align: center;
+  }
+  .karte__zeit { font-size: 11.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--kupfer); }
+  .karte__name { font-size: clamp(1.4rem, 5vw, 1.9rem); font-weight: 800; letter-spacing: -0.03em; }
+  .karte__text { color: var(--braun); max-width: 46ch; margin: 0 auto; }
+
+  /* --------------------------------------------------------------------------
+     Zeiten und Anschrift
+     -------------------------------------------------------------------------- */
+
+  .tafel { border-top: 2px solid rgba(232,218,195,0.3); }
+  .tafel__reihe {
+    display: grid; grid-template-columns: 1fr; gap: 2px;
+    padding: var(--s3) 0;
+    border-bottom: 1px solid rgba(232,218,195,0.18);
+    text-align: center;
+  }
+  .tafel__k { font-size: 11.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,218,195,0.6); }
+  .tafel__v { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+  .tafel__v a { text-decoration: none; display: inline-block; min-height: 44px; line-height: 44px; }
+  .tafel__zusatz { font-size: 15px; color: rgba(232,218,195,0.62); }
+
+  /* --------------------------------------------------------------------------
+     Formular
+     -------------------------------------------------------------------------- */
+
+  .form { display: grid; gap: var(--s3); text-align: left; margin-top: var(--s5); }
+  .reihe { display: grid; gap: var(--s3); }
+  .feld { display: grid; gap: 6px; }
+  .feld label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,218,195,0.72); }
+  .feld input, .feld textarea, .feld select {
+    font: inherit; font-size: 16px; color: var(--beige);
+    background: var(--mittel); border: 1px solid rgba(232,218,195,0.26); border-radius: 0;
+    padding: 13px 15px; min-height: 50px; width: 100%;
+  }
+  .feld select {
+    -webkit-appearance: none; appearance: none; height: 50px; padding-right: 42px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8dac3' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 17px 17px;
+  }
+  .feld textarea { min-height: 118px; resize: vertical; }
+  .feld input::placeholder, .feld textarea::placeholder { color: rgba(232,218,195,0.4); }
+  .feld input:focus, .feld textarea:focus, .feld select:focus { outline: none; border-color: var(--kupfer); }
+  .feld.mangel input, .feld.mangel textarea, .feld.mangel select { border-color: #e0876f; }
+  .feld__mangel { font-size: 13px; color: #e0876f; }
+
+  .koeder { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .zustimmung { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; }
+  .zustimmung input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--kupfer); }
+  .zustimmung span { font-size: 14.5px; line-height: 1.55; color: rgba(232,218,195,0.76); }
+  .zustimmung a { color: var(--beige); }
+  .zustimmung.mangel span { color: #e0876f; }
+
+  .hinweis { font-size: 13.5px; color: rgba(232,218,195,0.55); }
+  .meldung { font-size: 15px; padding: 13px 16px; display: none; border: 1px solid; }
+  .meldung.an { display: block; }
+  .meldung--gut { background: rgba(169,117,74,0.16); border-color: rgba(169,117,74,0.55); }
+  .meldung--schlecht { background: rgba(224,135,111,0.12); border-color: rgba(224,135,111,0.5); }
+  .knopf[disabled] { opacity: 0.6; cursor: default; }
+
+  /* --------------------------------------------------------------------------
+     Fuss
+     -------------------------------------------------------------------------- */
+
+  .fuss { background: var(--tief); color: rgba(232,218,195,0.6); padding: var(--s5) 0; font-size: 14px; }
+  .fuss__in { display: grid; gap: var(--s3); }
+  .fuss__links { display: flex; flex-wrap: wrap; gap: var(--s3); justify-content: center; }
+  .fuss__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+  .fuss__links a:hover { color: var(--beige); }
+  .fuss__demo {
+    margin-top: var(--s3);
+    border: 1px dashed rgba(232,218,195,0.28);
+    padding: 12px 16px; font-size: 13px;
+  }
+
+  .auftritt { opacity: 0; transform: translateY(14px); transition: opacity 600ms var(--weich), transform 600ms var(--weich); }
+  .auftritt.da { opacity: 1; transform: none; }
+
+  :focus-visible { outline: 3px solid var(--kupfer); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .auftritt { opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (min-width: 700px) {
+    :root { --rand: 32px; }
+    .karte__posten { grid-template-columns: 180px 1fr; gap: var(--s4); text-align: left; align-items: baseline; }
+    .karte__zeit { grid-row: 1; }
+    .karte__name { grid-column: 2; grid-row: 1; }
+    .karte__text { grid-column: 2; margin: 0; }
+    .tafel__reihe { grid-template-columns: 200px 1fr; gap: var(--s4); text-align: left; align-items: baseline; }
+    .tafel__k { grid-row: 1; }
+    .tafel__v { grid-column: 2; grid-row: 1; }
+    .tafel__zusatz { grid-column: 2; }
+    .reihe--zwei { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 960px) {
+    :root { --rand: 40px; }
+    body { font-size: 18px; }
+    .kopf__nav { display: flex; }
+    .band { padding: var(--s7) 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<p class="merke">
+  <strong>Beispielprojekt.</strong> Erfundener Betrieb, erfundene Kontaktdaten. Gebaut von Rimci als Arbeitsprobe.
+</p>
+
+<header class="kopf">
+  <div class="bahn kopf__in">
+    <a class="marke" href="#oben">
+      <svg class="marke__zeichen" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" fill="#e8dac3" />
+        <path d="M11 14h14v9a7 7 0 0 1-7 7 7 7 0 0 1-7-7z" fill="#34251b" />
+        <path d="M25 16h3a4 4 0 0 1 0 8h-3" fill="none" stroke="#34251b" stroke-width="2.4" />
+        <path d="M15 8v3M20 8v3" stroke="#34251b" stroke-width="2.4" stroke-linecap="round" />
+      </svg>
+      <span class="marke__text">
+        <span class="marke__name">Café Lichtung</span>
+        <span class="marke__zusatz">Backstube</span>
+      </span>
+    </a>
+
+    <nav class="kopf__nav" aria-label="Hauptmenü">
+      <a href="#karte">Die Karte</a>
+      <a href="#raum">Der Raum</a>
+      <a href="#zeiten">Zeiten</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+
+    <a class="knopf knopf--voll" href="#kontakt">Anfragen</a>
+  </div>
+</header>
+
+<main id="oben">
+
+  <section class="auf">
+    <div class="bahn bahn--eng mitte">
+      <p class="label">Backstube und Café</p>
+
+      <h1 class="auf__titel">Morgens Brot.<br />Mittags Suppe.<br />Immer Kaffee.</h1>
+
+      <p class="auf__text">
+        Gebacken wird ab vier, ausgeschenkt ab sieben. Ein Gericht am Tag,
+        Kuchen solange er reicht, und ein Platz zum Bleiben.
+      </p>
+
+      <div class="auf__knoepfe">
+        <a class="knopf knopf--voll" href="#karte">Die Karte</a>
+        <a class="knopf knopf--leer" href="#zeiten">Zeiten und Weg</a>
+      </div>
+
+      <p class="status">Heute geöffnet bis 18 Uhr</p>
+    </div>
+  </section>
+
+  <section class="band band--beige" id="karte">
+    <div class="bahn bahn--eng">
+      <div class="kopfzeile mitte auftritt">
+        <p class="label">Die Karte</p>
+        <div class="strich" aria-hidden="true"></div>
+        <h2 class="kopfzeile__titel">Drei Dinge, den ganzen Tag</h2>
+        <p class="kopfzeile__text">
+          Wir machen wenig, das aber richtig. Alles aus eigener Herstellung,
+          außer dem Kaffee, der kommt von einer Rösterei zwei Straßen weiter.
+        </p>
+      </div>
+
+      <ul class="karte auftritt">
+        <li class="karte__posten">
+          <span class="karte__zeit">7 bis 11 Uhr</span>
+          <h3 class="karte__name">Frühstück</h3>
+          <p class="karte__text">Brot vom Morgen, Butter, Marmelade, weiches Ei. Auf Wunsch mit Käse und Schinken.</p>
+        </li>
+        <li class="karte__posten">
+          <span class="karte__zeit">11 bis 14 Uhr</span>
+          <h3 class="karte__name">Mittagstisch</h3>
+          <p class="karte__text">Ein Gericht am Tag, immer mit einer fleischlosen Fassung. Suppe gibt es dazu.</p>
+        </li>
+        <li class="karte__posten">
+          <span class="karte__zeit">ab 14 Uhr</span>
+          <h3 class="karte__name">Kuchen</h3>
+          <p class="karte__text">Was der Ofen hergibt. Meist drei Sorten, mindestens eine davon mit Obst der Saison.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="raum">
+    <div class="bahn bahn--eng">
+      <div class="kopfzeile mitte auftritt">
+        <p class="label">Der Raum</p>
+        <div class="strich" aria-hidden="true"></div>
+        <h2 class="kopfzeile__titel">Bleiben ist ausdrücklich erlaubt</h2>
+        <p class="kopfzeile__text">
+          Zwölf Tische, große Fenster, Steckdosen an jeder Wand.
+          Wer arbeiten will, sitzt hinten. Wer reden will, vorne.
+        </p>
+      </div>
+
+      <figure class="flaeche flaeche--quer auftritt">
+        <svg class="flaeche__zeichnung" viewBox="0 0 640 360" role="img"
+             aria-label="Vier große Silhouetten: Tasse, Kuchenstück, Brotlaib und Kaffeebohne">
+          <defs>
+            <g id="tasse">
+              <circle cx="42" cy="29" r="8" fill="none" stroke="#e8dac3" stroke-width="5" />
+              <path d="M12 18h26v14a9 9 0 0 1-9 9h-8a9 9 0 0 1-9-9z" fill="#e8dac3" />
+              <rect x="4" y="47" width="44" height="5" rx="2.5" fill="#e8dac3" />
+            </g>
+
+            <g id="laib">
+              <path d="M10 44a20 18 0 0 1 40 0z" fill="#e8dac3" />
+              <rect x="5" y="45" width="50" height="5" rx="2.5" fill="#e8dac3" />
+              <path d="M20 38l5-6M28 34l5-6M36 36l5-6" fill="none" stroke="#4a3529" stroke-width="3" stroke-linecap="round" />
+            </g>
+
+            <g id="stueck">
+              <path d="M10 48L50 20v28z" fill="#e8dac3" />
+              <path d="M18 48L50 26" fill="none" stroke="#4a3529" stroke-width="2.5" stroke-linecap="round" />
+              <circle cx="42" cy="21" r="5" fill="#a9754a" />
+            </g>
+
+            <g id="bohne">
+              <g transform="rotate(-28 30 30)">
+                <ellipse cx="30" cy="30" rx="12" ry="17" fill="#a9754a" />
+                <path d="M30 15q6 15 0 30" fill="none" stroke="#4a3529" stroke-width="3" stroke-linecap="round" />
+              </g>
+            </g>
+
+          </defs>
+
+          <rect width="640" height="360" fill="#4a3529" />
+
+          <use href="#tasse"  transform="translate(45 50) scale(2.4)" />
+          <use href="#laib"   transform="translate(190 160) scale(2.4)" />
+          <use href="#stueck" transform="translate(335 50) scale(2.4)" />
+          <use href="#bohne"  transform="translate(480 160) scale(2.4)" />
+        </svg>
+        <img src="bilder/raum.jpg" alt="Blick in den Gastraum" decoding="async" />
+        <figcaption>Foto Raum</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band band--hell" id="zeiten">
+    <div class="bahn bahn--eng">
+      <div class="kopfzeile mitte auftritt">
+        <p class="label">Zeiten und Weg</p>
+        <div class="strich" aria-hidden="true"></div>
+        <h2 class="kopfzeile__titel">Wo und wann</h2>
+      </div>
+
+      <div class="karte auftritt">
+        <div class="karte__posten">
+          <span class="karte__zeit">Adresse</span>
+          <h3 class="karte__name">Lichtweg 00</h3>
+          <p class="karte__text">00000 Musterstadt, zwei Minuten vom Marktplatz.</p>
+        </div>
+        <div class="karte__posten">
+          <span class="karte__zeit">Geöffnet</span>
+          <h3 class="karte__name">Dienstag bis Sonntag</h3>
+          <p class="karte__text">7 bis 18 Uhr. Montags ist die Backstube zu.</p>
+        </div>
+        <div class="karte__posten">
+          <span class="karte__zeit">Telefon</span>
+          <h3 class="karte__name">0000 000000</h3>
+          <p class="karte__text">Für Bestellungen zum Mitnehmen, am besten vormittags.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--tief" id="kontakt">
+    <div class="bahn bahn--eng">
+      <div class="kopfzeile mitte auftritt">
+        <p class="label">Kontakt</p>
+        <div class="strich" aria-hidden="true"></div>
+        <h2 class="kopfzeile__titel">Feier, Bestellung oder eine Frage</h2>
+        <p class="kopfzeile__text">
+          Für Kuchenbestellungen, größere Runden oder den Raum am Abend
+          schreiben Sie uns kurz. Wir antworten am selben Tag.
+        </p>
+      </div>
+
+      <form class="form auftritt" id="anfrage" novalidate data-empfaenger="">
+        <div class="reihe reihe--zwei">
+          <div class="feld" data-feld>
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Vor- und Nachname" required />
+            <p class="feld__mangel" id="f-name-mangel" aria-live="polite"></p>
+          </div>
+          <div class="feld" data-feld>
+            <label for="f-mail">E-Mail</label>
+            <input id="f-mail" name="email" type="email" autocomplete="email" placeholder="name@beispiel.de" required />
+            <p class="feld__mangel" id="f-mail-mangel" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="feld" data-feld>
+          <label for="f-anlass">Worum geht es?</label>
+          <select id="f-anlass" name="anlass" required>
+            <option value="">bitte wählen</option>
+            <option>Kuchen bestellen</option>
+            <option>Größere Runde</option>
+            <option>Raum am Abend</option>
+            <option>Etwas anderes</option>
+          </select>
+          <p class="feld__mangel" id="f-anlass-mangel" aria-live="polite"></p>
+        </div>
+
+        <div class="feld" data-feld>
+          <label for="f-text">Ihre Nachricht</label>
+          <textarea id="f-text" name="nachricht" placeholder="Wann, für wie viele, und was soll es geben?" required></textarea>
+          <p class="feld__mangel" id="f-text-mangel" aria-live="polite"></p>
+        </div>
+
+        <div class="koeder" aria-hidden="true">
+          <label for="f-koeder">Bitte frei lassen</label>
+          <input id="f-koeder" name="botcheck" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label class="zustimmung" for="f-ok" id="f-ok-feld">
+          <input id="f-ok" name="einwilligung" type="checkbox" required />
+          <span>
+            Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung der Anfrage
+            gespeichert werden. Hinweise in der <a href="#datenschutz">Datenschutzerklärung</a>.
+          </span>
+        </label>
+        <p class="feld__mangel" id="f-ok-mangel" aria-live="polite"></p>
+
+        <button class="knopf knopf--voll" type="submit" id="f-ab">Anfrage absenden</button>
+
+        <p class="hinweis" id="f-hinweis">
+          Beispielprojekt: Der Versand ist bewusst nicht eingerichtet.
+        </p>
+
+        <p class="meldung" id="f-meldung" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="fuss">
+  <div class="bahn">
+    <div class="fuss__in mitte">
+      <nav class="fuss__links" aria-label="Rechtliches">
+        <a href="#zeiten">Zeiten</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#impressum">Impressum</a>
+        <a href="#datenschutz">Datenschutz</a>
+      </nav>
+      <p>© 2026 Café Lichtung</p>
+    </div>
+    <p class="fuss__demo">
+      Dies ist ein Beispielprojekt von Rimci. Der Betrieb, die Anschrift und die
+      Telefonnummer sind frei erfunden. Jede Ähnlichkeit mit einem bestehenden
+      Unternehmen wäre unbeabsichtigt.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ========================================================================
+     Einblenden beim Scrollen
+     ======================================================================== */
+
+  var stuecke = document.querySelectorAll(".auftritt");
+  var sparsam = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (sparsam || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(stuecke, function (el) { el.classList.add("da"); });
+  } else {
+    var wache = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("da");
+        wache.unobserve(e.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    Array.prototype.forEach.call(stuecke, function (el, i) {
+      el.style.transitionDelay = Math.min(i % 3, 2) * 80 + "ms";
+      wache.observe(el);
+    });
+  }
+
+  /* ========================================================================
+     Bildflächen
+     Die Zeichnung ist die Grundlage. Liegt ein Foto im Ordner, legt es sich
+     darüber. Fehlt es, bleibt die Zeichnung stehen.
+     ======================================================================== */
+
+  Array.prototype.forEach.call(document.querySelectorAll(".flaeche img"), function (bild) {
+    function weg() { bild.style.display = "none"; }
+    if (bild.complete && bild.naturalWidth === 0) weg();
+    bild.addEventListener("error", weg);
+  });
+
+  /* ========================================================================
+     Anfrageformular
+     In einem echten Projekt kommt hier ein Versanddienst dazu. Für dieses
+     Beispiel ist der Versand bewusst abgeschaltet.
+     ======================================================================== */
+
+  var form = document.getElementById("anfrage");
+  var meldung = document.getElementById("f-meldung");
+  var okFeld = document.getElementById("f-ok-feld");
+  var EMPFAENGER = (form.getAttribute("data-empfaenger") || "").trim();
+
+  var pflicht = ["f-name", "f-mail", "f-anlass", "f-text"].map(function (id) {
+    return document.getElementById(id);
+  });
+  var zustimmung = document.getElementById("f-ok");
+
+  function sage(el, text) {
+    var feld = el.closest("[data-feld]");
+    var stelle = document.getElementById(el.id + "-mangel");
+    if (feld) feld.classList.toggle("mangel", Boolean(text));
+    el.setAttribute("aria-invalid", text ? "true" : "false");
+    if (stelle) stelle.textContent = text || "";
+    return !text;
+  }
+
+  function pruefe(el) {
+    var wert = (el.value || "").trim();
+    if (!wert) return sage(el, "Bitte ausfüllen.");
+    if (el.type === "email" && !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(wert)) {
+      return sage(el, "Diese E-Mail-Adresse sieht nicht vollständig aus.");
+    }
+    return sage(el, "");
+  }
+
+  function pruefeZustimmung() {
+    var stelle = document.getElementById("f-ok-mangel");
+    var fehlt = !zustimmung.checked;
+    okFeld.classList.toggle("mangel", fehlt);
+    stelle.textContent = fehlt ? "Bitte bestätigen Sie die Einwilligung." : "";
+    return !fehlt;
+  }
+
+  pflicht.forEach(function (el) {
+    el.addEventListener(el.tagName === "SELECT" ? "change" : "input", function () {
+      var feld = el.closest("[data-feld]");
+      if (feld && feld.classList.contains("mangel")) pruefe(el);
+    });
+  });
+  zustimmung.addEventListener("change", function () {
+    if (okFeld.classList.contains("mangel")) pruefeZustimmung();
+  });
+
+  function zeige(art, text, roh) {
+    meldung.className = "meldung an meldung--" + art;
+    if (roh) meldung.innerHTML = text; else meldung.textContent = text;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var gut = true;
+    pflicht.forEach(function (el) { if (!pruefe(el)) gut = false; });
+    if (!pruefeZustimmung()) gut = false;
+
+    if (!gut) {
+      zeige("schlecht", "Bitte ergänzen Sie die markierten Felder.");
+      var erstes = form.querySelector(".mangel input, .mangel select, .mangel textarea");
+      if (erstes) erstes.focus();
+      return;
+    }
+
+    if (document.getElementById("f-koeder").value) {
+      zeige("gut", "Vielen Dank, Ihre Anfrage ist eingegangen.");
+      form.reset();
+      return;
+    }
+
+    if (EMPFAENGER) {
+      var inhalt =
+        "Name: " + pflicht[0].value.trim() + "\n" +
+        "E-Mail: " + pflicht[1].value.trim() + "\n" +
+        "Anlass: " + pflicht[2].value + "\n\n" +
+        pflicht[3].value.trim();
+      var verweis = "mailto:" + EMPFAENGER +
+        "?subject=" + encodeURIComponent("Anfrage über die Website") +
+        "&body=" + encodeURIComponent(inhalt);
+      zeige("gut", 'Ihre Nachricht ist vorbereitet. <a href="' + verweis + '" style="color:#e8dac3">E-Mail-Programm öffnen</a>', true);
+      return;
+    }
+
+    zeige("gut", "Danke. In diesem Beispielprojekt wird bewusst nichts verschickt. Auf einer echten Seite läge Ihre Anfrage jetzt im Postfach des Cafés.");
+  });
+})();
+</script>
+
+</body>
+</html>
