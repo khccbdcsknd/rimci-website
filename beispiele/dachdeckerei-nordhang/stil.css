@@ -1,0 +1,424 @@
+/* ==========================================================================
+   Dachdeckerei Nordhang, Beispielprojekt
+   Erfundener Betrieb, erfundene Kontaktdaten.
+
+   Aufbau bewusst anders als die bisherigen Uebungsseiten: kein langer Lauf
+   aus Baendern ueber die volle Breite, sondern eine feststehende linke
+   Spalte mit Name, Menue und Telefonnummer, daneben der laufende Inhalt.
+   Farben: Ziegelrot und Terrakotta auf Kalkweiss.
+   ========================================================================== */
+
+:root {
+  --kalk:    #f7f3ec;
+  --kalk-2:  #efe7da;
+  --kalk-3:  #e5dacb;
+  --ziegel:  #b0452a;
+  --ziegel-d:#8b3520;
+  --terra:   #cc7a4f;
+  --tinte:   #2b2521;
+  --tinte-2: #6d6158;
+  --linie:   rgba(43, 37, 33, 0.16);
+  --linie-2: rgba(43, 37, 33, 0.3);
+
+  --rail: 296px;
+  --rand: 22px;
+
+  --s1: 0.5rem;
+  --s2: 0.85rem;
+  --s3: 1.3rem;
+  --s4: 2rem;
+  --s5: 3rem;
+  --s6: 4.5rem;
+
+  --schrift: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --weich: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--kalk);
+  color: var(--tinte);
+  font-family: var(--schrift);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.028em; line-height: 1.08; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+img, svg { max-width: 100%; }
+
+.nur-lesen {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Hinweis auf das Beispiel
+   -------------------------------------------------------------------------- */
+
+.merke {
+  background: var(--tinte);
+  color: var(--kalk);
+  font-size: 13px;
+  text-align: center;
+  padding: 9px var(--rand);
+}
+.merke strong { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Grundraster
+   -------------------------------------------------------------------------- */
+
+.huelle { display: block; }
+
+/* --------------------------------------------------------------------------
+   Die linke Spalte, auf dem Handy eine Leiste oben
+   -------------------------------------------------------------------------- */
+
+.rail {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--kalk-2);
+  border-bottom: 1px solid var(--linie);
+  padding: var(--s2) var(--rand);
+}
+
+.rail__kopf { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+
+.marke { display: flex; align-items: center; gap: 11px; text-decoration: none; min-height: 44px; }
+.marke__zeichen { width: 34px; height: 34px; flex: none; display: block; }
+.marke__wort { display: flex; flex-direction: column; line-height: 1.12; }
+.marke__name { font-weight: 800; font-size: 16px; letter-spacing: -0.02em; }
+.marke__zusatz {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ziegel);
+  font-weight: 700;
+}
+
+.rufen {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 16px;
+  background: var(--ziegel); color: #fff;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+  text-decoration: none; border-radius: 2px;
+}
+.rufen:hover { background: var(--ziegel-d); }
+.rufen svg { width: 16px; height: 16px; flex: none; }
+
+/* Menue bricht um statt seitwaerts zu scrollen. Eine scrollbare Reihe wuerde
+   den letzten Punkt verstecken, und das waere ausgerechnet der Kontakt. */
+.rail__menue {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  margin-top: var(--s2);
+}
+
+.rail__menue a {
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 0 12px;
+  white-space: nowrap;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; color: var(--tinte-2);
+  border: 1px solid var(--linie); border-radius: 2px;
+  background: var(--kalk);
+}
+.rail__menue a:hover { color: var(--tinte); border-color: var(--linie-2); }
+.rail__menue a.ist-hier {
+  color: #fff; background: var(--tinte); border-color: var(--tinte);
+}
+
+.rail__fuss { display: none; }
+
+/* --------------------------------------------------------------------------
+   Inhaltsspalte
+   -------------------------------------------------------------------------- */
+
+.lauf { padding: var(--s5) var(--rand) var(--s6); }
+.lauf > * + * { margin-top: var(--s6); }
+
+.block { max-width: 760px; }
+
+.kopfzeile { display: grid; gap: var(--s2); margin-bottom: var(--s4); }
+
+.marke-zeile {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ziegel);
+}
+.marke-zeile::before {
+  content: ""; width: 26px; height: 3px; background: var(--ziegel); flex: none;
+}
+
+.titel-gross { font-size: clamp(2.1rem, 8vw, 4rem); }
+.titel-mittel { font-size: clamp(1.6rem, 5.4vw, 2.4rem); }
+
+.vorspann { font-size: clamp(1.02rem, 3.4vw, 1.15rem); color: var(--tinte-2); max-width: 56ch; }
+
+/* Saegezahn als Trennlinie, greift die Dachschraege auf */
+.zacke { display: block; width: 100%; height: 12px; color: var(--ziegel); }
+
+/* --------------------------------------------------------------------------
+   Knoepfe
+   -------------------------------------------------------------------------- */
+
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 50px; padding: 0 24px;
+  font: inherit; font-size: 15px; font-weight: 700;
+  border-radius: 2px; border: 1px solid transparent;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background 150ms var(--weich), color 150ms var(--weich), border-color 150ms var(--weich);
+}
+.knopf--voll { background: var(--ziegel); color: #fff; border-color: var(--ziegel); }
+.knopf--voll:hover { background: var(--ziegel-d); border-color: var(--ziegel-d); }
+.knopf--leer { background: transparent; color: var(--tinte); border-color: var(--linie-2); }
+.knopf--leer:hover { border-color: var(--tinte); background: var(--kalk-2); }
+
+.knopfreihe { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+/* --------------------------------------------------------------------------
+   Leistungen als Liste mit Ziegelbalken
+   -------------------------------------------------------------------------- */
+
+.posten { border-top: 1px solid var(--linie); }
+
+.posten__zeile {
+  display: grid; gap: var(--s1);
+  padding: var(--s3) 0 var(--s3) var(--s3);
+  border-bottom: 1px solid var(--linie);
+  border-left: 3px solid transparent;
+  transition: border-left-color 160ms var(--weich), background 160ms var(--weich);
+}
+.posten__zeile:hover { border-left-color: var(--ziegel); background: var(--kalk-2); }
+
+.posten__name { font-size: clamp(1.15rem, 4vw, 1.45rem); }
+.posten__text { color: var(--tinte-2); max-width: 54ch; }
+.posten__rand { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ziegel); }
+
+/* --------------------------------------------------------------------------
+   Notdienst, das einzige farbig gefuellte Feld
+   -------------------------------------------------------------------------- */
+
+.notdienst {
+  background: var(--ziegel);
+  color: #fff;
+  padding: var(--s4);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+/* Ziegeldeckung als feine Textur */
+.notdienst::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 50% 0, rgba(255,255,255,0.1) 0 9px, transparent 9px);
+  background-size: 22px 11px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.notdienst > * { position: relative; }
+.notdienst__titel { font-size: clamp(1.4rem, 5vw, 1.9rem); margin-bottom: var(--s2); }
+.notdienst__text { color: rgba(255,255,255,0.88); max-width: 48ch; margin-bottom: var(--s3); }
+.notdienst .knopf--voll { background: #fff; color: var(--ziegel); border-color: #fff; }
+.notdienst .knopf--voll:hover { background: var(--kalk-2); border-color: var(--kalk-2); }
+
+/* --------------------------------------------------------------------------
+   Ablauf
+   -------------------------------------------------------------------------- */
+
+.ablauf { display: grid; gap: var(--s3); counter-reset: schritt; }
+.ablauf__punkt {
+  display: grid; grid-template-columns: 44px 1fr; gap: var(--s3);
+  align-items: start;
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--linie);
+}
+.ablauf__punkt::before {
+  counter-increment: schritt;
+  content: counter(schritt, decimal-leading-zero);
+  font-size: 15px; font-weight: 800; color: var(--ziegel);
+  border: 1px solid var(--ziegel); border-radius: 2px;
+  display: grid; place-items: center; height: 44px;
+}
+.ablauf__name { font-size: 1.1rem; margin-bottom: 2px; }
+.ablauf__text { color: var(--tinte-2); }
+
+/* --------------------------------------------------------------------------
+   Bildflaechen
+   -------------------------------------------------------------------------- */
+
+.flaeche {
+  position: relative; overflow: hidden; margin: 0;
+  border: 1px solid var(--linie); border-radius: 2px;
+  background: var(--kalk-2);
+}
+.flaeche--quer { aspect-ratio: 16 / 9; }
+.flaeche--hoch { aspect-ratio: 4 / 5; }
+.flaeche img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+.flaeche__zeichnung { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.flaeche figcaption { display: none; }
+
+/* --------------------------------------------------------------------------
+   Referenzen
+   -------------------------------------------------------------------------- */
+
+.arbeiten { display: grid; gap: var(--s4); }
+.arbeit__kopf { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s2); margin-top: var(--s2); }
+.arbeit__name { font-size: 1.2rem; }
+.arbeit__ort { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinte-2); }
+.arbeit__text { color: var(--tinte-2); margin-top: 4px; max-width: 54ch; }
+
+/* --------------------------------------------------------------------------
+   Zahlenspiegel
+   -------------------------------------------------------------------------- */
+
+.spiegel { display: grid; gap: 1px; background: var(--linie); border: 1px solid var(--linie); border-radius: 2px; overflow: hidden; }
+.spiegel__feld { background: var(--kalk); padding: var(--s3); }
+.spiegel__wert { font-size: clamp(1.6rem, 6vw, 2.2rem); font-weight: 800; letter-spacing: -0.03em; color: var(--ziegel); }
+.spiegel__wort { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinte-2); }
+
+/* --------------------------------------------------------------------------
+   Formular
+   -------------------------------------------------------------------------- */
+
+.form { display: grid; gap: var(--s3); max-width: 640px; }
+.reihe { display: grid; gap: var(--s3); }
+.feld { display: grid; gap: 6px; }
+.feld label { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinte-2); }
+
+.feld input, .feld textarea, .feld select {
+  font: inherit; font-size: 16px; color: var(--tinte);
+  background: #fff; border: 1px solid var(--linie-2); border-radius: 2px;
+  padding: 13px 14px; min-height: 50px; width: 100%;
+}
+.feld select {
+  -webkit-appearance: none; appearance: none; height: 50px; padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232b2521' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center; background-size: 17px 17px;
+}
+.feld textarea { min-height: 120px; resize: vertical; }
+.feld input::placeholder, .feld textarea::placeholder { color: #9a9088; }
+.feld input:focus, .feld textarea:focus, .feld select:focus { outline: none; border-color: var(--ziegel); }
+.feld.mangel input, .feld.mangel textarea, .feld.mangel select { border-color: #b0452a; background: #fdf4f1; }
+.feld__mangel { font-size: 13px; color: var(--ziegel-d); }
+
+.koeder { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.zustimmung { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; }
+.zustimmung input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--ziegel); }
+.zustimmung span { font-size: 14.5px; line-height: 1.55; color: var(--tinte-2); }
+.zustimmung.mangel span { color: var(--ziegel-d); }
+
+.hinweis { font-size: 13.5px; color: var(--tinte-2); }
+.meldung { font-size: 15px; padding: 13px 15px; display: none; border: 1px solid; border-radius: 2px; }
+.meldung.an { display: block; }
+.meldung--gut { background: #f0f5ee; border-color: #8fae86; color: #2f4429; }
+.meldung--schlecht { background: #fdf0ec; border-color: #d59a86; color: var(--ziegel-d); }
+
+/* --------------------------------------------------------------------------
+   Kontaktangaben
+   -------------------------------------------------------------------------- */
+
+.angabe { border-top: 1px solid var(--linie); }
+.angabe__zeile { display: grid; gap: 2px; padding: var(--s3) 0; border-bottom: 1px solid var(--linie); }
+.angabe__k { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinte-2); }
+.angabe__v { font-size: 1.1rem; font-weight: 700; }
+.angabe__v a { text-decoration: none; display: inline-block; min-height: 44px; line-height: 44px; }
+.angabe__v a:hover { color: var(--ziegel); }
+
+/* --------------------------------------------------------------------------
+   Fuss
+   -------------------------------------------------------------------------- */
+
+.fuss {
+  border-top: 1px solid var(--linie);
+  padding: var(--s4) var(--rand);
+  font-size: 14px; color: var(--tinte-2);
+  display: grid; gap: var(--s2);
+}
+.fuss__reihe { display: flex; flex-wrap: wrap; gap: var(--s3); }
+.fuss__reihe a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.fuss__reihe a:hover { color: var(--tinte); }
+.fuss__demo { border: 1px dashed var(--linie-2); padding: 12px 14px; font-size: 13px; border-radius: 2px; }
+
+/* --------------------------------------------------------------------------
+   Bewegung
+   -------------------------------------------------------------------------- */
+
+.auftritt { opacity: 0; transform: translateY(12px); transition: opacity 550ms var(--weich), transform 550ms var(--weich); }
+.auftritt.da { opacity: 1; transform: none; }
+
+:focus-visible { outline: 3px solid var(--ziegel); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .auftritt { opacity: 1; transform: none; transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Breitere Schirme: hier entsteht die feststehende linke Spalte
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 640px) {
+  :root { --rand: 34px; }
+  .reihe--zwei { grid-template-columns: 1fr 1fr; }
+  .spiegel { grid-template-columns: repeat(3, 1fr); }
+  .arbeiten { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1000px) {
+  :root { --rand: 46px; }
+  body { font-size: 17.5px; }
+
+  .huelle { display: grid; grid-template-columns: var(--rail) 1fr; align-items: start; }
+
+  .rail {
+    position: sticky; top: 0;
+    height: 100vh;
+    display: flex; flex-direction: column;
+    gap: var(--s4);
+    padding: var(--s4) var(--s4) var(--s3);
+    border-bottom: 0;
+    border-right: 1px solid var(--linie);
+    overflow-y: auto;
+  }
+
+  .rail__kopf { display: block; }
+  .rail__kopf .rufen { display: none; }
+  .marke { min-height: 0; }
+  .marke__zeichen { width: 42px; height: 42px; }
+  .marke__name { font-size: 18px; }
+
+  .rail__menue {
+    flex-direction: column; gap: 2px;
+    margin-top: 0; overflow: visible;
+  }
+  .rail__menue a {
+    border: 0; background: transparent; border-radius: 0;
+    padding: 0 0 0 16px;
+    border-left: 3px solid transparent;
+    letter-spacing: 0.14em;
+  }
+  .rail__menue a:hover { border-left-color: var(--linie-2); background: transparent; }
+  .rail__menue a.ist-hier {
+    color: var(--ziegel); background: transparent;
+    border-left-color: var(--ziegel);
+  }
+
+  .rail__fuss { display: block; margin-top: auto; border-top: 1px solid var(--linie); padding-top: var(--s3); }
+  .rail__fuss .rufen { width: 100%; justify-content: center; margin-bottom: var(--s2); }
+  .rail__zeit { font-size: 13px; color: var(--tinte-2); }
+
+  .lauf { padding: var(--s6) var(--rand) var(--s6); }
+  .block { max-width: 820px; }
+  .fuss { padding-left: var(--rand); padding-right: var(--rand); }
+}
+
+@media (min-width: 1320px) {
+  :root { --rail: 330px; }
+}

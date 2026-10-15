@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Physiotherapie Amselgrund | Beispielprojekt von Rimci</title>
+<meta name="description" content="Beispielprojekt: Website einer erfundenen Physiotherapie-Praxis. Krankengymnastik, manuelle Therapie, Lymphdrainage und Hausbesuche." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="stylesheet" href="schrift/schrift.css" />
+
+<style>
+  /* ==========================================================================
+     Physiotherapie Amselgrund, Beispielprojekt
+     Erfundene Praxis, erfundene Kontaktdaten.
+
+     Gebaut nach dem Design-System aus dem Skill ui-ux-pro-max, mit drei
+     begruendeten Abweichungen. Die Begruendungen stehen in LIESMICH.txt.
+     ========================================================================== */
+
+  :root {
+    /* Palette aus ui-ux-pro-max, "Healthcare App". Kontraste nachgerechnet. */
+    --primaer:        #0891B2;  /* nur Flaechen und Rahmen, NICHT fuer Text */
+    --primaer-text:   #0E7490;  /* 5,15:1 auf Grund, 5,36:1 auf Karte, geprueft */
+    --auf-primaer:    #000000;  /* 5,70:1 gegen Primaer, geprueft */
+    --sekundaer:      #22D3EE;
+    --akzent:         #059669;  /* ausschliesslich fuer Handlungsknoepfe */
+    --auf-akzent:     #000000;  /* 5,57:1 gegen Akzent, geprueft */
+    --grund:          #ECFEFF;
+    --vordergrund:    #164E63;  /* 8,76:1 gegen Grund, geprueft */
+    --karte:          #FFFFFF;
+    --karte-vg:       #164E63;  /* 9,11:1 gegen Karte, geprueft */
+    --gedaempft:      #E8F1F6;
+    --gedaempft-vg:   #475569;  /* 7,28:1 gegen Grund, geprueft */
+    --warnung:        #DC2626;
+    --auf-warnung:    #FFFFFF;
+
+    /* Rahmen: der Vorschlag #A5F3FC erreichte nur 1,20:1 und war unsichtbar.
+       Tragende Abgrenzungen nutzen den Primaerton (rund 3,4:1), rein
+       dekorative Linien duerfen schwaecher sein, sie tragen keine Information. */
+    --rahmen:         #0891B2;
+    --linie:          rgba(22, 78, 99, 0.16);
+
+    /* Dichte 3/10 "Spacious" laut Design-System: 24 bis 96 px */
+    --s1: 0.5rem;
+    --s2: 0.75rem;
+    --s3: 1.5rem;
+    --s4: 2.25rem;
+    --s5: 3.5rem;
+    --s6: 6rem;
+
+    --radius: 14px;   /* 12 bis 16 px laut Stilvorgabe */
+    --rand: 20px;
+    --takt: 180ms;
+    --kurve: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --schrift: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont,
+               'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--grund);
+    color: var(--vordergrund);
+    font-family: var(--schrift);
+    font-size: 17px;          /* Vorgabe: Basis mindestens 16 px */
+    line-height: 1.6;         /* Vorgabe: mindestens 1.5 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { margin: 0; line-height: 1.2; font-weight: 700; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  a { color: inherit; }
+
+  .bahn { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 var(--rand); }
+  .eng { max-width: 720px; }
+
+  .nur-lesen {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  /* Sprungmarke: erste Taste erreicht sie, Vorgabe Tastaturbedienung */
+  .sprung {
+    position: absolute; left: -9999px; top: 0; z-index: 100;
+    background: var(--vordergrund); color: #fff;
+    padding: 12px 18px; border-radius: 0 0 var(--radius) 0;
+  }
+  .sprung:focus { left: 0; }
+
+  /* --------------------------------------------------------------------------
+     Hinweis auf das Beispiel
+     -------------------------------------------------------------------------- */
+
+  .merke {
+    background: var(--vordergrund); color: #fff;
+    font-size: 14px; text-align: center; padding: 10px var(--rand);
+  }
+
+  /* --------------------------------------------------------------------------
+     Kopf
+     -------------------------------------------------------------------------- */
+
+  .kopf {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--grund);
+    border-bottom: 1px solid var(--linie);
+  }
+  .kopf__in {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s3); min-height: 72px;
+  }
+
+  .marke { display: flex; align-items: center; gap: 11px; text-decoration: none; min-height: 44px; }
+  .marke__zeichen { width: 36px; height: 36px; flex: none; }
+  .marke__wort { display: flex; flex-direction: column; line-height: 1.2; }
+  .marke__name { font-weight: 700; font-size: 17px; }
+  .marke__zusatz { font-size: 13px; color: var(--gedaempft-vg); }
+
+  .kopf__nav { display: none; gap: var(--s3); }
+  .kopf__nav a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    text-decoration: none; font-size: 16px;
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--takt) var(--kurve), color var(--takt) var(--kurve);
+  }
+  .kopf__nav a:hover { border-bottom-color: var(--primaer); }
+
+  /* --------------------------------------------------------------------------
+     Knoepfe. Akzentgruen bleibt der Hauptaktion vorbehalten.
+     -------------------------------------------------------------------------- */
+
+  .knopf {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    min-height: 48px; padding: 0 24px;
+    font: inherit; font-size: 16px; font-weight: 700;
+    border: 2px solid transparent; border-radius: var(--radius);
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background var(--takt) var(--kurve),
+                border-color var(--takt) var(--kurve),
+                color var(--takt) var(--kurve);
+  }
+  .knopf svg { width: 19px; height: 19px; flex: none; }
+  .knopf--tat { background: var(--akzent); color: var(--auf-akzent); border-color: var(--akzent); }
+  .knopf--tat:hover { background: #047857; border-color: #047857; color: #fff; }
+  .knopf--ruhig { background: transparent; color: var(--vordergrund); border-color: var(--rahmen); }
+  .knopf--ruhig:hover { background: var(--karte); }
+
+  .knopfreihe { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+  /* --------------------------------------------------------------------------
+     Abschnitte
+     -------------------------------------------------------------------------- */
+
+  .teil { padding: var(--s5) 0; }
+  .teil--karte { background: var(--karte); border-block: 1px solid var(--linie); }
+
+  .titel-1 { font-size: clamp(1.9rem, 6vw, 3rem); letter-spacing: -0.02em; }
+  .titel-2 { font-size: clamp(1.5rem, 4.6vw, 2.1rem); letter-spacing: -0.015em; }
+  .titel-3 { font-size: clamp(1.25rem, 3vw, 1.45rem); }
+
+  .fuehrung {
+    font-size: clamp(1.05rem, 3.2vw, 1.2rem);
+    color: var(--gedaempft-vg); max-width: 58ch;
+  }
+
+  .kopfzeile { display: grid; gap: var(--s2); margin-bottom: var(--s4); }
+
+  .augen {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 15px; font-weight: 700; color: var(--primaer-text);
+  }
+  .augen::before { content: ""; width: 22px; height: 2px; background: var(--primaer-text); }
+
+  /* --------------------------------------------------------------------------
+     Hero
+     -------------------------------------------------------------------------- */
+
+  .hero { padding: var(--s5) 0 var(--s4); }
+  .hero__titel { margin: var(--s2) 0 var(--s3); max-width: 18ch; }
+  .hero__knoepfe { margin-top: var(--s4); }
+
+  /* --------------------------------------------------------------------------
+     Belege. Statt erfundener Siegel nur nachpruefbare Aussagen.
+     -------------------------------------------------------------------------- */
+
+  .belege { display: grid; gap: 1px; background: var(--linie);
+            border: 1px solid var(--linie); border-radius: var(--radius); overflow: hidden; }
+  .beleg { background: var(--karte); padding: var(--s3); display: grid; gap: 5px; }
+  .beleg__wert { font-size: 1.6rem; font-weight: 700; color: var(--primaer-text); line-height: 1.1; }
+  .beleg__wort { font-size: 15px; color: var(--gedaempft-vg); }
+
+  /* --------------------------------------------------------------------------
+     Leistungen
+     -------------------------------------------------------------------------- */
+
+  .leistungen { display: grid; gap: var(--s3); }
+  .leistung {
+    background: var(--karte); border: 1px solid var(--linie);
+    border-radius: var(--radius); padding: var(--s3);
+    display: grid; gap: var(--s1);
+    box-shadow: 0 1px 2px rgba(22, 78, 99, 0.05);
+  }
+  .leistung__kopf { display: flex; align-items: center; gap: 11px; }
+  /* Bewusst ohne eigenen Behaelter: eine gerundete Symbolkachel neben der
+     Ueberschrift ist das austauschbare Baukastenmuster. Das Symbol steht
+     frei im Fluss und traegt die Akzentfarbe als einziges Signal. */
+  .leistung__zeichen { flex: none; color: var(--primaer-text); display: block; }
+  .leistung__zeichen svg { width: 28px; height: 28px; display: block; }
+  .leistung__text { color: var(--gedaempft-vg); }
+
+  /* --------------------------------------------------------------------------
+     Weg zum Termin
+     -------------------------------------------------------------------------- */
+
+  .weg { display: grid; gap: var(--s3); counter-reset: tritt; }
+  .weg__punkt {
+    display: grid; grid-template-columns: 46px 1fr; gap: var(--s3);
+    align-items: start;
+  }
+  .weg__punkt::before {
+    counter-increment: tritt; content: counter(tritt);
+    width: 46px; height: 46px; display: grid; place-items: center;
+    border-radius: 50%; background: var(--primaer); color: var(--auf-primaer);
+    font-weight: 700; font-size: 18px;
+  }
+  .weg__text { color: var(--gedaempft-vg); margin-top: 3px; }
+
+  /* --------------------------------------------------------------------------
+     Formular
+     -------------------------------------------------------------------------- */
+
+  .form { display: grid; gap: var(--s3); max-width: 580px; }
+  .reihe { display: grid; gap: var(--s3); }
+  .feld { display: grid; gap: 6px; }
+  .feld label { font-weight: 700; font-size: 15px; }
+  .feld__hilfe { font-size: 14px; color: var(--gedaempft-vg); }
+
+  .feld input, .feld textarea, .feld select {
+    font: inherit; font-size: 16px; color: var(--vordergrund);
+    background: var(--karte);
+    border: 2px solid var(--rahmen); border-radius: 11px;
+    padding: 12px 14px; min-height: 50px; width: 100%;
+  }
+  .feld select {
+    -webkit-appearance: none; appearance: none; height: 50px; padding-right: 44px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23164E63' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+  }
+  .feld textarea { min-height: 120px; resize: vertical; }
+  .feld input::placeholder, .feld textarea::placeholder { color: #6b7b84; }
+  .feld.mangel input, .feld.mangel textarea, .feld.mangel select { border-color: var(--warnung); }
+
+  /* Fehler steht am Feld, nicht gesammelt oben. Vorgabe Formulare. */
+  .feld__mangel { font-size: 15px; font-weight: 700; color: #B01B1B; display: flex; gap: 7px; }
+  .feld__mangel:empty { display: none; }
+  .feld__mangel svg { width: 18px; height: 18px; flex: none; margin-top: 2px; }
+
+  .koeder { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .zustimmung { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; }
+  .zustimmung input { width: 24px; height: 24px; margin: 1px 0 0; accent-color: var(--primaer); }
+  .zustimmung span { font-size: 15px; }
+
+  .meldung {
+    font-size: 16px; padding: 14px 16px; border-radius: 11px;
+    display: none; border: 2px solid; gap: 10px;
+  }
+  .meldung.an { display: flex; }
+  .meldung svg { width: 21px; height: 21px; flex: none; margin-top: 2px; }
+  .meldung--gut { background: #ECFDF5; border-color: var(--akzent); color: #065F46; }
+  .meldung--schlecht { background: #FEF2F2; border-color: var(--warnung); color: #B01B1B; }
+
+  /* --------------------------------------------------------------------------
+     Angaben
+     -------------------------------------------------------------------------- */
+
+  .angaben { display: grid; gap: var(--s3); }
+  .angabe { display: grid; gap: 3px; }
+  .angabe__k { font-size: 14px; font-weight: 700; color: var(--gedaempft-vg); }
+  .angabe__v { font-size: 1.15rem; }
+  .angabe__v a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  /* --------------------------------------------------------------------------
+     Rechtliches und Fuss
+     -------------------------------------------------------------------------- */
+
+  .recht details { border-top: 1px solid var(--linie); }
+  .recht details:last-of-type { border-bottom: 1px solid var(--linie); }
+  .recht summary {
+    cursor: pointer; list-style: none; display: flex; align-items: center;
+    min-height: 54px; padding: 10px 0; font-weight: 700;
+  }
+  .recht summary::-webkit-details-marker { display: none; }
+  .recht summary::after { content: "+"; margin-left: auto; font-size: 22px; color: var(--primaer-text); }
+  .recht details[open] summary::after { content: "\2212"; }
+  .recht__text { padding: 0 0 18px; color: var(--gedaempft-vg); max-width: 68ch; }
+
+  .fuss { background: var(--karte); border-top: 1px solid var(--linie); padding: var(--s4) 0; }
+  .fuss__reihe { display: flex; flex-wrap: wrap; gap: var(--s3); margin-bottom: var(--s2); }
+  .fuss__reihe a { display: inline-flex; align-items: center; min-height: 44px; }
+  .fuss__demo {
+    margin-top: var(--s3); border: 1px dashed var(--rahmen);
+    border-radius: var(--radius); padding: 14px 16px;
+    font-size: 15px; color: var(--gedaempft-vg);
+  }
+
+  /* --------------------------------------------------------------------------
+     Bewegung: dezent, Stufe 2 von 10 laut Design-System
+     -------------------------------------------------------------------------- */
+
+  .auftritt { opacity: 0; transform: translateY(12px); }
+  .auftritt.da {
+    opacity: 1; transform: none;
+    transition: opacity 350ms var(--kurve), transform 350ms var(--kurve);
+  }
+
+  /* Sichtbarer Fokus, 2 px, Vorgabe Tastaturbedienung */
+  :focus-visible {
+    outline: 3px solid var(--vordergrund);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .auftritt { opacity: 1; transform: none; transition: none; }
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* --------------------------------------------------------------------------
+     Breiter. Haltepunkte 768 und 1024 gemaess Checkliste.
+     -------------------------------------------------------------------------- */
+
+  @media (min-width: 768px) {
+    :root { --rand: 32px; }
+    .belege { grid-template-columns: repeat(3, 1fr); }
+    .leistungen { grid-template-columns: 1fr 1fr; }
+    .reihe--zwei { grid-template-columns: 1fr 1fr; }
+    .angaben { grid-template-columns: 1fr 1fr; }
+    .teil { padding: var(--s6) 0; }
+  }
+
+  @media (min-width: 1024px) {
+    :root { --rand: 40px; }
+    body { font-size: 18px; }
+    .kopf__nav { display: flex; }
+    .kontakt__raster { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s5); align-items: start; }
+  }
+</style>
+</head>
+
+<body>
+
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<p class="merke">
+  <strong>Beispielprojekt.</strong> Erfundene Praxis, erfundene Kontaktdaten. Gebaut von Rimci als Arbeitsprobe.
+</p>
+
+<header class="kopf">
+  <div class="bahn kopf__in">
+    <a class="marke" href="#oben">
+      <svg class="marke__zeichen" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" fill="#0891B2" />
+        <path d="M13 24c3-7 11-7 14 0" fill="none" stroke="#ECFEFF" stroke-width="3" stroke-linecap="round" />
+        <circle cx="20" cy="14" r="3.4" fill="#ECFEFF" />
+      </svg>
+      <span class="marke__wort">
+        <span class="marke__name">Physiotherapie Amselgrund</span>
+        <span class="marke__zusatz">Praxis für Physiotherapie</span>
+      </span>
+    </a>
+
+    <nav class="kopf__nav" aria-label="Hauptmenü">
+      <a href="#leistungen">Leistungen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+  <section class="hero" id="oben">
+    <div class="bahn eng">
+      <p class="augen">Seit 2009 in Musterstadt</p>
+
+      <h1 class="titel-1 hero__titel">Wir behandeln Sie, nicht Ihren Befund.</h1>
+
+      <p class="fuehrung">
+        Krankengymnastik, manuelle Therapie und Lymphdrainage. Zwanzig Minuten
+        Behandlung heißt bei uns zwanzig Minuten mit einer Therapeutin, nicht
+        zehn Minuten Gerät und zehn Minuten warten.
+      </p>
+
+      <div class="knopfreihe hero__knoepfe">
+        <a class="knopf knopf--tat" href="#kontakt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M8 3v4M16 3v4M3 11h18" />
+          </svg>
+          Termin anfragen
+        </a>
+        <a class="knopf knopf--ruhig" href="tel:000000000">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z" />
+          </svg>
+          0000 000000
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="teil teil--karte">
+    <div class="bahn">
+      <h2 class="titel-2 nur-lesen">Fakten zur Praxis</h2>
+      <ul class="belege auftritt">
+        <li class="beleg">
+          <span class="beleg__wert">Alle Kassen</span>
+          <span class="beleg__wort">Gesetzlich, privat und Selbstzahler. Rezept bitte mitbringen.</span>
+        </li>
+        <li class="beleg">
+          <span class="beleg__wert">7 Tage</span>
+          <span class="beleg__wort">Übliche Wartezeit auf den ersten Termin, bei akuten Fällen schneller.</span>
+        </li>
+        <li class="beleg">
+          <span class="beleg__wert">Hausbesuch</span>
+          <span class="beleg__wort">Wenn Sie nicht zu uns kommen können, kommen wir zu Ihnen.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="teil" id="leistungen">
+    <div class="bahn">
+      <div class="kopfzeile auftritt">
+        <p class="augen">Leistungen</p>
+        <h2 class="titel-2">Was wir machen</h2>
+        <p class="fuehrung">
+          Alle Leistungen sind verordnungsfähig. Was Ihnen hilft, entscheiden
+          wir nach dem ersten Termin gemeinsam mit Ihnen.
+        </p>
+      </div>
+
+      <ul class="leistungen auftritt">
+        <li class="leistung">
+          <div class="leistung__kopf">
+            <span class="leistung__zeichen" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M4 20v-5a8 8 0 0 1 16 0v5M9 20v-4M15 20v-4" />
+              </svg>
+            </span>
+            <h3 class="titel-3">Krankengymnastik</h3>
+          </div>
+          <p class="leistung__text">
+            Nach Operationen, bei Rückenschmerzen, nach Unfällen. Übungen, die
+            Sie auch allein weiterführen können.
+          </p>
+        </li>
+
+        <li class="leistung">
+          <div class="leistung__kopf">
+            <span class="leistung__zeichen" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M7 11V7a2 2 0 0 1 4 0v4M11 11V6a2 2 0 0 1 4 0v5M15 11V8a2 2 0 0 1 4 0v7a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-3a2 2 0 0 1 4 0" />
+              </svg>
+            </span>
+            <h3 class="titel-3">Manuelle Therapie</h3>
+          </div>
+          <p class="leistung__text">
+            Gezielte Griffe an Gelenken und Muskeln bei Blockaden und
+            eingeschränkter Beweglichkeit.
+          </p>
+        </li>
+
+        <li class="leistung">
+          <div class="leistung__kopf">
+            <span class="leistung__zeichen" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M12 3c3 4 5 6.5 5 9.5A5 5 0 0 1 7 12.5C7 9.5 9 7 12 3z" />
+              </svg>
+            </span>
+            <h3 class="titel-3">Lymphdrainage</h3>
+          </div>
+          <p class="leistung__text">
+            Bei Schwellungen nach Operationen und bei Lymphödemen. Sanft, mit
+            anschließender Bandagierung wenn nötig.
+          </p>
+        </li>
+
+        <li class="leistung">
+          <div class="leistung__kopf">
+            <span class="leistung__zeichen" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M3 12h4l2-5 3 10 2.5-7 1.5 4h5" />
+              </svg>
+            </span>
+            <h3 class="titel-3">Wärme und Kälte</h3>
+          </div>
+          <p class="leistung__text">
+            Fango, Heißluft und Eis als Ergänzung zur Behandlung, nicht als
+            Ersatz dafür.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="teil teil--karte" id="ablauf">
+    <div class="bahn eng">
+      <div class="kopfzeile auftritt">
+        <p class="augen">Ablauf</p>
+        <h2 class="titel-2">So kommen Sie zu einem Termin</h2>
+      </div>
+
+      <ol class="weg auftritt">
+        <li class="weg__punkt">
+          <div>
+            <h3 class="titel-3">Rezept vom Arzt</h3>
+            <p class="weg__text">
+              Ihre Ärztin stellt eine Verordnung aus. Ohne Rezept behandeln wir
+              auch, dann als Selbstzahler.
+            </p>
+          </div>
+        </li>
+        <li class="weg__punkt">
+          <div>
+            <h3 class="titel-3">Anrufen oder schreiben</h3>
+            <p class="weg__text">
+              Sagen Sie uns, was auf dem Rezept steht und wann Sie können.
+              Vormittags erreichen Sie uns am sichersten.
+            </p>
+          </div>
+        </li>
+        <li class="weg__punkt">
+          <div>
+            <h3 class="titel-3">Erster Termin</h3>
+            <p class="weg__text">
+              Wir sehen uns an, was los ist, und besprechen den Plan. Bringen
+              Sie bequeme Kleidung mit.
+            </p>
+          </div>
+        </li>
+        <li class="weg__punkt">
+          <div>
+            <h3 class="titel-3">Feste Termine</h3>
+            <p class="weg__text">
+              Die weiteren Termine legen wir gleich zusammen fest, damit Sie
+              nicht jede Woche neu anrufen müssen.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="teil" id="kontakt">
+    <div class="bahn">
+      <div class="kontakt__raster">
+
+        <div>
+          <div class="kopfzeile auftritt">
+            <p class="augen">Kontakt</p>
+            <h2 class="titel-2">Termin anfragen</h2>
+            <p class="fuehrung">
+              Wir melden uns am nächsten Werktag. Bei akuten Beschwerden rufen
+              Sie besser an, das geht schneller.
+            </p>
+          </div>
+
+          <div class="angaben auftritt">
+            <div class="angabe">
+              <span class="angabe__k">Telefon</span>
+              <span class="angabe__v"><a href="tel:000000000">0000 000000</a></span>
+            </div>
+            <div class="angabe">
+              <span class="angabe__k">Praxis</span>
+              <span class="angabe__v">Amselweg 00<br />00000 Musterstadt</span>
+            </div>
+            <div class="angabe">
+              <span class="angabe__k">Sprechzeiten</span>
+              <span class="angabe__v">Mo bis Do 8 bis 18 Uhr<br />Fr 8 bis 14 Uhr</span>
+            </div>
+            <div class="angabe">
+              <span class="angabe__k">Barrierefrei</span>
+              <span class="angabe__v">Ebenerdig, keine Stufen</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="form auftritt" id="anfrage" novalidate data-empfaenger="">
+          <div class="reihe reihe--zwei">
+            <div class="feld" data-feld>
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name"
+                     placeholder="Vor- und Nachname" required aria-describedby="f-name-mangel" />
+              <p class="feld__mangel" id="f-name-mangel" aria-live="polite"></p>
+            </div>
+            <div class="feld" data-feld>
+              <label for="f-tel">Telefon</label>
+              <input id="f-tel" name="telefon" type="tel" autocomplete="tel"
+                     placeholder="Für den Rückruf" required aria-describedby="f-tel-hilfe f-tel-mangel" />
+              <p class="feld__hilfe" id="f-tel-hilfe">Wir rufen zurück, wir schreiben nicht.</p>
+              <p class="feld__mangel" id="f-tel-mangel" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="feld" data-feld>
+            <label for="f-anliegen">Worum geht es?</label>
+            <select id="f-anliegen" name="anliegen" required aria-describedby="f-anliegen-mangel">
+              <option value="">bitte wählen</option>
+              <option>Krankengymnastik</option>
+              <option>Manuelle Therapie</option>
+              <option>Lymphdrainage</option>
+              <option>Hausbesuch</option>
+              <option>Etwas anderes</option>
+            </select>
+            <p class="feld__mangel" id="f-anliegen-mangel" aria-live="polite"></p>
+          </div>
+
+          <div class="feld" data-feld>
+            <label for="f-text">Ihre Nachricht</label>
+            <textarea id="f-text" name="nachricht" required aria-describedby="f-text-hilfe f-text-mangel"
+                      placeholder="Was steht auf dem Rezept, und wann können Sie?"></textarea>
+            <p class="feld__hilfe" id="f-text-hilfe">Bitte keine Diagnosen oder Befunde, das besprechen wir am Telefon.</p>
+            <p class="feld__mangel" id="f-text-mangel" aria-live="polite"></p>
+          </div>
+
+          <div class="koeder" aria-hidden="true">
+            <label for="f-koeder">Bitte frei lassen</label>
+            <input id="f-koeder" name="botcheck" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <label class="zustimmung" for="f-ok" id="f-ok-feld">
+            <input id="f-ok" name="einwilligung" type="checkbox" required />
+            <span>Meine Angaben dürfen zur Bearbeitung der Anfrage gespeichert werden.</span>
+          </label>
+          <p class="feld__mangel" id="f-ok-mangel" aria-live="polite"></p>
+
+          <button class="knopf knopf--tat" type="submit" id="f-ab">Anfrage absenden</button>
+
+          <p class="feld__hilfe">Beispielprojekt: Der Versand ist bewusst nicht eingerichtet.</p>
+          <p class="meldung" id="f-meldung" role="status"></p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="teil teil--karte recht">
+    <div class="bahn eng">
+      <details>
+        <summary>Impressum</summary>
+        <div class="recht__text">
+          Platzhalter. Auf einer echten Praxisseite stehen hier Name und
+          Anschrift, die gesetzliche Berufsbezeichnung mit dem Staat der
+          Verleihung, die zuständige Aufsichtsbehörde und die zuständige
+          Kammer, dazu Telefon und E-Mail. Für Heilberufe ist das Pflicht.
+        </div>
+      </details>
+      <details>
+        <summary>Datenschutz</summary>
+        <div class="recht__text">
+          Platzhalter. Hier steht, wer verantwortlich ist, welche Daten das
+          Formular erhebt, auf welcher Rechtsgrundlage und wie lange sie
+          gespeichert werden. Diese Seite setzt keine Cookies, bindet nichts
+          von fremden Servern ein und lädt die Schrift von ihrem eigenen
+          Server, nicht von Google.
+        </div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="fuss">
+  <div class="bahn">
+    <nav class="fuss__reihe" aria-label="Fußmenü">
+      <a href="#leistungen">Leistungen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <p>© 2026 Physiotherapie Amselgrund</p>
+    <p class="fuss__demo">
+      Dies ist ein Beispielprojekt von Rimci. Die Praxis, die Anschrift und die
+      Telefonnummer sind frei erfunden. Jede Ähnlichkeit mit einer bestehenden
+      Praxis wäre unbeabsichtigt.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var ACHTUNG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.01"/></svg>';
+  var HAKEN   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>';
+
+  /* Einblenden. Stufe 2 von 10: nur Deckkraft und 12 Pixel Versatz. */
+  var stuecke = document.querySelectorAll(".auftritt");
+  var sparsam = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (sparsam || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(stuecke, function (el) { el.classList.add("da"); });
+  } else {
+    var wache = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("da");
+        wache.unobserve(e.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
+    Array.prototype.forEach.call(stuecke, function (el) { wache.observe(el); });
+  }
+
+  /* Formular. Fehler stehen am Feld, nicht gesammelt oben. */
+  var form = document.getElementById("anfrage");
+  var meldung = document.getElementById("f-meldung");
+  var okFeld = document.getElementById("f-ok-feld");
+  var zustimmung = document.getElementById("f-ok");
+  var EMPFAENGER = (form.getAttribute("data-empfaenger") || "").trim();
+
+  var pflicht = ["f-name", "f-tel", "f-anliegen", "f-text"].map(function (id) {
+    return document.getElementById(id);
+  });
+
+  function sage(el, text) {
+    var feld = el.closest("[data-feld]");
+    var stelle = document.getElementById(el.id + "-mangel");
+    if (feld) feld.classList.toggle("mangel", Boolean(text));
+    el.setAttribute("aria-invalid", text ? "true" : "false");
+    if (stelle) stelle.innerHTML = text ? ACHTUNG + "<span>" + text + "</span>" : "";
+    return !text;
+  }
+
+  function pruefe(el) {
+    var wert = (el.value || "").trim();
+    if (!wert) return sage(el, "Bitte ausfüllen.");
+    if (el.type === "tel" && wert.replace(/[^0-9]/g, "").length < 6) {
+      return sage(el, "Diese Nummer sieht zu kurz aus.");
+    }
+    return sage(el, "");
+  }
+
+  function pruefeZustimmung() {
+    var stelle = document.getElementById("f-ok-mangel");
+    var fehlt = !zustimmung.checked;
+    okFeld.classList.toggle("mangel", fehlt);
+    stelle.innerHTML = fehlt ? ACHTUNG + "<span>Bitte bestätigen.</span>" : "";
+    return !fehlt;
+  }
+
+  pflicht.forEach(function (el) {
+    el.addEventListener(el.tagName === "SELECT" ? "change" : "input", function () {
+      var feld = el.closest("[data-feld]");
+      if (feld && feld.classList.contains("mangel")) pruefe(el);
+    });
+  });
+  zustimmung.addEventListener("change", function () {
+    if (okFeld.classList.contains("mangel")) pruefeZustimmung();
+  });
+
+  function zeige(art, text) {
+    meldung.className = "meldung an meldung--" + art;
+    meldung.innerHTML = (art === "gut" ? HAKEN : ACHTUNG) + "<span>" + text + "</span>";
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var gut = true;
+    pflicht.forEach(function (el) { if (!pruefe(el)) gut = false; });
+    if (!pruefeZustimmung()) gut = false;
+
+    if (!gut) {
+      zeige("schlecht", "Bitte ergänzen Sie die markierten Felder.");
+      var erstes = form.querySelector(".mangel input, .mangel select, .mangel textarea");
+      if (erstes) erstes.focus();
+      return;
+    }
+
+    if (document.getElementById("f-koeder").value) {
+      zeige("gut", "Danke, Ihre Anfrage ist eingegangen.");
+      form.reset();
+      return;
+    }
+
+    if (EMPFAENGER) {
+      var inhalt =
+        "Name: " + pflicht[0].value.trim() + "\n" +
+        "Telefon: " + pflicht[1].value.trim() + "\n" +
+        "Anliegen: " + pflicht[2].value + "\n\n" +
+        pflicht[3].value.trim();
+      window.location.href = "mailto:" + EMPFAENGER +
+        "?subject=" + encodeURIComponent("Terminanfrage über die Website") +
+        "&body=" + encodeURIComponent(inhalt);
+      return;
+    }
+
+    zeige("gut", "Danke. In diesem Beispielprojekt wird bewusst nichts verschickt. Auf einer echten Seite läge Ihre Anfrage jetzt im Postfach der Praxis.");
+  });
+})();
+</script>
+
+</body>
+</html>

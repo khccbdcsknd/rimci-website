@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kontakt | Dachdeckerei Nordhang</title>
+<meta name="description" content="Beispielprojekt: Kontaktformular, Telefon und Anschrift der erfundenen Dachdeckerei Nordhang." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="stylesheet" href="stil.css" />
+</head>
+
+<body>
+
+<p class="merke">
+  <strong>Beispielprojekt.</strong> Erfundener Betrieb, erfundene Kontaktdaten. Gebaut von Rimci als Arbeitsprobe.
+</p>
+
+<div class="huelle">
+
+  <header class="rail">
+    <div class="rail__kopf">
+      <a class="marke" href="index.html">
+        <svg class="marke__zeichen" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 6 44 24h-6v18H10V24H4z" fill="#b0452a" />
+          <path d="M16 30h16v12H16z" fill="#f7f3ec" />
+          <path d="M24 30v12" stroke="#b0452a" stroke-width="2" />
+        </svg>
+        <span class="marke__wort">
+          <span class="marke__name">Dachdeckerei Nordhang</span>
+          <span class="marke__zusatz">Meisterbetrieb</span>
+        </span>
+      </a>
+
+      <a class="rufen" href="tel:000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z" />
+        </svg>
+        Anrufen
+      </a>
+    </div>
+
+    <nav class="rail__menue" aria-label="Hauptmenü">
+      <a href="index.html">Start</a>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="referenzen.html">Referenzen</a>
+      <a href="kontakt.html" class="ist-hier" aria-current="page">Kontakt</a>
+    </nav>
+
+    <div class="rail__fuss">
+      <a class="rufen" href="tel:000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z" />
+        </svg>
+        0000 000000
+      </a>
+      <p class="rail__zeit">Montag bis Freitag 7 bis 17 Uhr.<br />Notdienst rund um die Uhr.</p>
+    </div>
+  </header>
+
+  <main class="lauf">
+
+    <section class="block">
+      <div class="kopfzeile">
+        <p class="marke-zeile">Kontakt</p>
+        <h1 class="titel-gross">Rufen Sie an,<br />wenn es eilt.</h1>
+      </div>
+      <p class="vorspann">
+        Bei Wasser im Haus ist das Telefon schneller als jedes Formular.
+        Für alles andere schreiben Sie uns, wir antworten am nächsten Werktag.
+      </p>
+    </section>
+
+    <svg class="zacke" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 12 6 0l6 12L18 0l6 12L30 0l6 12L42 0l6 12L54 0l6 12L66 0l6 12L78 0l6 12L90 0l6 12L102 0l6 12L114 0l6 12"
+            fill="none" stroke="currentColor" stroke-width="2" />
+    </svg>
+
+    <section class="block auftritt">
+      <div class="angabe">
+        <div class="angabe__zeile">
+          <span class="angabe__k">Telefon</span>
+          <span class="angabe__v"><a href="tel:000000000">0000 000000</a></span>
+        </div>
+        <div class="angabe__zeile">
+          <span class="angabe__k">Werkstatt</span>
+          <span class="angabe__v">Nordhangweg 00, 00000 Musterstadt</span>
+        </div>
+        <div class="angabe__zeile">
+          <span class="angabe__k">Zeiten</span>
+          <span class="angabe__v">Montag bis Freitag 7 bis 17 Uhr</span>
+        </div>
+        <div class="angabe__zeile">
+          <span class="angabe__k">Notdienst</span>
+          <span class="angabe__v">rund um die Uhr, auch am Wochenende</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="block auftritt">
+      <div class="kopfzeile">
+        <p class="marke-zeile">Anfrage</p>
+        <h2 class="titel-mittel">Schreiben Sie uns</h2>
+      </div>
+
+      <form class="form" id="anfrage" novalidate data-empfaenger="">
+        <div class="reihe reihe--zwei">
+          <div class="feld" data-feld>
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Vor- und Nachname" required />
+            <p class="feld__mangel" id="f-name-mangel" aria-live="polite"></p>
+          </div>
+          <div class="feld" data-feld>
+            <label for="f-mail">E-Mail</label>
+            <input id="f-mail" name="email" type="email" autocomplete="email" placeholder="name@beispiel.de" required />
+            <p class="feld__mangel" id="f-mail-mangel" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="feld" data-feld>
+          <label for="f-anliegen">Worum geht es?</label>
+          <select id="f-anliegen" name="anliegen" required>
+            <option value="">bitte wählen</option>
+            <option>Schaden am Dach</option>
+            <option>Neudeckung Steildach</option>
+            <option>Flachdach abdichten</option>
+            <option>Dachfenster</option>
+            <option>Rinnen und Fallrohre</option>
+            <option>Etwas anderes</option>
+          </select>
+          <p class="feld__mangel" id="f-anliegen-mangel" aria-live="polite"></p>
+        </div>
+
+        <div class="feld" data-feld>
+          <label for="f-text">Ihre Nachricht</label>
+          <textarea id="f-text" name="nachricht" placeholder="Was ist am Dach passiert, und wie alt ist es ungefähr?" required></textarea>
+          <p class="feld__mangel" id="f-text-mangel" aria-live="polite"></p>
+        </div>
+
+        <div class="koeder" aria-hidden="true">
+          <label for="f-koeder">Bitte frei lassen</label>
+          <input id="f-koeder" name="botcheck" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label class="zustimmung" for="f-ok" id="f-ok-feld">
+          <input id="f-ok" name="einwilligung" type="checkbox" required />
+          <span>
+            Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung der
+            Anfrage gespeichert werden.
+          </span>
+        </label>
+        <p class="feld__mangel" id="f-ok-mangel" aria-live="polite"></p>
+
+        <button class="knopf knopf--voll" type="submit" id="f-ab">Anfrage absenden</button>
+
+        <p class="hinweis">
+          Beispielprojekt: Der Versand ist bewusst nicht eingerichtet.
+        </p>
+
+        <p class="meldung" id="f-meldung" role="status"></p>
+      </form>
+    </section>
+
+    <section class="block auftritt">
+      <div class="notdienst">
+        <h2 class="notdienst__titel">Wasser im Haus?</h2>
+        <p class="notdienst__text">
+          Dann nicht schreiben, sondern anrufen. Wir sichern das Dach
+          provisorisch, meist noch am selben Tag.
+        </p>
+        <a class="knopf knopf--voll" href="tel:000000000">0000 000000 anrufen</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="fuss">
+  <nav class="fuss__reihe" aria-label="Fußmenü">
+    <a href="index.html">Start</a>
+    <a href="leistungen.html">Leistungen</a>
+    <a href="referenzen.html">Referenzen</a>
+    <a href="kontakt.html">Kontakt</a>
+  </nav>
+  <p>© 2026 Dachdeckerei Nordhang</p>
+  <p class="fuss__demo">
+    Dies ist ein Beispielprojekt von Rimci. Der Betrieb, die Anschrift und die
+    Telefonnummer sind frei erfunden. Jede Ähnlichkeit mit einem bestehenden
+    Unternehmen wäre unbeabsichtigt.
+  </p>
+</footer>
+
+<script src="skript.js"></script>
+</body>
+</html>
