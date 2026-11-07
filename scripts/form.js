@@ -1,11 +1,9 @@
 /* ==========================================================================
    RIMCI - form.js
-   Kontaktformular: Pruefung, Fehlermeldungen, Lade- und Ergebniszustand.
+   Anfrageformular im Footer: Prüfung, Fehlermeldungen, Lade- und Ergebniszustand.
 
-   VERSAND: Solange am <form> kein data-endpoint gesetzt ist, wird nichts
-   verschickt. Das Formular bietet dann an, die Anfrage als E-Mail zu oeffnen.
-   Fuer Formspree die Formular-URL eintragen, z. B.
-   data-endpoint="https://formspree.io/f/abcdwxyz"
+   VERSAND: über Web3Forms (data-endpoint plus verstecktes Feld access_key).
+   Ohne data-endpoint bietet das Formular an, die Anfrage als E-Mail zu öffnen.
    ========================================================================== */
 
 (function () {
@@ -18,20 +16,19 @@
   var done = document.getElementById("form-done");
   var submit = form.querySelector('[type="submit"]');
   var submitLabel = submit ? submit.querySelector("[data-label]") : null;
+  var idleLabel = submitLabel ? submitLabel.textContent : "";
   var endpoint = (form.getAttribute("data-endpoint") || "").trim();
   var MAIL = "nikorimacbusiness@gmail.com";
 
   var missing = {
-    name: "Bitte geben Sie Ihren Namen an.",
-    email: "Bitte geben Sie Ihre E-Mail-Adresse an.",
-    topic: "Bitte wählen Sie Ihr Anliegen aus.",
-    message: "Bitte schreiben Sie uns kurz, worum es geht.",
-    consent: "Bitte stimmen Sie der Datenschutzerklärung zu."
+    firma: "Bitte nennen Sie Ihren Betrieb.",
+    name: "Bitte nennen Sie Ihren Namen.",
+    kontakt: "Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse an."
   };
 
   var controls = Array.prototype.filter.call(
-    form.querySelectorAll("input, select, textarea"),
-    function (el) { return el.name && el.name !== "_gotcha"; }
+    form.querySelectorAll("input, textarea"),
+    function (el) { return el.name && el.type !== "hidden" && el.name !== "botcheck"; }
   );
 
   function fieldOf(el) { return el.closest(".field"); }
@@ -39,8 +36,7 @@
   function messageFor(el) {
     var v = el.validity;
     if (v.valueMissing) return missing[el.name] || "Bitte füllen Sie dieses Feld aus.";
-    if (v.typeMismatch) return "Diese E-Mail-Adresse sieht nicht vollständig aus.";
-    if (v.tooShort) return "Bitte schreiben Sie ein paar Worte mehr.";
+    if (v.tooShort) return "Das sieht noch nicht vollständig aus.";
     return "Bitte prüfen Sie diese Eingabe.";
   }
 
@@ -55,24 +51,21 @@
   }
 
   /* Fehler erst zeigen, wenn jemand ein Feld verlassen hat. Danach live
-     nachpruefen, damit die Meldung verschwindet, sobald es passt. */
+     nachprüfen, damit die Meldung verschwindet, sobald es passt. */
   controls.forEach(function (el) {
-    var liveEvent = el.tagName === "SELECT" || el.type === "checkbox" ? "change" : "input";
-
     el.addEventListener("blur", function () {
-      if (el.value || el.type === "checkbox") {
+      if (el.value) {
         el.dataset.touched = "true";
         validate(el);
       }
     });
-
-    el.addEventListener(liveEvent, function () {
+    el.addEventListener("input", function () {
       if (el.dataset.touched === "true") validate(el);
     });
   });
 
-  function showStatus(kind, text) {
-    status.className = "form-status is-visible form-status--" + kind;
+  function showStatus(text) {
+    status.className = "form-status is-visible";
     status.textContent = text;
   }
 
@@ -85,27 +78,20 @@
     if (!submit) return;
     submit.disabled = busy;
     submit.setAttribute("aria-busy", String(busy));
-    if (submitLabel) submitLabel.textContent = busy ? "Wird gesendet" : "Anfrage senden";
-  }
-
-  function topicLabel() {
-    var select = form.elements.topic;
-    return select && select.selectedIndex > 0 ? select.options[select.selectedIndex].text : "Anfrage";
+    if (submitLabel) submitLabel.textContent = busy ? "Wird gesendet" : idleLabel;
   }
 
   function mailtoHref() {
     var data = new FormData(form);
     var lines = [
+      "Betrieb: " + (data.get("firma") || ""),
       "Name: " + (data.get("name") || ""),
-      "Firma: " + (data.get("company") || "-"),
-      "E-Mail: " + (data.get("email") || ""),
-      "Telefon: " + (data.get("phone") || "-"),
-      "Anliegen: " + topicLabel(),
+      "Telefon oder E-Mail: " + (data.get("kontakt") || ""),
       "",
-      data.get("message") || ""
+      data.get("nachricht") || ""
     ];
     return "mailto:" + MAIL +
-      "?subject=" + encodeURIComponent("Anfrage: " + topicLabel()) +
+      "?subject=" + encodeURIComponent("Anfrage kostenloser Entwurf") +
       "&body=" + encodeURIComponent(lines.join("\n"));
   }
 
@@ -120,18 +106,17 @@
     });
 
     if (firstInvalid) {
-      showStatus("err", "Bitte prüfen Sie die markierten Felder.");
+      showStatus("Bitte prüfen Sie die markierten Felder.");
       firstInvalid.focus();
       return;
     }
 
-    /* Honigtopf ausgefuellt: vermutlich ein Bot. Still abbrechen. */
-    var trap = form.elements._gotcha;
-    if (trap && trap.value) return;
+    /* Honigtopf angekreuzt: vermutlich ein Bot. Still abbrechen. */
+    var trap = form.elements.botcheck;
+    if (trap && trap.checked) return;
 
-    /* Noch kein Versanddienst: ehrlich sagen und E-Mail als Ausweg anbieten */
     if (!endpoint) {
-      showStatus("info", "Der Formularversand ist noch nicht eingerichtet. Ihre Angaben gehen trotzdem nicht verloren:");
+      showStatus("Der Versand ist gerade nicht eingerichtet. Ihre Angaben gehen trotzdem nicht verloren:");
       var link = document.createElement("a");
       link.href = mailtoHref();
       link.textContent = "Als E-Mail öffnen";
@@ -149,13 +134,15 @@
       .then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
         form.hidden = true;
+        var intro = document.getElementById("form-intro");
+        if (intro) intro.hidden = true;
         if (done) {
           done.hidden = false;
           done.focus();
         }
       })
       .catch(function () {
-        showStatus("err", "Das hat leider nicht geklappt. Bitte versuchen Sie es noch einmal oder schreiben Sie direkt an " + MAIL + ".");
+        showStatus("Das hat leider nicht geklappt. Bitte versuchen Sie es noch einmal oder schreiben Sie direkt an " + MAIL + ".");
       })
       .then(function () {
         setBusy(false);

@@ -1,292 +1,126 @@
 /* ==========================================================================
    RIMCI - components.css
-   Wiederverwendete Bausteine, die mehrere Seiten teilen:
-   Seitenkopf, Abschnittskopf, Zusagen-Zeile, Arbeiten-Raster, Abschluss-CTA,
-   Hilfsklassen.
+   Geteilte Bausteine: Bänder, Glasfläche, Leistungen, Schritte, Fragen, Leiste.
    ========================================================================== */
 
-[hidden] { display: none !important; }
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
+.band {
+  position: relative;
+  padding: clamp(64px, 8.5vw, 124px) var(--gutter);
+  text-align: center;
 }
+.band--black { background: var(--black); }
+.band--flush { padding-top: 0; }
+.band--white { background: var(--white); color: var(--black); }
+.band--gray { background: var(--gray); color: var(--black); }
 
-.u-small { font-size: var(--fs-small); }
-.u-mt-3  { margin-top: var(--s3); }
-
-/* Kleine Gruppenueberschrift innerhalb eines Blocks (keine Sektions-Eyebrow) */
-.group-title {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: var(--s3);
-}
-
-.tag {
-  align-self: flex-start;
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding: 0.3em 0.8em;
-  border: 1px solid var(--accent-line);
-  border-radius: var(--r-pill);
-}
-
-/* --------------------------------------------------------------------------
-   Seitenkopf fuer Unterseiten
-   -------------------------------------------------------------------------- */
-
-.page-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--s4);
-  padding-top: calc(72px + clamp(2.5rem, 6vw, 4.5rem));
-  padding-bottom: clamp(3.5rem, 8vw, 6.5rem);
-  border-bottom: 1px solid var(--line);
-}
-
-.page-hero__title {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 10vw, 8.5rem);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.045em;
-}
-
-.page-hero__lead { margin-top: var(--s2); }
-
-.page-hero--compact { padding-bottom: clamp(2.5rem, 5vw, 4rem); }
-
-.page-hero--compact .page-hero__title { font-size: clamp(2.75rem, 8vw, 6rem); }
-
-.page-hero + .section { padding-top: clamp(3rem, 6vw, 5.5rem); }
-
-/* Ueberschrift plus optionaler Text, immer untereinander */
-.sec-head {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s3);
-  max-width: 56ch;
-  margin-bottom: var(--s6);
-}
-
-/* --------------------------------------------------------------------------
-   Zusagen-Zeile
-   -------------------------------------------------------------------------- */
-
-/* Flache Kennzahl-Zeile unter dem Hero, kein Kartencontainer. */
-.facts {
+.glass {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--s4) var(--s5);
-  border-top: 1px solid var(--line);
-  padding-top: var(--s5);
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--head) + 24px) var(--gutter) 64px;
+  background-color: #233034;
+  background-position: center;
+  background-size: cover;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
 }
+.glass--1 { background-image: url("../assets/glas-1.jpg"); }
+.glass--2 { background-color: #2f2629; background-image: url("../assets/glas-2.jpg"); }
+.glass__in { max-width: 44rem; min-width: 0; }
+.glass--auto { min-height: 0; }
+.glass--auto .glass__in { max-width: none; width: 100%; }
 
-@media (min-width: 480px) {
-  .facts { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 768px) {
-  .facts { grid-template-columns: repeat(4, 1fr); }
-}
-
-.facts__item { display: flex; flex-direction: column; gap: 0.35rem; }
-
-.facts__key {
-  font-family: var(--font-display);
-  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.facts__val { font-size: var(--fs-small); color: var(--text-dim); }
-
-
-/* --------------------------------------------------------------------------
-   3. Arbeiten-Raster
-   Zwoelfspaltiges Raster mit wechselnden Breiten, damit keine Reihe
-   wie die vorherige liest.
-   -------------------------------------------------------------------------- */
-
-.work-head {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s3);
-  margin-bottom: var(--s6);
-}
-
-.work-head__row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s4);
-}
-
-.work-grid {
+/* ---- Leistungen ---- */
+.services {
   display: grid;
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  gap: 44px;
+  max-width: 1240px;
+  margin: clamp(44px, 6vw, 82px) auto 0;
 }
+.service { display: grid; align-content: start; justify-items: center; gap: 10px; }
+.service img { width: 56px; height: 56px; margin-bottom: 6px; }
+.service h3 { font: 700 0.875rem/1.3 var(--display); letter-spacing: 0; text-transform: uppercase; }
+.service p { max-width: 21rem; text-wrap: pretty; }
+
+@media (min-width: 720px) {
+  .services { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .services { grid-template-columns: repeat(3, 1fr); row-gap: 48px; margin-top: 56px; }
+}
+
+/* ---- Schritte ---- */
+.steps {
+  display: grid;
+  gap: 36px;
+  max-width: 1120px;
+  margin: clamp(36px, 4.5vw, 56px) auto 0;
+}
+.step { display: grid; align-content: start; justify-items: center; gap: 8px; }
+.step__no { font: 700 var(--fs-h)/1 var(--display); }
+.step h3 { font: 700 0.875rem/1.3 var(--display); letter-spacing: 0; text-transform: uppercase; }
+.step p { max-width: 21rem; text-wrap: pretty; }
 
 @media (min-width: 860px) {
-  .work-grid { grid-template-columns: repeat(12, 1fr); }
-  .work-card:nth-child(1) { grid-column: span 7; }
-  .work-card:nth-child(2) { grid-column: span 5; }
-  .work-card:nth-child(3) { grid-column: span 5; }
-  .work-card:nth-child(4) { grid-column: span 7; }
-  .work-card:nth-child(5) { grid-column: span 6; }
-  .work-card:nth-child(6) { grid-column: span 6; }
-
-  /* Die zweite Karte jeder Reihe sitzt tiefer. Bricht die Rasterkante auf. */
-  .work-card:nth-child(2),
-  .work-card:nth-child(4) { margin-top: clamp(1.5rem, 4vw, 4rem); }
+  .steps { grid-template-columns: repeat(3, 1fr); gap: 48px; }
 }
 
-.work-card { display: block; }
-
-.work-card__media {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--r-card);
-  border: 1px solid var(--line);
-  transition: border-color var(--dur) var(--ease);
-}
-
-.work-card:hover .work-card__media { border-color: var(--line-strong); }
-
-/* Der Platzhalter selbst zoomt leicht, damit die Karte auf Hover antwortet. */
-.work-card__media .ph {
+/* ---- Runde Pfeile ---- */
+.rail-btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: 0;
-  border-radius: 0;
-  transition: transform var(--dur-slow) var(--ease);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
 }
+.rail-btn:hover { background: var(--orange); }
+.rail-btn:disabled { opacity: 0.35; cursor: default; background: var(--white); }
+.rail-btn svg { width: 20px; height: 20px; }
 
-.work-card:hover .work-card__media .ph { transform: scale(1.035); }
-
-/* Echte Arbeitsbilder sitzen im selben Rahmen und folgen derselben Hover-Geste
-   wie die Platzhalter, damit gemischte Reihen ruhig bleiben. */
-.work-shot {
-  display: block;
+/* ---- Fragen-Leiste ---- */
+.quotes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  gap: 22px 12px;
+  max-width: 760px;
+  margin: clamp(32px, 4vw, 44px) auto 0;
+}
+.quotes__rail {
+  order: -1;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  transition: transform var(--dur-slow) var(--ease);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.quotes__rail::-webkit-scrollbar { display: none; }
+.quote { display: grid; align-content: start; justify-items: center; gap: 14px; padding-inline: 4px; scroll-snap-align: start; }
+.quote h3 { font: 700 0.875rem/1.3 var(--display); letter-spacing: 0; text-transform: uppercase; text-wrap: balance; }
+.quote p { max-width: 30rem; text-wrap: pretty; }
+.quotes .rail-btn:first-of-type { justify-self: end; }
+.quotes .rail-btn:last-of-type { justify-self: start; }
+
+@media (min-width: 860px) {
+  .quotes { grid-template-columns: auto 1fr auto; align-items: center; column-gap: 32px; }
+  .quotes__rail { order: 0; grid-column: 2; grid-row: 1; }
+  .quotes .rail-btn:first-of-type { grid-column: 1; grid-row: 1; justify-self: center; }
+  .quotes .rail-btn:last-of-type { grid-column: 3; grid-row: 1; justify-self: center; }
 }
 
-.work-shot--4x5 { aspect-ratio: 4 / 5; }
-.work-shot--16x9 { aspect-ratio: 16 / 9; }
-
-.work-card:hover .work-shot { transform: scale(1.035); }
-
-/* Verweis auf die zugehörige Beispielseite, direkt unter der Karte. */
-.work-card__link {
-  margin: 0;
-  padding-top: 0.6rem;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.02em;
+@media (prefers-reduced-motion: reduce) {
+  .rail-btn { transition: none; }
 }
-
-.work-card__link a {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 2px;
-}
-
-.work-card__link a:hover { color: var(--text); border-bottom-color: var(--text); }
-
-.work-card__meta {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s4);
-  padding-top: var(--s3);
-}
-
-.work-card__name {
-  font-family: var(--font-display);
-  font-size: clamp(1.125rem, 1.7vw, 1.4rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.work-card__name svg {
-  width: 0.8em;
-  height: 0.8em;
-  opacity: 0;
-  transform: translate(-4px, 4px);
-  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
-}
-
-.work-card:hover .work-card__name svg { opacity: 1; transform: none; }
-
-.work-card__tags {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  text-align: right;
-}
-
-
-/* --------------------------------------------------------------------------
-   7. Abschluss-CTA
-   Eine Aussage, ein Knopf. Kein zweites Angebot daneben.
-   -------------------------------------------------------------------------- */
-
-.closer {
-  position: relative;
-  padding-block: clamp(5rem, 14vw, 10rem);
-  text-align: center;
-  overflow: hidden;
-}
-
-.closer::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(70rem, 120vw);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, var(--accent-dim), transparent 62%);
-  pointer-events: none;
-}
-
-.closer__inner {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s5);
-}
-
-.closer__title { max-width: 22ch; }
-
-.closer__mail {
-  font-size: var(--fs-small);
-  color: var(--text-dim);
-}
-
-.closer__mail a { color: var(--text); }

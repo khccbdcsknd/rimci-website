@@ -1,305 +1,238 @@
 /* ==========================================================================
    RIMCI - home.css
-   Nur Startseite: Hero, Logo-Band, Arbeiten-Raster, Kundenstimmen,
-   Auszeichnungen, Ablauf-Stapel, Abschluss-CTA.
+   Startseite: Hero, Karten-Stapel, Beispiel-Leiste.
+   Der Stapel arbeitet nur mit position: sticky, ohne Scroll-Listener.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Hero
-   Asymmetrisch, linksbuendig. Ueberschrift zweizeilig, laeuft per Maske ein.
-   -------------------------------------------------------------------------- */
-
 .hero {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--s6);
-  padding-top: calc(72px + clamp(1.5rem, 5vh, 3.5rem));
-  padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
-  isolation: isolate;
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  height: 100vh;
+  height: 100svh;
+  padding: var(--head) var(--gutter) 24px;
+  text-align: center;
 }
 
-/* Sehr weiches Licht hinter der Ueberschrift, hebt die obere Haelfte an.
-   Neutral gehalten, kein farbiges Leuchten. */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -20% 0 auto 0;       /* seitlich buendig, sonst Querscroll auf iOS */
-  height: 80%;
-  z-index: -1;
-  background: radial-gradient(
-    ellipse 70% 60% at 35% 35%,
-    rgba(255, 255, 255, 0.045),
-    transparent 70%
-  );
+.hero .h { max-width: 18em; }
+.h__line { display: block; }
+.hero .lead { max-width: 30rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__in > * { animation: hero-in 1s var(--ease) both; }
+  .hero__in > :nth-child(2) { animation-delay: 0.06s; }
+  .hero__in > :nth-child(3) { animation-delay: 0.12s; }
+  .hero__in > :nth-child(4) { animation-delay: 0.18s; }
+}
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Der Hero klebt und bleibt für den Beobachter sichtbar. Diese unsichtbare Marke
+   scrollt normal mit und sagt der Handy-Leiste, wann der erste Bildschirm vorbei ist. */
+.dock-mark { position: absolute; top: 0; left: 0; width: 1px; height: 80vh; pointer-events: none; }
+
+.stack {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 340vh;
+  min-height: 340svh;
   pointer-events: none;
 }
+.stack > * { grid-area: 1 / 1; align-self: start; }
 
-
-.hero__title { margin-bottom: 0; }
-
-/* Die zweite Zeile ist eingerueckt, damit der Block nicht als Rechteck liest. */
-.hero__title .line-mask:nth-child(2) > span { padding-left: clamp(0rem, 8vw, 9rem); }
-
-.hero__foot {
-  display: grid;
-  gap: var(--s5);
-  align-items: end;
-}
-
-@media (min-width: 900px) {
-  .hero__foot {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    gap: var(--s6);
-  }
-}
-
-.hero__pitch {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s4);
-  align-items: flex-start;
-}
-
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-
-.hero__media { width: 100%; }
-
-.hero__media .ph { aspect-ratio: 16 / 9; }
-
-@media (min-width: 900px) {
-  .hero__media .ph { aspect-ratio: 21 / 9; }
-}
-
-/* --------------------------------------------------------------------------
-   2. Logo-Band
-   Einzige Laufschrift der Seite. Zeigt, fuer wie viele Branchen gebaut wird,
-   sobald echte Kundenlogos vorliegen.
-   -------------------------------------------------------------------------- */
-
-.clients {
-  padding-block: clamp(3rem, 6vw, 4.5rem);
-  border-block: 1px solid var(--line);
-  background: var(--bg-raised);
-  overflow: hidden;
-}
-
-.clients__head {
-  display: flex;
-  justify-content: center;
-  margin-bottom: var(--s5);
-}
-
-.marquee {
-  position: relative;
-  display: flex;
-  overflow: hidden;
-  /* Kanten ausblenden, damit die Schleife nicht abrupt abschneidet */
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-}
-
-.marquee__track {
-  display: flex;
-  flex: none;
-  gap: var(--s4);
-  padding-right: var(--s4);
-  animation: marquee-run 38s linear infinite;
-  will-change: transform;
-}
-
-.marquee:hover .marquee__track { animation-play-state: paused; }
-
-@keyframes marquee-run {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
-}
-
-.client-slot {
-  flex: none;
-  width: clamp(9rem, 16vw, 13rem);
-  height: clamp(3.75rem, 6vw, 4.75rem);
-  border-radius: var(--r-card);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    overflow-x: auto;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-  .marquee__track { animation: none; }
-}
-
-/* --------------------------------------------------------------------------
-   4. Ablauf
-   Echter Sticky-Stapel: jede Karte haelt oben an, die naechste schiebt
-   darueber. Erzaehlt die drei Schritte in der Reihenfolge, in der sie
-   passieren.
-   -------------------------------------------------------------------------- */
-
-.flow { padding-block: var(--section-y) 0; }
-
-.flow__head { margin-bottom: var(--s6); }
-
-.flow__stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s4);
-  padding-bottom: var(--section-y);
-}
-
-.flow-step {
+.story {
   position: sticky;
-  top: calc(72px + var(--s4));
-  display: grid;
-  gap: var(--s4);
-  padding: clamp(1.75rem, 4vw, 3rem);
-  border: 1px solid var(--line);
-  border-radius: var(--r-card);
-  /* Deckend, damit die vorherige Karte sauber verdeckt wird */
-  background: var(--bg-card);
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  top: var(--stick);
+  width: var(--w);
+  margin-top: var(--from);
+  margin-left: var(--x);
+  aspect-ratio: 356 / 676;
+  border-radius: 16px;
+  background: #111;
+  color: var(--white);
+  font: 400 0.6875rem/1.2 var(--display);
+  letter-spacing: 0;
+  text-decoration: none;
+  pointer-events: auto;
 }
+.story img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
-@media (min-width: 860px) {
-  .flow-step {
-    grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--s5);
-    align-items: start;
-  }
-}
+.story--mid { --w: 58vw; --x: 21vw; --from: 72vh; --stick: 11vh; z-index: 1; }
+.story--left { --w: 33vw; --x: 8vw; --from: 130vh; --stick: 47vh; z-index: 2; }
+.story--right { --w: 30vw; --x: 62vw; --from: 186vh; --stick: 53vh; z-index: 3; }
 
-.flow-step__no {
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  color: var(--accent);
-  letter-spacing: 0.1em;
-}
-
-.flow-step__title { margin-bottom: var(--s2); }
-
-.flow-step__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  font-size: var(--fs-small);
-  color: var(--text-dim);
-}
-
-.flow-step__list li {
-  display: grid;
-  grid-template-columns: 1rem 1fr;
-  gap: 0.5rem;
-}
-
-.flow-step__list svg { width: 0.85rem; height: 0.85rem; margin-top: 0.38rem; color: var(--accent); }
-
-/* --------------------------------------------------------------------------
-   5. Kundenstimmen
-   Waagerechte Leiste mit Schnappkanten. Vier Karten, jede bewusst kurz.
-   -------------------------------------------------------------------------- */
-
-.voices { background: var(--bg-raised); border-block: 1px solid var(--line); }
-
-.voices__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--s4);
-  margin-bottom: var(--s6);
-}
-
-.voices__nav { display: flex; gap: var(--s2); }
-
-.rail-btn {
-  display: grid;
-  place-items: center;
-  width: 2.875rem;
-  height: 2.875rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-pill);
-  color: var(--text);
-  transition: background var(--dur-fast) var(--ease),
-              border-color var(--dur-fast) var(--ease),
-              opacity var(--dur-fast) var(--ease);
-}
-
-.rail-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--text-on-accent); }
-
-.rail-btn:disabled { opacity: 0.3; pointer-events: none; }
-
-.rail-btn svg { width: 1rem; height: 1rem; }
-
-.voices__rail {
-  display: flex;
-  gap: var(--s4);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  /* Einrastpunkt liegt an der Rasterkante, nicht am Bildschirmrand */
-  scroll-padding-inline: var(--gutter);
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  /* Volle Breite nutzen, erste Karte bleibt an der Rasterkante */
-  margin-inline: calc(var(--gutter) * -1);
-  padding-inline: var(--gutter);
-  padding-bottom: var(--s2);
-}
-
-.voices__rail::-webkit-scrollbar { display: none; }
-
-.voice {
-  flex: none;
-  width: min(23rem, 82vw);
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s4);
-  padding: var(--s5);
-  border: 1px solid var(--line);
-  border-radius: var(--r-card);
-  background: var(--bg-card);
-  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
-}
-
-.voice:hover { border-color: var(--accent-line); background: var(--bg-card-hover); }
-
-.voice__quote { font-size: 1.0625rem; line-height: 1.5; letter-spacing: -0.01em; }
-
-.voice__who {
+.story__top,
+.story__bottom {
+  position: absolute;
+  inset-inline: 0;
   display: flex;
   align-items: center;
-  gap: var(--s3);
-  margin-top: auto;
-  padding-top: var(--s3);
-  border-top: 1px solid var(--line);
+  gap: 8px;
+  padding: 9px 10px;
 }
-
-.voice__name { font-size: var(--fs-small); font-weight: 600; }
-
-.voice__role { font-size: var(--fs-small); color: var(--text-faint); }
-
-/* --------------------------------------------------------------------------
-   6. Auszeichnungen
-   Platzhalter-Leiste. Hier stehen spaeter echte Nachweise, keine erfundenen.
-   -------------------------------------------------------------------------- */
-
-.proof__head { margin-bottom: var(--s6); max-width: 52ch; }
-
-.proof__grid {
+.story__top {
+  top: 0;
+  padding-block: 12px 8px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+  text-transform: uppercase;
+}
+.story__top::before {
+  content: "";
+  position: absolute;
+  inset: 5px 8px auto;
+  height: 1.5px;
+  background: linear-gradient(90deg, #fff 0 32%, transparent 32% 34%, rgba(255, 255, 255, 0.5) 34% 66%, transparent 66% 68%, rgba(255, 255, 255, 0.5) 68%);
+}
+.story__dot {
   display: grid;
-  gap: var(--s4);
-  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 700;
+}
+.story__arrow { width: 16px; height: 16px; margin-left: auto; flex: none; }
+.story__bottom {
+  bottom: 0;
+  padding-block: 8px 10px;
+}
+.story__tag {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 300px;
+  background: rgba(0, 0, 0, 0.42);
+  white-space: nowrap;
+}
+.story--left .story__tag,
+.story--right .story__tag { padding: 4px 8px; font-size: 0.6875rem; }
+.story--left .story__dot,
+.story--right .story__dot { width: 16px; height: 16px; font-size: 0.5625rem; }
+.story--left .story__top,
+.story--right .story__top { font-size: 0.625rem; gap: 5px; padding-inline: 7px; }
+.story--left .story__arrow,
+.story--right .story__arrow { display: none; }
+
+.stack__word {
+  position: relative;
+  z-index: 5;
+  margin-top: 236vh;
+  padding-inline: var(--gutter);
+  color: var(--white);
+  font: 700 var(--word)/0.78 var(--display);
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  mix-blend-mode: difference;
 }
 
-.proof__slot {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s3);
+@supports (height: 1svh) {
+  .story--mid { --from: 72svh; --stick: 11svh; }
+  .story--left { --from: 130svh; --stick: 47svh; }
+  .story--right { --from: 186svh; --stick: 53svh; }
+  .stack__word { margin-top: 236svh; }
 }
 
-.proof__slot .ph { aspect-ratio: 3 / 2; }
+@media (min-width: 1024px) {
+  .stack { min-height: 470vh; min-height: 470svh; }
+  .story { border-radius: 20px; font-size: 0.875rem; }
+  .story--mid { --w: min(24.7vw, 41vh); --x: calc(50vw - var(--w) / 2); --from: 76vh; --stick: 5vh; }
+  .story--left { --w: min(20.3vw, 34vh); --x: 8.2vw; --from: 136vh; --stick: 5vh; }
+  .story--right { --w: min(18.5vw, 31vh); --x: 73.3vw; --from: 192vh; --stick: 25vh; }
+  .stack__word { margin-top: 294vh; }
+  .story__dot { width: 30px; height: 30px; }
+  .story__top, .story__bottom { padding-inline: 14px; }
+  .story--left .story__tag, .story--right .story__tag { font-size: 0.75rem; padding-inline: 12px; }
+  .story--left .story__dot, .story--right .story__dot { width: 24px; height: 24px; font-size: 0.75rem; }
+  .story--left .story__top, .story--right .story__top { font-size: 0.75rem; gap: 8px; }
+  .story--left .story__arrow, .story--right .story__arrow { display: block; }
+}
+@supports (height: 1svh) {
+  @media (min-width: 1024px) {
+    .story--mid { --w: min(24.7vw, 41svh); --from: 76svh; --stick: 5svh; }
+    .story--left { --w: min(20.3vw, 34svh); --from: 136svh; --stick: 5svh; }
+    .story--right { --w: min(18.5vw, 31svh); --from: 192svh; --stick: 25svh; }
+    .stack__word { margin-top: 294svh; }
+  }
+}
 
-.proof__caption { font-size: var(--fs-small); color: var(--text-dim); }
+.sec-about { z-index: 2; }
+.sec-services { z-index: 3; }
+.sec-work { z-index: 4; }
+.sec-steps { z-index: 5; }
+.sec-faq { z-index: 6; }
+
+.sec-about { position: sticky; top: 0; }
+
+@media (min-width: 1024px) and (min-height: 820px) {
+  .sec-services {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    padding-block: 72px;
+  }
+}
+
+/* ---- Beispiel-Leiste ---- */
+.sec-work {
+  min-height: 0;
+  padding-block: clamp(64px, 6vw, 88px);
+}
+.sec-work .glass__in { max-width: none; width: 100%; }
+
+.work-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 50%;
+  max-width: 1034px;
+  margin: clamp(36px, 5vw, 72px) auto 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.work-rail::-webkit-scrollbar { display: none; }
+
+.work-item {
+  display: block;
+  color: var(--white);
+  font: 600 0.875rem/1.3 var(--display);
+  letter-spacing: 0;
+  text-align: left;
+  text-decoration: none;
+  scroll-snap-align: start;
+}
+.work-item img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; }
+.work-item span { display: block; padding: 12px 4px 0 0; }
+.work-item small { display: block; font: 400 0.75rem/1.4 var(--mono); letter-spacing: 0.02em; }
+
+.work-nav { display: flex; justify-content: center; gap: 14px; margin-top: 22px; }
+.work-note { max-width: 34rem; margin: 22px auto 0; text-wrap: pretty; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero, .sec-about, .sec-services { position: relative; top: auto; }
+  .hero { height: auto; min-height: 70vh; }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    min-height: 0;
+    padding: 24px var(--gutter) 48px;
+  }
+  .story { position: relative; top: auto; margin: 0; --x: 0; --from: 0; }
+  .stack__word { width: 100%; margin-top: 16px; padding: 0; mix-blend-mode: normal; }
+}
