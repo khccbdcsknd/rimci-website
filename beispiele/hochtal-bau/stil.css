@@ -1,0 +1,221 @@
+/* ==========================================================================
+   Hochtal Bau: erfundenes Bauunternehmen, Arbeitsprobe von Rimci.
+   Aufbau nach einer Wix-Studio-Vorlage für Bauunternehmen, eigene Texte und eigener Code.
+   ========================================================================== */
+
+@font-face { font-family: "Madefor"; src: url("schrift/wix-madefor-text-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Madefor"; src: url("schrift/wix-madefor-text-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Madefor"; src: url("schrift/wix-madefor-text-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Madefor"; src: url("schrift/wix-madefor-text-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+
+:root {
+  --tinte: #2d2727;
+  --weiss: #ffffff;
+  --orange: #ff5200;
+  --linie: rgba(45, 39, 39, 0.2);
+  --rand: 20px;
+  --kurve: cubic-bezier(0.22, 1, 0.36, 1);
+  --schrift: "Madefor", "Helvetica Neue", Arial, sans-serif;
+}
+@media (min-width: 1024px) { :root { --rand: 50px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 24px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--weiss); color: var(--tinte); font: 400 1rem/1.8 var(--schrift); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+h1, h2, h3, p, ul, dl, dd, figure, address { margin: 0; padding: 0; }
+ul { list-style: none; }
+address { font-style: normal; }
+a { color: inherit; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+.marke-zeile { font-weight: 700; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.4; }
+.titel { font-weight: 500; font-size: clamp(1.5rem, 1.1rem + 1.2vw, 1.97rem); line-height: 1.55; text-wrap: balance; }
+.leise { color: rgba(45, 39, 39, 0.78); }
+
+/* ---- Hinweisleiste ---- */
+.hinweis { padding: 8px var(--rand); background: var(--tinte); color: var(--weiss); font-size: 0.8125rem; line-height: 1.45; text-align: center; }
+.hinweis strong { font-weight: 700; }
+
+/* ---- Knöpfe ---- */
+.pille {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 52px; padding: 0 26px; border-radius: 100px; border: 0;
+  background: var(--tinte); color: var(--weiss);
+  font: 700 0.875rem/1 var(--schrift); text-transform: uppercase; text-decoration: none; cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.3s var(--kurve);
+}
+.pille svg { width: 14px; height: 14px; transition: transform 0.3s var(--kurve); }
+.pille:hover svg { transform: translate(2px, 2px); }
+.pille:hover { background: var(--orange); color: var(--tinte); }
+.pille--orange { background: var(--orange); color: var(--tinte); }
+.pille--orange:hover { background: var(--tinte); color: var(--weiss); }
+.pille--weiss { background: var(--weiss); color: var(--tinte); }
+@media (min-width: 1024px) { .pille { min-height: 64px; padding: 0 32px; } }
+
+/* ---- Kopf ---- */
+.kopf { position: absolute; inset: 0 0 auto; z-index: 20; color: var(--weiss); }
+.ab-gross { display: none; }
+@media (min-width: 1024px) { .ab-gross { display: inline; } }
+.kopf__in { display: flex; align-items: center; gap: 12px; padding: 22px var(--rand); }
+.logo { margin-right: auto; font-size: 1.375rem; line-height: 1; text-decoration: none; letter-spacing: 0.01em; white-space: nowrap; }
+.logo b { font-weight: 800; }
+.logo span { font-weight: 500; }
+.nav { display: none; gap: 38px; }
+.nav a { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; text-decoration: none; letter-spacing: 0.02em; }
+.nav a:hover, .nav a[aria-current] { color: #ffc5aa; }
+.kopf .pille { min-height: 42px; padding: 0 18px; font-size: 0.75rem; }
+.burger { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.16); color: inherit; cursor: pointer; }
+.burger svg { width: 20px; height: 20px; }
+@media (max-width: 359px) { .kopf .pille { display: none; } }
+@media (min-width: 1024px) {
+  .nav { display: flex; margin-right: 22px; }
+  .burger { display: none; }
+  .kopf .pille { min-height: 50px; padding: 0 24px; font-size: 0.875rem; }
+}
+
+.menue {
+  position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; justify-content: center; gap: 18px;
+  padding: 80px var(--rand) 40px; background: var(--tinte); color: var(--weiss);
+  opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s;
+}
+.menue.offen { opacity: 1; visibility: visible; }
+.menue a:not(.pille) { font-size: 1.75rem; font-weight: 500; text-decoration: none; }
+.menue .pille { align-self: flex-start; margin-top: 18px; }
+.menue__zu { position: absolute; top: 20px; right: var(--rand); }
+
+/* ---- Einstieg ---- */
+.einstieg { position: relative; display: grid; align-items: end; min-height: 100svh; min-height: max(620px, 100svh); padding: 170px var(--rand) clamp(56px, 9vh, 110px); color: var(--weiss); background: #6d8fb4; overflow: hidden; }
+.einstieg__bild { position: absolute; inset: 0; z-index: 0; }
+.einstieg::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(20, 24, 30, 0.55) 0%, rgba(20, 24, 30, 0.18) 55%, rgba(20, 24, 30, 0) 75%), linear-gradient(0deg, rgba(20, 24, 30, 0.35), rgba(20, 24, 30, 0) 45%); }
+.einstieg__text { position: relative; z-index: 2; max-width: 900px; }
+.einstieg h1 { font-weight: 400; font-size: clamp(2.6rem, 0.9rem + 5.6vw, 5.98rem); line-height: 1.12; letter-spacing: -0.04em; text-wrap: balance; }
+.einstieg__unter { margin-top: 0.7rem; font-weight: 500; font-size: clamp(1.2rem, 0.85rem + 1.3vw, 1.97rem); line-height: 1.3; }
+.einstieg .pille { margin-top: 2rem; }
+
+/* ---- Raster mit Linien ---- */
+.raster { border-bottom: 1px solid var(--linie); }
+.zelle { padding: clamp(36px, 5vw, 70px) var(--rand); }
+
+/* Über uns */
+.ueber, .fokus, .kontakt, .leistungen { grid-template-columns: minmax(0, 1fr); }
+.ueber { display: grid; }
+.ueber__text { display: grid; align-content: start; gap: 1.6rem; }
+.ueber__text p:not(.marke-zeile):not(.titel) { max-width: 30rem; }
+.zahlen { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--linie); }
+.zahl { padding: 26px 12px 22px; text-align: center; }
+.zahl + .zahl { border-left: 1px solid var(--linie); }
+.zahl b { display: block; font-weight: 700; font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.5rem); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.zahl span { display: block; font-size: 0.875rem; line-height: 1.35; }
+.ueber__bild { padding: 0 var(--rand) var(--rand); aspect-ratio: 4 / 5; }
+@media (min-width: 1024px) {
+  .ueber { grid-template-columns: 1fr 1fr; min-height: 900px; }
+  .ueber__links { display: grid; grid-template-rows: 1fr auto; border-right: 1px solid var(--linie); }
+  .ueber__text { padding-top: 145px; }
+  .ueber__bild { padding: 28px; aspect-ratio: auto; }
+}
+
+/* Projekte */
+.projekte__kopf { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; padding-top: clamp(40px, 5vw, 56px); }
+.projekte__kopf .titel { margin-top: 1.2rem; }
+.leiste-rahmen { position: relative; padding: 32px 0 clamp(48px, 6vw, 80px); }
+.leiste { display: grid; grid-auto-flow: column; grid-auto-columns: 82%; gap: 16px; padding: 0 var(--rand); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--rand); scrollbar-width: none; }
+.leiste::-webkit-scrollbar { display: none; }
+.projekt { scroll-snap-align: start; }
+.projekt__bild { aspect-ratio: 1; overflow: hidden; background: #c9c3bd; }
+.projekt__bild img { transition: transform 0.8s var(--kurve); }
+.projekt:hover .projekt__bild img { transform: scale(1.04); }
+.projekt p { margin-top: 14px; }
+.leiste-pfeil {
+  position: absolute; top: calc(32px + 41%); right: calc(var(--rand) + 12px); z-index: 2;
+  display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%;
+  background: var(--weiss); color: var(--tinte); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18); cursor: pointer;
+}
+.leiste-pfeil svg { width: 18px; height: 18px; }
+.leiste-pfeil[disabled] { opacity: 0; pointer-events: none; }
+@media (min-width: 720px) { .leiste { grid-auto-columns: calc((100% - 2 * var(--rand) - 2 * 26px) / 2.6); gap: 26px; } }
+
+/* Leistungen */
+.leistungen { display: grid; border-top: 1px solid var(--linie); }
+.leistungen__kopf { display: grid; align-content: start; gap: 1.4rem; }
+.leistungen__kopf .pille { justify-self: start; }
+.leistung { display: grid; align-content: start; gap: 12px; border-top: 1px solid var(--linie); }
+.leistung svg { width: 34px; height: 34px; color: var(--tinte); }
+.leistung h3 { font-weight: 700; font-size: 0.98rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.4; }
+.leistung p { max-width: 23rem; }
+@media (min-width: 1024px) {
+  .leistungen { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto auto; }
+  .leistungen__kopf { grid-row: 1 / 3; border-right: 1px solid var(--linie); padding-top: 120px; }
+  .leistung { border-top: 0; min-height: 474px; padding-top: 120px; }
+  .leistung:nth-child(2), .leistung:nth-child(4) { border-right: 1px solid var(--linie); }
+  .leistung:nth-child(4), .leistung:nth-child(5) { border-top: 1px solid var(--linie); }
+}
+
+/* Projekt im Fokus */
+.fokus { display: grid; }
+.fokus__text { display: grid; align-content: center; gap: 1.6rem; }
+.fokus dl { display: grid; gap: 22px; margin-top: 0.6rem; }
+.fokus dt { font-weight: 700; font-size: 0.98rem; letter-spacing: 0.05em; }
+.fokus__bild { padding: 0 var(--rand) var(--rand); aspect-ratio: 4 / 3; }
+@media (min-width: 1024px) {
+  .fokus { grid-template-columns: 1fr 2fr; min-height: 800px; }
+  .fokus__bild { padding: 28px 28px 28px 0; aspect-ratio: auto; }
+}
+
+/* Bauherren */
+.bauherren { padding: 28px var(--rand) 28px; }
+.bauherren__kasten { padding: clamp(56px, 7vw, 100px) var(--rand); background: var(--tinte); color: var(--weiss); text-align: center; }
+.bauherren .titel { max-width: 26rem; margin: 1.2rem auto 0; }
+.marken { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 40px 24px; max-width: 1100px; margin: clamp(44px, 6vw, 72px) auto 0; }
+.marken li { display: grid; place-items: center; min-height: 48px; line-height: 1; }
+.m1 { font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; }
+.m2 { font-weight: 400; font-size: 1.05rem; letter-spacing: 0.32em; text-transform: uppercase; }
+.m3 { font-family: Georgia, "Times New Roman", serif; font-size: 1.5rem; font-style: italic; }
+.m4 { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.12em; text-transform: uppercase; border: 2px solid currentColor; padding: 8px 10px; }
+.m5 { font-weight: 500; font-size: 1.5rem; letter-spacing: -0.04em; }
+@media (max-width: 400px) { .m2 { letter-spacing: 0.16em; font-size: 0.9rem; } .m4 { letter-spacing: 0.06em; font-size: 0.9rem; } .m1, .m5 { font-size: 1.15rem; } .m3 { font-size: 1.25rem; } }
+@media (min-width: 900px) { .marken { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* Kontakt */
+.kontakt { display: grid; border-top: 1px solid var(--linie); }
+.kontakt__text { display: grid; align-content: start; gap: 1.6rem; }
+.kontakt__wege { display: grid; gap: 6px; font-size: 1.0625rem; }
+.kontakt__wege a { font-weight: 700; text-underline-offset: 4px; }
+.formular { display: grid; gap: 26px; padding: 0 var(--rand) clamp(48px, 7vw, 70px); }
+.feld { display: grid; gap: 4px; }
+.feld label { font-weight: 700; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.feld input, .feld select, .feld textarea {
+  width: 100%; min-height: 48px; padding: 10px 0; border: 0; border-bottom: 1px solid var(--tinte); border-radius: 0;
+  background: transparent; color: var(--tinte); font: inherit; -webkit-appearance: none; appearance: none;
+}
+.feld select { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6' fill='none' stroke='%232d2727' stroke-width='1.6'/%3E%3C/svg%3E") right center / 18px no-repeat; }
+.feld textarea { min-height: 110px; resize: vertical; }
+.formular .pille { justify-self: start; }
+.formular__hinweis:empty { display: none; }
+@media (min-width: 1024px) {
+  .kontakt { grid-template-columns: 1fr 1fr; }
+  .kontakt__text { border-right: 1px solid var(--linie); }
+  .formular { padding: clamp(36px, 5vw, 70px) var(--rand); }
+}
+
+/* ---- Fuß ---- */
+.fuss { display: grid; gap: 36px; padding: 56px var(--rand) 40px; }
+.fuss__nav { display: grid; gap: 14px; margin-top: 30px; }
+.fuss__nav a { text-transform: uppercase; text-decoration: none; }
+.fuss__nav a:hover, .fuss__nav a[aria-current] { color: var(--orange); }
+.fuss h2 { font-weight: 700; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 14px; }
+.fuss .pille { margin: 18px 0 22px; }
+.fuss__unten { display: flex; flex-direction: column; gap: 10px; padding: 18px var(--rand) 28px; border-top: 1px solid var(--linie); font-weight: 700; font-size: 0.875rem; }
+@media (min-width: 900px) {
+  .fuss { grid-template-columns: 1.2fr 1fr 1fr 1.1fr; padding-top: 80px; padding-bottom: 60px; }
+  .fuss__unten { flex-direction: row; justify-content: space-between; }
+}
+
+/* ---- Einblendung, nur mit JS und ohne reduzierte Bewegung ---- */
+.js .auf { opacity: 0; transform: translateY(18px); }
+.js .auf.da { opacity: 1; transform: none; transition: opacity 0.8s var(--kurve), transform 1s var(--kurve); }
+@media (prefers-reduced-motion: reduce) {
+  .js .auf { opacity: 1; transform: none; }
+  .pille, .pille svg, .projekt__bild img { transition: none; }
+}
