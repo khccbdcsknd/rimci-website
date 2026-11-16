@@ -210,6 +210,18 @@
 .work-single small { display: block; font: 400 0.75rem/1.4 var(--mono); letter-spacing: 0.02em; }
 @media (prefers-reduced-motion: reduce) { .work-single img { transition: none; } }
 
+/* Zwei Beispiele: am Handy untereinander, ab Tablet nebeneinander. */
+.work-pair {
+  display: grid;
+  gap: clamp(36px, 5vw, 48px);
+  max-width: 1034px;
+  margin: clamp(36px, 5vw, 72px) auto 0;
+}
+.work-pair .work-single { max-width: none; margin: 0; }
+@media (min-width: 768px) {
+  .work-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+
 .work-note { max-width: 34rem; margin: 22px auto 0; text-wrap: pretty; }
 
 @media (prefers-reduced-motion: reduce) {

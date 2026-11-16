@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kinderarztpraxis Sternwiese | Kinder- und Jugendmedizin</title>
+<meta name="description" content="Beispielprojekt von Rimci: Website für eine erfundene Kinderarztpraxis.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preload" as="font" type="font/woff2" href="schrift/playfair-display-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="schrift/sora-latin-400-normal.woff2" crossorigin>
+<link rel="stylesheet" href="stil.css">
+<script>document.documentElement.className = "js";</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="menue" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="zu" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<p class="hinweis"><strong>Beispielprojekt.</strong> Erfundene Praxis, erfundene Personen und Kontaktdaten. Gebaut von Rimci als Arbeitsprobe.</p>
+
+<header class="kopf">
+  <div class="kopf__in">
+    <a class="logo" href="#oben">Sternwiese.</a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#praxis">Praxis</a>
+      <a href="#leistungen">Leistungen</a>
+      <a href="#eltern">Für Eltern</a>
+      <a href="#team">Team</a>
+      <a href="#sprechzeiten">Sprechzeiten</a>
+    </nav>
+    <a class="knopf" href="#kontakt">Termin anfragen</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü öffnen"><svg aria-hidden="true"><use href="#menue"/></svg></button>
+  </div>
+</header>
+
+<div class="menue" id="menue" hidden>
+  <button class="burger menue__zu" type="button" aria-label="Menü schließen"><svg aria-hidden="true"><use href="#zu"/></svg></button>
+  <a href="#praxis">Praxis</a>
+  <a href="#leistungen">Leistungen</a>
+  <a href="#eltern">Für Eltern</a>
+  <a href="#team">Team</a>
+  <a href="#sprechzeiten">Sprechzeiten</a>
+  <a class="knopf knopf--hell" href="#kontakt">Termin anfragen</a>
+</div>
+
+<main id="oben">
+  <section class="einstieg">
+    <img class="einstieg__bild" src="bilder/einstieg.jpg" width="1408" height="768" alt="Eine Kinderärztin misst einen lachenden Jungen an einer bunten Messlatte im Behandlungszimmer" fetchpriority="high">
+    <div class="einstieg__karte">
+      <h1>Gut aufgehoben von Anfang an</h1>
+      <p class="einstieg__unter">Kinder- und Jugendmedizin für Babys, Kinder und Jugendliche</p>
+      <p class="text">Willkommen in der Kinderarztpraxis Sternwiese. Wir begleiten Ihr Kind von der ersten Vorsorge bis zum Erwachsenwerden, mit Zeit, Geduld und einem Team, das Kinder mag.</p>
+      <a class="knopf" href="#kontakt">Termin anfragen</a>
+    </div>
+  </section>
+
+  <section class="dunkel band" id="praxis">
+    <div class="in ueber">
+      <div>
+        <p class="marke-pille auf">Praxis</p>
+        <h2 class="titel auf">Ein Ort, an den Kinder gern zurückkommen</h2>
+        <p class="text auf">Helle Räume, ein Wartezimmer mit Spielecke und Ärztinnen, die erst einmal Hallo sagen. Wir erklären jeden Schritt so, dass Ihr Kind ihn versteht, und nehmen uns Zeit für Ihre Fragen.</p>
+      </div>
+      <div class="collage">
+        <figure class="c1 auf"><img src="bilder/praxis-1.jpg" width="900" height="1000" alt="Ein Vater spielt mit seinem Sohn im Wartebereich der Praxis" loading="lazy"></figure>
+        <figure class="c2 auf"><img src="bilder/praxis-2.jpg" width="900" height="850" alt="Ein Kinderarzt reicht einem kleinen Jungen die Hand zur Begrüßung" loading="lazy"></figure>
+        <figure class="c3 auf"><img src="bilder/praxis-3.jpg" width="900" height="850" alt="Spielecke mit Holzspielzeug und Bilderbüchern im Wartezimmer" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="leistungen">
+    <div class="in">
+      <p class="marke-pille auf">Leistungen</p>
+      <h2 class="titel auf">Was wir für Ihr Kind tun</h2>
+      <ul class="leistungen">
+        <li class="leistung auf"><figure><img src="bilder/leistung-vorsorge.jpg" width="1000" height="860" alt="Eine Ärztin untersucht ein Baby auf der Liege, die Mutter hält seine Hand" loading="lazy"></figure><h3>Vorsorge</h3><p>Alle U-Untersuchungen von der U2 bis zur J1</p></li>
+        <li class="leistung auf"><figure><img src="bilder/leistung-impfen.jpg" width="1000" height="860" alt="Ein Mädchen zeigt stolz ein buntes Pflaster auf ihrem Oberarm" loading="lazy"></figure><h3>Impfungen</h3><p>Nach den Empfehlungen der Ständigen Impfkommission</p></li>
+        <li class="leistung auf"><figure><img src="bilder/leistung-akut.jpg" width="1000" height="860" alt="Ein Kinderarzt schaut einem Jungen mit einer Lampe ins Ohr" loading="lazy"></figure><h3>Akutsprechstunde</h3><p>Jeden Morgen, wenn es schnell gehen muss</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="dunkel band" id="eltern">
+    <div class="in">
+      <p class="marke-pille auf">Für Eltern</p>
+      <h2 class="titel auf">Was uns wichtig ist</h2>
+      <p class="text auf">Ein Arztbesuch ist für Kinder aufregend genug. Deshalb machen wir den Rest so einfach wie möglich, für Ihr Kind und für Sie.</p>
+      <ol class="punkte">
+        <li class="punkt p1 auf">
+          <span class="punkt__kreis" aria-hidden="true"><svg viewBox="0 0 56 56"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="28" r="17"/><path d="M28 17v11l7 5"/><path d="M28 6v3M28 47v3M6 28h3M47 28h3"/></g></svg></span>
+          <div class="punkt__karte"><h3>Zeit für Fragen</h3><p>Jeder Termin plant Zeit für Ihre Fragen ein. Was offen bleibt, klären wir auch gern später am Telefon.</p></div>
+        </li>
+        <li class="punkt p2 auf">
+          <span class="punkt__kreis" aria-hidden="true"><svg viewBox="0 0 56 56"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 48V22l20-14 20 14v26"/><path d="M28 18v30"/><path d="M15 48V32h8v16M33 48V32h8v16"/></g></svg></span>
+          <div class="punkt__karte"><h3>Zwei Wartebereiche</h3><p>Kinder mit Fieber oder Ausschlag warten getrennt von Kindern, die zur Vorsorge oder zum Impfen kommen.</p></div>
+        </li>
+        <li class="punkt p3 auf">
+          <span class="punkt__kreis" aria-hidden="true"><svg viewBox="0 0 56 56"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="6" width="24" height="44" rx="5"/><path d="M24 11h8M22 26l4 4 8-8"/><circle cx="28" cy="44" r="1.5"/></g></svg></span>
+          <div class="punkt__karte"><h3>Termine online</h3><p>Vorsorge und Impfungen buchen Sie rund um die Uhr. Für akute Fälle halten wir jeden Tag Plätze frei.</p></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="flieder band" id="team">
+    <div class="in">
+      <p class="marke-pille auf">Team</p>
+      <h2 class="titel auf">Die Menschen hinter der Praxis</h2>
+      <p class="text auf">Zwei Fachärzte für Kinder- und Jugendmedizin und ein Praxisteam, das Ihr Kind beim Namen kennt.</p>
+      <ul class="team">
+        <li class="person auf"><figure><img src="bilder/team-1.jpg" width="800" height="1170" alt="Porträt von Dr. Clara Wendling" loading="lazy"></figure><h3>Dr. Clara Wendling</h3><p>Fachärztin für Kinder- und Jugendmedizin</p></li>
+        <li class="person auf"><figure><img src="bilder/team-2.jpg" width="800" height="1170" alt="Porträt von Dr. Paul Ahrens" loading="lazy"></figure><h3>Dr. Paul Ahrens</h3><p>Facharzt für Kinder- und Jugendmedizin</p></li>
+        <li class="person auf"><figure><img src="bilder/team-3.jpg" width="800" height="1170" alt="Porträt von Selin Kaya" loading="lazy"></figure><h3>Selin Kaya</h3><p>Medizinische Fachangestellte</p></li>
+        <li class="person auf"><figure><img src="bilder/team-4.jpg" width="800" height="1170" alt="Porträt von Greta Holm" loading="lazy"></figure><h3>Greta Holm</h3><p>Praxismanagement</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="in">
+      <p class="marke-pille auf">Eltern über uns</p>
+      <h2 class="titel auf">Was Familien erzählen</h2>
+      <div class="stimmen">
+        <figure class="stimme auf"><blockquote><p>„Unsere Tochter hatte große Angst vor dem Impfen. Dr. Wendling hat ihr alles am Teddy gezeigt, danach war es halb so schlimm.“</p></blockquote><figcaption>Mutter von Lea, 4</figcaption></figure>
+        <figure class="stimme auf"><blockquote><p>„Morgens angerufen, mittags dran. Und niemand hat uns das Gefühl gegeben, dass wir stören.“</p></blockquote><figcaption>Vater von Noah, 2</figcaption></figure>
+        <figure class="stimme auf"><blockquote><p>„Wir kommen seit der U2 hierher. Inzwischen freut sich unser Sohn sogar auf die Spielecke.“</p></blockquote><figcaption>Eltern von Ben, 6</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="kontakt" id="kontakt">
+    <img class="kontakt__bild" src="bilder/kontakt.jpg" width="2400" height="1350" alt="" loading="lazy">
+    <div class="formular-karte">
+      <h2>Termin anfragen</h2>
+      <form class="formular" novalidate>
+        <div class="reihe">
+          <div class="feld"><label for="f-vorname">Vorname Elternteil *</label><input id="f-vorname" name="vorname" type="text" autocomplete="given-name"></div>
+          <div class="feld"><label for="f-kind">Name des Kindes *</label><input id="f-kind" name="kind" type="text"></div>
+        </div>
+        <div class="reihe">
+          <div class="feld"><label for="f-mail">E-Mail-Adresse *</label><input id="f-mail" name="email" type="email" autocomplete="email"></div>
+          <div class="feld"><label for="f-tel">Telefon</label><input id="f-tel" name="telefon" type="tel" autocomplete="tel"></div>
+        </div>
+        <div class="feld"><label for="f-grund">Anlass</label>
+          <select id="f-grund" name="anlass"><option>Vorsorge</option><option>Impfung</option><option>Krankheit oder Beschwerden</option><option>Neue Patientin oder neuer Patient</option><option>Sonstiges</option></select></div>
+        <div class="feld"><label for="f-text">Ihre Nachricht</label><textarea id="f-text" name="nachricht"></textarea></div>
+        <button class="knopf knopf--voll" type="submit">Absenden</button>
+        <p class="formular__hinweis" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="fuss" id="sprechzeiten">
+  <div class="in">
+    <div class="fuss__oben">
+      <p class="fuss__marke" aria-hidden="true">Sternwiese.</p>
+      <div>
+        <h2>Sprechzeiten</h2>
+        <dl class="zeiten">
+          <div><dt>Montag, Dienstag, Donnerstag</dt><dd>8 bis 12 und 15 bis 18 Uhr</dd></div>
+          <div><dt>Mittwoch und Freitag</dt><dd>8 bis 12 Uhr</dd></div>
+          <div><dt>Akutsprechstunde</dt><dd>täglich 8 bis 9 Uhr</dd></div>
+        </dl>
+        <p class="notfall">Außerhalb der Sprechzeiten erreichen Sie den ärztlichen Bereitschaftsdienst unter <a href="tel:116117">116 117</a>. In Notfällen wählen Sie <a href="tel:112">112</a>.</p>
+      </div>
+    </div>
+    <div class="fuss__unten">
+      <div>
+        <p>Tel. <a href="tel:0000000000">0000 000000</a></p>
+        <p><a href="mailto:praxis@example.com">praxis@example.com</a></p>
+        <p>Musterweg 00, 00000 Musterstadt</p>
+      </div>
+      <div>
+        <p>Impressum und Datenschutz entfallen, die Praxis ist erfunden.</p>
+        <p>&copy; 2026 Kinderarztpraxis Sternwiese. Beispielprojekt von <a href="https://www.rimci.de/">Rimci</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a class="knopf knopf--voll anruf" href="tel:0000000000">Anrufen</a>
+<script src="skript.js"></script>
+</body>
+</html>
