@@ -158,8 +158,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 900px) { .stimmen { grid-template-columns: repeat(3, 1fr); gap: 30px; } }
 
 /* ---- Kontakt ---- */
-.kontakt { display: grid; padding: clamp(48px, 8vw, 96px) var(--rand); background: var(--hellgruen); }
-.formular-karte { padding: 30px 24px; border-radius: 30px; background: var(--creme); }
+.kontakt { position: relative; display: grid; padding: 0 0 var(--rand); }
+/* Farbfläche statt Foto: Verlauf von Hellgrün zu Flieder */
+.kontakt::before { content: ""; aspect-ratio: 4 / 3; background: linear-gradient(135deg, #e8f3dc, #e2e1fe); }
+.formular-karte { position: relative; z-index: 2; margin: -60px var(--rand) 0; padding: 30px 24px; border-radius: 30px; background: var(--creme); }
 .formular-karte h2 { font: 400 clamp(2rem, 1.6rem + 1.4vw, 2.9rem)/1.1 var(--serif); }
 .formular { display: grid; gap: 18px; margin-top: 22px; }
 .reihe { display: grid; gap: 18px; }
@@ -176,7 +178,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .formular__hinweis { font-size: 0.875rem; }
 @media (min-width: 640px) { .reihe { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 900px) {
-  .formular-karte { justify-self: center; width: min(760px, 100%); padding: 40px 42px 42px; }
+  .kontakt { min-height: 820px; padding: 0; }
+  .kontakt::before { position: absolute; inset: 0; aspect-ratio: auto; }
+  .formular-karte { justify-self: end; align-self: center; width: min(640px, 48%); margin: 80px var(--rand); padding: 40px 42px 42px; }
 }
 
 /* ---- Fuß ---- */
